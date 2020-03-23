@@ -1,21 +1,30 @@
 body {
     font-family: sans-serif;
+}
 
-
+h4 {
+    margin: 10px 0px;
 }
 
 header {
-    height: 3vw;
+    display: flex;
+
+    
     margin-bottom: 50px;
     border-bottom: 1px solid rgb(233, 233, 233);
-    padding: 12px;
 }
 
-#logo {
+#logo-img {
+    height: 50px;
+    display: inline-flex;
+    margin: 5px 10px;
+}
+
+#logo-text {
     align-self: center;
     margin: 0;
+    display: inline;
  }
-
 
 main {
     display: flex;

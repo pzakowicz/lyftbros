@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./style.css" type="text/css" rel="stylesheet" />
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon">
     <title>Login</title>
 </head>
 <body>
 
         <header>
-            <i class="fas fa-dumbbell"></i>
-            <h2 id="logo">Lyftbros</h2> 
+            <img id="logo-img" src="resources/Lbs logo fat.PNG">
+            <h2 id="logo-text">Lyftbros</h2> 
         </header>
         <main>
             <form class="container-box tile" id="login">
@@ -25,13 +25,9 @@
                 <br>
                 <input type="password" id="password" required>
                 <br>
-                <button type="button">Login</button>
+                <button onclick="logIn()" type="button">Login</button>
             </form>
-            <div class="container-box" id="create">
-                <h4>Create account</h4>
-                <button>Create account</button>
-            </div>
-            <div class="container-box" id="create-form">
+            <form class="container-box" id="create-form">
                 <h4>Create account</h4>
                 <label for="name">Name</label>
                 <br>
@@ -42,9 +38,10 @@
                 <input type="text" id="surname" required>
                 <br>
                 <label for="male">Male</label>
-                <input id="male" name="male" type="checkbox" value="male">
+                <input id="male" name="gender" type="radio" value="male">
                 <label for="female">Female</label>
-                <input id="female" name="female" type="checkbox" value="female">
+                <input id="female" name="gender" type="radio" value="female">
+                <br>
                 <br>
                 <label for="name">Email</label>
                 <br>
@@ -52,10 +49,10 @@
                 <br>
                 <label for="name">Password</label>
                 <br>
-                <input type="text" id="password-create" required>
+                <input type="password" id="password-create" required>
                 <br>
-                <button>Create account</button>
-            </div>
+                <button onclick="createUser()">Create account</button>
+            </form>
         </main>
     <script src='./script.js'></script>
 </body>
