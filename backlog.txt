@@ -14,6 +14,8 @@ Epics:
 4. Lyftfeed
     - view friends and your activity
 
+5. Create logo / favicon
+
 
 Screens: 
 1. Login / create account
