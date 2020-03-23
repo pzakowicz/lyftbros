@@ -14,3 +14,9 @@ Epics:
 4. Lyftfeed
     - view friends and your activity
 
+
+Screens: 
+1. Login / create account
+2. Account screen
+3. Add exercise screen
+4. Lyft feed screen
