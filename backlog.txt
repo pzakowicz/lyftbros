@@ -1,0 +1,16 @@
+Epics: 
+1. Log your training
+    - add own exercise name
+    - choose from exercise list
+    - log number of reps
+    - log number of sets
+2. Authenticate
+    - create an account with name and surname, email and password, gender, age, weight
+    - login
+    - sign-in / sign-out
+3. Add a friend
+    - search for a friend
+    - add a friend
+4. Lyftfeed
+    - view friends and your activity
+
