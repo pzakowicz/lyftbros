@@ -1,17 +1,3 @@
-let users = [];
-
-
-class User {
-    constructor(name, surname, gender, email, password) {
-        this.name = name;
-        this.surname = surname;
-        this.gender = gender;
-        this.email = email;
-        this.password = password;
-    }
-}
-
-
 function createUser() {
     let user = {};
     user.name = document.getElementById('name').value;
