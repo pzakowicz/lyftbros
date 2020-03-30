@@ -5,8 +5,11 @@ Epics:
     - log number of reps
     - log number of sets
 2. Authenticate
-    - create an account with name and surname, email and password, gender, age, weight
+    - save user to json / database
+    - complete account information
     - login
+        - add login function
+
     - sign-in / sign-out
 3. Add a friend
     - search for a friend
