@@ -1,5 +1,4 @@
 Epics: 
-0.1 Add a web query for mobile
 0. Create user
     - create POST route to the db
     - check if the user already exists by email

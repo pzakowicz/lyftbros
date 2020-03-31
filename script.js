@@ -1,3 +1,5 @@
+//imports
+
 function createUser() {
     let user = {};
     user.name = document.getElementById('name').value;
@@ -8,9 +10,12 @@ function createUser() {
     console.log(users);
 }
 
-function printUser() {
-    document.getElementById('created-user').innerHTML = user.name;
-}
+
+//CREATE USER
+const xhr = new XMLHttpRequest();
+const url = 
+
+
 
 // listeners
 

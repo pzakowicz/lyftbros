@@ -8,8 +8,6 @@ h4 {
 
 header {
     display: flex;
-
-    
     margin-bottom: 50px;
     border-bottom: 1px solid rgb(233, 233, 233);
 }
@@ -29,6 +27,7 @@ header {
 main {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .container-box {
