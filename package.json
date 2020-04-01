@@ -1,0 +1,34 @@
+{
+  "name": "lyftbros",
+  "version": "1.0.0",
+  "description": "Strava for weightlifting",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "cors": "^2.8.5",
+    "error-handler": "^1.0.0",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.2",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.1"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pzakowicz/lyftbros.git"
+  },
+  "author": "Piotr Zakowicz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pzakowicz/lyftbros/issues"
+  },
+  "homepage": "https://github.com/pzakowicz/lyftbros#readme"
+}
