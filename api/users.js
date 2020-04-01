@@ -3,26 +3,29 @@ const express = require('express');
 const userRouter = express.Router();
 
 const sqlite3 = require('sqlite3');
-const db = new sqlite3.Database('../database.sqlite')
+const db = new sqlite3.Database('./database.sqlite')
 
 // middleware
 
 
 // request handlers
+const response = { 
+    user: {}
+};
+
 userRouter.post('/users', (req, res, next) => {
-    const name = req.body.user.name;
-    const surname = req.body.user.surname;
-    const gender = req.body.user.gender;
-    const email = req.body.user.email;
-    const password = req.body.user.password;
+    const name = req.query.name;
+    const surname = req.query.surname;
+    //const gender = req.params.gender;
+    const email = req.query.email;
+    const password = req.query.password;
     
-    if (!name || !surname || !gender || !email || !password ) {
+    if (!name || !surname || !email || !password ) {
         return res.sendStatus(400);
     } else {
-        db.run("INSERT INTO Users (name, surname, gender, email, password) VALUES ($name, $surname, $gender, $email, $password)", {
+        db.run("INSERT INTO Users (name, surname, email, password) VALUES ($name, $surname, $email, $password)", {
             $name: name, 
             $surname: surname, 
-            $gender: gender, 
             $email: email, 
             $password: password
         }, function(error) {
@@ -30,7 +33,9 @@ userRouter.post('/users', (req, res, next) => {
                 next(error);
             } else {
                 db.get(`SELECT * FROM Users WHERE id = ${this.lastID}`, (error, row) => {
-                    res.status(201).json({user: row});
+                    response.user = row
+                    res.status(201).send(response)
+                    //res.status(201).json({user: row});
                 })
             }
         })
