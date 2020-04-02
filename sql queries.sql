@@ -1,0 +1,1 @@
+INSERT INTO Users (first_name, surname, gender, email, password) VALUES ("Piotr", "Zakowicz", "male", "piotr.zakowicz@gmail.com", "test")

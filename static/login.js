@@ -1,7 +1,5 @@
 //get elements
-const createUserButton = document.getElementById('create-user');
-const newUserContainer = document.getElementById('new-user');
-
+const createUserButton = document.getElementById("create-user");
 
 //event listener
 createUserButton.addEventListener('click', () => {
@@ -23,3 +21,4 @@ createUserButton.addEventListener('click', () => {
     });
 
 });
+*/

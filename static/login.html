@@ -1,61 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="./style.css" />
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon">
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon" />
     <title>Login</title>
-</head>
-<body>
-
-        <header>
-            <img id="logo-img" src="resources/Lbs logo fat.PNG">
-            <h2 id="logo-text">Lyftbros</h2> 
-        </header>
-        <main>
-            <form class="container-box tile" id="login">
-                <h4>Login</h4>
-                <label for="username">Email</label>
-                <br>
-                <input type="text" id="email" required>
-                <br>
-                <label for="password">Password</label>
-                <br>
-                <input type="password" id="password" required>
-                <br>
-                <button onclick="logIn()" type="button">Login</button>
-            </form>
-            <form class="container-box" id="create-form">
-                <h4>Create account</h4>
-                <label for="name">Name</label>
-                <br>
-                <input type="text" id="name" value="" required>
-                <br>
-                <label for="name">Surname</label>
-                <br>
-                <input type="text" id="surname" value="" required>
-                <!--<br>
+  </head>
+  <body>
+    <header>
+      <img id="logo-img" src="resources/Lbs logo fat.PNG" />
+      <h2 id="logo-text">Lyftbros</h2>
+    </header>
+    <main>
+      <form class="container-box tile" id="login">
+        <h4>Login</h4>
+        <label for="username">Email</label>
+        <br />
+        <input type="text" id="email" required />
+        <br />
+        <label for="password">Password</label>
+        <br />
+        <input type="password" id="password" required />
+        <br />
+        <button type="button">Login</button>
+      </form>
+      <form class="container-box" id="create-form" action="/" method="POST">
+        <h4>Create account</h4>
+        <label for="name">Name</label>
+        <br />
+        <input type="text" id="name" value="" required />
+        <br />
+        <label for="name">Surname</label>
+        <br />
+        <input type="text" id="surname" value="" required />
+        <!--<br>
                 <label for="male">Male</label>
                 <input id="male" name="gender" type="radio" value="male">
                 <label for="female">Female</label>
                 <input id="female" name="gender" type="radio" value="female"> -->
-                <br>
-                <label for="name">Email</label>
-                <br>
-                <input type="text" id="email-create" value="" required>
-                <br>
-                <label for="name">Password</label>
-                <br>
-                <input type="password" id="password-create" value="" required>
-                <br>
-                <button id="create-user">Create account</button>
-            </form>
-            <div id="new-user">
-    
-            </div>
-        </main>
-    <script src='./script.js'></script>
-</body>
+        <br />
+        <label for="name">Email</label>
+        <br />
+        <input type="text" id="email-create" value="" required />
+        <br />
+        <label for="name">Password</label>
+        <br />
+        <input type="password" id="password-create" value="" required />
+        <br />
+        <button id="create-user">Create account</button>
+      </form>
+      <div id="new-user"></div>
+    </main>
+    <script src="./login.js"></script>
+  </body>
 </html>
