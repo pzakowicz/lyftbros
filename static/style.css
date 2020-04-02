@@ -1,51 +1,56 @@
 body {
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
 
 h4 {
-    margin: 10px 0px;
+  margin: 10px 0px;
 }
 
 header {
-    display: flex;
-    margin-bottom: 50px;
-    border-bottom: 1px solid rgb(233, 233, 233);
+  display: flex;
+  margin-bottom: 50px;
+  border-bottom: 1px solid rgb(233, 233, 233);
 }
 
 #logo-img {
-    height: 50px;
-    display: inline-flex;
-    margin: 5px 10px;
+  height: 50px;
+  display: inline-flex;
+  margin: 5px 10px;
 }
 
 #logo-text {
-    align-self: center;
-    margin: 0;
-    display: inline;
- }
+  align-self: center;
+  margin: 0;
+  display: inline;
+}
 
 main {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .container-box {
-    margin: 25px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 200px;
-    padding: 15px;
- }
+  margin: 25px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 200px;
+  padding: 15px;
+}
 
- label {
-     font-size: small;
- }
+#user-created {
+  text-align: center;
+  margin: auto 0px;
+  display: none;
+}
 
+label {
+  font-size: small;
+}
 
 input {
-    margin: 5px 0px; 
+  margin: 5px 0px;
 }
 
 button {
-    margin: 10px 0px;
+  margin: 10px 0px;
 }

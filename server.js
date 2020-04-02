@@ -57,9 +57,6 @@ app.get("/api/users/:first_name", (req, res, next) => {
 
 //POST a new user
 app.post("/api/users/", (req, res, next) => {
-  //console.log(req.body);
-  //res.send(req.body);
-//});
   const name = req.body.first_name;
   const surname = req.body.surname;
   const gender = req.body.gender;
@@ -95,6 +92,32 @@ app.post("/api/users/", (req, res, next) => {
   }
 });
 
+//GET login as a created user
+app.get("/api/users/login/:email-:password", (req, res, next) => {
+  console.log(req.params);
+  db.get(
+    "SELECT * FROM Users WHERE email = $email AND password = $password",
+    {
+      $email: req.params.email,
+      $password: req.params.password
+    },
+    (error, row) => {
+      console.log(row);
+      res.status(200).json({ user: row });
+    }
+  );
+});
+
+app.get("/api/users/:first_name", (req, res, next) => {
+  console.log(req.params);
+  db.get(
+    "SELECT * FROM Users WHERE first_name = $first_name",
+    { $first_name: req.params.first_name },
+    (error, row) => {
+      res.status(200).json({ user: row });
+    }
+  );
+});
 
 //starting app
 app.listen(PORT, "0.0.0.0", () => {

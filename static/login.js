@@ -1,6 +1,10 @@
 //get elements
 const createUserButton = document.getElementById("create-user");
+const loginButton = document.getElementById("login-button");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
 
+//helper functions
 function findGender() {
   let male = document.getElementById("male");
   let female = document.getElementById("female");
@@ -11,7 +15,12 @@ function findGender() {
   }
 }
 
-//event listener
+function userCreatedMessage() {
+  document.getElementById("create-form").style.display = "none";
+  document.getElementById("user-created").style.display = "inline";
+}
+
+//Create user request
 createUserButton.addEventListener("click", () => {
   const name = document.getElementById("name").value;
   const surname = document.getElementById("surname").value;
@@ -40,4 +49,26 @@ createUserButton.addEventListener("click", () => {
     .catch(error => {
       console.error("Error:", error);
     });
+  userCreatedMessage();
+});
+
+//Login request
+loginButton.addEventListener("click", () => {
+  let email = emailInput.value;
+  let password = passwordInput.value;
+  if (email && password) {
+    fetch(`/api/users/login/${email}-${password}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        if (data.user) {
+          console.log("login successful");
+          window.location.href = "/users";
+        } else {
+          console.log("No matching user found");
+        }
+      });
+  }
 });

@@ -13,7 +13,7 @@
   <body>
     <header>
       <img id="logo-img" src="resources/Lbs logo fat.PNG" />
-      <h2 id="logo-text">Lyftbros</h2>
+      <h2 id="logo-text">Lyftbros (lbs)</h2>
     </header>
     <main>
       <form class="container-box tile" id="login">
@@ -26,7 +26,7 @@
         <br />
         <input type="password" id="password" required />
         <br />
-        <button type="button">Login</button>
+        <button type="button" id="login-button">Login</button>
       </form>
       <form class="container-box" id="create-form">
         <h4>Create account</h4>
@@ -51,9 +51,11 @@
         <br />
         <input type="password" id="password-create" value="" required />
         <br />
-        <button id="create-user">Create account</button>
+        <button type="button" id="create-user">Create account</button>
       </form>
-      <div id="new-user"></div>
+      <div class="container-box" id="user-created">
+        <h4>User successfully created!</h4>
+      </div>
     </main>
     <script src="./login.js"></script>
   </body>
