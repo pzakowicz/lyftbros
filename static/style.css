@@ -43,6 +43,12 @@ main {
   display: none;
 }
 
+.error-message {
+  color: red;
+  display: none;
+  font-size: small;
+}
+
 label {
   font-size: small;
 }

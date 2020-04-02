@@ -20,6 +20,14 @@ function userCreatedMessage() {
   document.getElementById("user-created").style.display = "inline";
 }
 
+function userNotFoundMessage() {
+  document.getElementById("user-not-found").style.display = "inline";
+}
+
+function emailTakenMessage() {
+    document.getElementById("email-taken").style.display = "inline";
+}
+
 //Create user request
 createUserButton.addEventListener("click", () => {
   const name = document.getElementById("name").value;
@@ -65,9 +73,11 @@ loginButton.addEventListener("click", () => {
         console.log(data);
         if (data.user) {
           console.log("login successful");
-          window.location.href = "/users";
+          document.getElementById("user-not-found").innerHTML = "";
+          window.location.href = "/feed";
         } else {
           console.log("No matching user found");
+          userNotFoundMessage();
         }
       });
   }

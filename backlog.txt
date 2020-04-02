@@ -4,11 +4,6 @@ Epics:
     - check if the user already exists by email
     - check if user has been created
     - write some unit tests
-0.5 Login
-    - create a GET request 
-    - check if credentials match
-    - display error if they dont
-    - take to homepage if they exist
 1. Log your training
     - add own exercise name
     - choose from exercise list

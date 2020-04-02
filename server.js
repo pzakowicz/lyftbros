@@ -32,6 +32,11 @@ app.get("/users", (req, res) => {
   res.sendFile(path.join(__dirname, "./static/users.html"));
 });
 
+//GET feed page
+app.get("/feed", (req, res) => {
+  res.sendFile(path.join(__dirname, "./static/feed.html"));
+});
+
 //GET all users
 app.get("/api/users", (req, res, next) => {
   db.all("SELECT * FROM Users", (err, rows) => {
