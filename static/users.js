@@ -27,16 +27,18 @@ getAllUsers.addEventListener("click", () => {
 
 getUserByNameButton.addEventListener("click", () => {
   let name = getUserByNameInput.value;
-  fetch(`/api/users/${name}`)
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      console.log(data.user);
-      userContainer.innerHTML = "";
-      let name = data.user.first_name;
-      let surname = data.user.surname;
-      let content = name + " " + surname;
-      userContainer.innerHTML = content;
-    });
+  if (name) {
+    fetch(`/api/users/${name}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log(data.user);
+        userContainer.innerHTML = "";
+        let name = data.user.first_name;
+        let surname = data.user.surname;
+        let content = name + " " + surname;
+        userContainer.innerHTML = content;
+      });
+  }
 });

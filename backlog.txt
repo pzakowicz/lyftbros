@@ -26,8 +26,11 @@ Epics:
     - add a friend
 4. Lyftfeed
     - view friends and your activity
-
-5. Create logo / favicon
+5. View users
+    - view all users
+    - search for user by first_name
+        - erorr message when user does not exist
+    - view user details
 
 
 Screens: 

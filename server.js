@@ -56,22 +56,26 @@ app.get("/api/users/:first_name", (req, res, next) => {
 });
 
 //POST a new user
-app.post("/", (req, res, next) => {
-  const name = req.query.name;
-  const surname = req.query.surname;
-  //const gender = req.params.gender;
-  const email = req.query.email;
-  const password = req.query.password;
+app.post("/api/users/", (req, res, next) => {
+  //console.log(req.body);
+  //res.send(req.body);
+//});
+  const name = req.body.first_name;
+  const surname = req.body.surname;
+  const gender = req.body.gender;
+  const email = req.body.email;
+  const password = req.body.password;
 
-  if (!name || !surname || !email || !password) {
+  if (!name || !surname || !gender || !email || !password) {
     return res.sendStatus(400);
   } else {
     console.log(req.body);
     db.run(
-      "INSERT INTO Users (name, surname, email, password) VALUES ($name, $surname, $email, $password)",
+      "INSERT INTO Users (first_name, surname, gender, email, password) VALUES ($name, $surname, $gender, $email, $password)",
       {
         $name: name,
         $surname: surname,
+        $gender: gender,
         $email: email,
         $password: password
       },
@@ -90,6 +94,7 @@ app.post("/", (req, res, next) => {
     );
   }
 });
+
 
 //starting app
 app.listen(PORT, "0.0.0.0", () => {
