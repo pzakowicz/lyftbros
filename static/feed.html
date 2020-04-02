@@ -11,12 +11,16 @@
     <title>Lyft feed</title>
   </head>
   <body>
-    <header>
+    <header id="feed-header">
       <img id="logo-img" src="resources/Lbs logo fat.PNG" />
       <h2 id="logo-text">Lyftbros (lbs)</h2>
+      <button type="button" id="log-training">Log training</button>
     </header>
-    <main>
-      <div></div>
+    <main id="feed-main">
+      <div class="container-box tile" id="bros-container">
+        <h4>Your bros</h4>
+        <div id="users-container"></div>
+      </div>
     </main>
     <script src="./feed.js"></script>
   </body>
