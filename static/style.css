@@ -8,8 +8,17 @@ h4 {
 
 header {
   display: flex;
+  justify-content: space-between;
   margin-bottom: 50px;
   border-bottom: 1px solid rgb(233, 233, 233);
+}
+
+nav {
+  display: flex;
+}
+
+#title {
+  text-align: center;
 }
 
 #logo-img {
@@ -37,7 +46,7 @@ main {
   padding: 15px;
 }
 
-/* Login */
+/* ------------------------- Login ------------------------- */
 
 #user-created {
   text-align: center;
@@ -63,27 +72,55 @@ button {
   margin: 10px 0px;
 }
 
-/* Feed */
+/* ------------------------- Feed ------------------------- */
 
-#log-training {
-  margin: auto 30px;
+.nav-button {
   height: 30px;
   padding: 5px 10px;
-  background-color: black;
-  color: white;
   font-weight: bold;
   border-radius: 4px;
+}
+
+.primary-button {
+  margin: auto 10px auto 30px;
+  background-color: black;
+  color: white;
   border: none;
 }
 
+.secondary-button {
+  margin: auto 10px auto 10px;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+
+#account-container {
+  display: flex;
+}
+
+#account-pic {
+  height: 35px;
+  border-radius: 100%;
+  margin: auto 40px;
+}
+
 #feed-main {
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 #feed-header {
-  margin-bottom: 0px;
+  margin-bottom: 5px;
+}
+
+#stat-container {
+  width: 15vw;
+}
+
+#feed-container {
+  width: 50vw;
 }
 
 #bros-container {
-  margin-top: 5px;
+  width: 15vw;
 }

@@ -12,11 +12,24 @@
   </head>
   <body>
     <header id="feed-header">
-      <img id="logo-img" src="resources/Lbs logo fat.PNG" />
-      <h2 id="logo-text">Lyftbros (lbs)</h2>
-      <button type="button" id="log-training">Log training</button>
+      <nav>
+        <img id="logo-img" src="resources/Lbs logo fat.PNG" />
+        <h2 id="logo-text">Lyftbros</h2>
+        <button type="button" class="nav-button primary-button" id="log-training"> Log training </button>
+        <button type="button" class="nav-button secondary-button" id="exercises"> Exercises </button>
+        <button type="button" class="nav-button secondary-button" id="diary">Diary</button>
+      </nav>
+      <div id="account-container">
+        <img id="account-pic" src="resources/profile pic.png" />
+      </div>
     </header>
     <main id="feed-main">
+      <div class="container-box tile" id="stat-container">
+        <h4>Your stats</h4>
+      </div>
+      <div class="container-box tile" id="feed-container">
+        <h4>Your feed</h4>
+      </div>
       <div class="container-box tile" id="bros-container">
         <h4>Your bros</h4>
         <div id="users-container"></div>
