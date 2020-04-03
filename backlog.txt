@@ -1,7 +1,9 @@
 Epics: 
+
+- Make user email unique in the schema
 - Available lyfts
-    - add primary and secondary body type (tell people how long since they exercised a body part - when they are de-training)
-    - enable user to add lyft
+    - add primary and secondary body part (tell people how long since they exercised a body part - when they are de-training)
+    - exercise already exists (message)
 
 - Log your training
     - create a popup
@@ -32,6 +34,13 @@ Epics:
         - give users more details:
             - age, height, weight
             - max bench, max squat, max deadlift, max military press, max barbell row
+
+- add webquries for all pages to RWF for mobile
+- clean up css
+- introduce templates
+- introduce react
+- introduce redux
+
 
 
 Screens: 

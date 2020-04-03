@@ -2,7 +2,6 @@ html, body {
   font-family: sans-serif;
   margin: 0;
   height: 100%;
-  overflow: hidden;
 }
 
 h4 {
@@ -29,17 +28,6 @@ a:visited {
   
 }
 
-#title {
-  text-align: center;
-  background-color: rgb(247, 247, 250);
-
-}
-
-#title-text {
-  margin: 0;
-  padding: 40px 0px 20px 0px;
-}
-
 #logo-img {
   height: 50px;
   display: inline-flex;
@@ -63,22 +51,36 @@ main {
 }
 
 .container-box {
-  margin: 25px;
+  margin: 10px;
   box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  width: 200px;
   padding: 15px;
   background-color: white;
   border-radius: 4px;
 }
 
-.container {
+.flex-container {
   display: flex;
+}
+
+.inline-container {
+  display: inline-block;
 }
 
 /* ------------------------- Login ------------------------- */
 
 #login-header {
   justify-content: start;
+}
+
+#title {
+  text-align: center;
+  background-color: rgb(247, 247, 250);
+
+}
+
+#title-text {
+  margin: 0;
+  padding: 40px 0px;
 }
 
 #user-created {
@@ -97,8 +99,12 @@ label {
   font-size: small;
 }
 
-input {
+input, select {
   margin: 5px 0px;
+}
+
+select {
+  width: 100%;
 }
 
 button {
@@ -121,7 +127,7 @@ button {
   margin: auto 10px auto 30px;
   background-color: black;
   color: white;
-  border: none;
+  border: 1px solid black;
 }
 
 .secondary-button {
@@ -131,6 +137,11 @@ button {
   border: 1px solid black;
 }
 
+button:hover {
+  background-color: lightgray;
+  border: 1px solid lightgray;
+}
+
 #account-pic {
   height: 35px;
   border-radius: 100%;
@@ -138,44 +149,52 @@ button {
 }
 
 #feed-main {
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-start;
   background-color: rgb(247, 247, 250);
 }
 
 #stat-container {
-  width: 15vw;
+  width: 20%;
 }
 
 #feed-container {
-  width: 50vw;
+  width: 45%;
 }
 
 #bros-container {
-  width: 15vw;
+  width: 20%;
 }
 
 /* ------------------------- Exercises ------------------------- */
 
-#exercise-container {
-  width: 90vw;
+
+
+#exercise-table-container {
+  margin: 10px;
+
 }
 
 table {
-  width: 50%;
   font-size: 0.8em;
+  width: 600px;
 }
 
 th {
   text-align: left;
   width: 25%;
+  background-color: rgb(243, 243, 243);
 }
 
 th, td {
-  padding: 5px;
+  padding: 8px;
 }
 
 table, th, td {
   border: 1px solid rgb(233, 233, 233);
   border-collapse: collapse;
+}
+
+#add-exercise-button {
+  margin: 10px 0px;
 }

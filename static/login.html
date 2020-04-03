@@ -11,13 +11,13 @@
     <title>Login</title>
   </head>
   <body>
-    <header class="container" id="login-header">
+    <header class="flex-container" id="login-header">
       <img id="logo-img" src="resources/Lbs logo fat.PNG" />
       <h2 id="logo-text">Lyftbros</h2>
     </header>
     <div id="title"><h1 id="title-text">The #1 app for lifting with your bros</h1></div>
     <main>
-      <div class="container">
+      <div class="flex-container">
         <form class="container-box tile" id="login">
           <h4>Login</h4>
           <label for="username">Email</label>
@@ -28,7 +28,7 @@
           <br />
           <input type="password" id="password" required />
           <br />
-          <button type="button" id="login-button">Login</button>
+          <button class="nav-button" type="button" id="login-button">Login</button>
           <br />
           <p class="error-message" id="user-not-found">
             Wrong email and/or password.
@@ -57,7 +57,7 @@
           <br />
           <input type="password" id="password-create" value="" required />
           <br />
-          <button type="button" id="create-user">Create account</button>
+          <button type="button" class="nav-button" id="create-user">Create account</button>
           <p class="error-message" id="email-taken">Email already taken!</p>
         </form>
         <div class="container-box" id="user-created">

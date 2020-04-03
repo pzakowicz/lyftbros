@@ -140,6 +140,38 @@ app.get("/api/exercises", (req, res, next) => {
   });
 });
 
+//POST new exercise
+app.post("/api/exercises/", (req, res, next) => {
+  const name = req.body.name;
+  const equipment = req.body.equipment;
+  const measurement = req.body.measurement;
+  if (!name || !equipment || !measurement) {
+    return res.sendStatus(400);
+  } else {
+    console.log(req.body);
+    db.run(
+      "INSERT INTO Lifts (name, equipment, measurement) VALUES ($name, $equipment, $measurement)",
+      {
+        $name: name,
+        $equipment: equipment,
+        $measurement: measurement,
+      },
+      function(error) {
+        if (error) {
+          next(error);
+        } else {
+          db.get(
+            `SELECT * FROM Lifts WHERE id = ${this.lastID}`,
+            (error, row) => {
+              res.status(201).json({ exercise: row });
+            }
+          );
+        }
+      }
+    );
+  }
+});
+
 //starting app
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Listening on port: ${PORT}`);
