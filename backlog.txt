@@ -1,7 +1,7 @@
 Epics: 
 - Available lyfts
-    - create lyfts table
-    - populate with pre-defined lifts
+    - display lifts in a table in the website
+    - add primary and secondary body type (tell people how long since they exercised a body part - when they are de-training)
     - enable user to add lyft
 
 - Log your training

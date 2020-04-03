@@ -1,1 +1,6 @@
-INSERT INTO Users (first_name, surname, gender, email, password) VALUES ("Piotr", "Zakowicz", "male", "piotr.zakowicz@gmail.com", "test")
+--SELECT * FROM Users
+--SELECT * FROM Lifts
+--INSERT INTO Users (first_name, surname, gender, email, password) VALUES ("Piotr", "Zakowicz", "male", "piotr.zakowicz@gmail.com", "test")
+--CREATE TABLE Lifts (id INTEGER PRIMARY KEY, name TEXT NOT NULL, category TEXT NOT NULL, body_part TEXT NOT NULL, type TEXT NOT NULL)
+--INSERT INTO Lifts (name, category, body_part, type) VALUES ("Bench press", "Barbell", "Chest", "Weight & reps")
+--DELETE FROM Lifts WHERE id=2
