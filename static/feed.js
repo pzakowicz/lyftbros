@@ -1,5 +1,8 @@
+// get elements
 const usersContainer = document.getElementById("users-container");
+const exercisesButton = document.getElementById("exercises-button");
 
+//functions
 function getAllUsers() {
   fetch("/api/users")
     .then(response => {
@@ -20,8 +23,13 @@ function getAllUsers() {
     });
 }
 
+exercisesButton.addEventListener('click', () => {
+  window.location.href = "/exercises";
+})
+
 function main() {
   getAllUsers();
 }
 
+//execute funcions
 main();

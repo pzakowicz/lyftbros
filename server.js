@@ -37,6 +37,11 @@ app.get("/feed", (req, res) => {
   res.sendFile(path.join(__dirname, "./static/feed.html"));
 });
 
+//get exercises page
+app.get("/exercises", (req, res) => {
+  res.sendFile(path.join(__dirname, "./static/exercises.html"));
+});
+
 //GET all users
 app.get("/api/users", (req, res, next) => {
   db.all("SELECT * FROM Users", (err, rows) => {
@@ -122,6 +127,17 @@ app.get("/api/users/:first_name", (req, res, next) => {
       res.status(200).json({ user: row });
     }
   );
+});
+
+//GET all exercises
+app.get("/api/exercises", (req, res, next) => {
+  db.all("SELECT * FROM Lifts", (err, rows) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    console.log(rows);
+    res.status(200).json({ exercise: rows });
+  });
 });
 
 //starting app
