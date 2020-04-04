@@ -88,6 +88,16 @@ table, th, td {
   border-collapse: collapse;
 }
 
+i {
+  margin: 5px;
+  color: lightgray;
+  cursor: pointer;
+}
+
+i:hover {
+  color: grey;
+}
+
 /* ------------------------- Login ------------------------- */
 
 #login-header {
@@ -230,10 +240,24 @@ button:hover {
 
 #log-training-form label {
   display: inline-block;
-}
-
-.training-label {
-  display: inline-block;
   width: 70px;
 }
+
+#workout-name {
+  display: inline-block;
+}
+
+#workout-name-input {
+  display: none;
+}
+
+#save-workout-name-button {
+  display: none;
+}
+
+#workout-owner {
+  margin-top: 15px;
+}
+
+
 

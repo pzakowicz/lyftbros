@@ -3,13 +3,16 @@
 - Log your training
     - create a training table with foreign keys to users and lifts
     - change the logging method depending on measurement type
+    - add validation on empty fields
     - delete set
     - edit set
     - add comment
     - add how easy / hard it was
+    - add workout name
     - separate sets of exercises
     - save training
         - add date 
+        - add workout summary
     - warning message against navigating away from page
 
 - User account
@@ -44,6 +47,7 @@
 
 ---- Technology ------------------------------------
 
+- move getter functions to utils
 - add webquries for all pages to RWF for mobile
 - clean up css
 - introduce templates
