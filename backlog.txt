@@ -1,18 +1,16 @@
 ---- Functionality ---------------------------------
 
 - Log your training
-    - create a training table with foreign keys to users and lifts
+    - create tables for workouts and sets (google sheets)
     - change the logging method depending on measurement type
-    - add validation on empty fields
     - delete set
     - edit set
-    - add comment
     - add how easy / hard it was
-    - add workout name
+    - add comment
     - separate sets of exercises
     - save training
         - add date 
-        - add workout summary
+        - add workout stats
     - warning message against navigating away from page
 
 - User account

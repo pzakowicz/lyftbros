@@ -54,24 +54,26 @@ function getAllUsers() {
   });
 };
 
-
 // add set to workout
 addSetButton.addEventListener("click", () => {
   let lyft = document.getElementById("lyft").value;
   let weight = document.getElementById("weight").value;
   let reps = document.getElementById("reps").value;
-  let newSet = document.createElement("tr");
-  newSet.innerHTML = `
+  if (lyft && weight && reps) {
+    let newSet = document.createElement("tr");
+    newSet.innerHTML = `
     <td>${lyft}</td>
     <td>${weight}</td>
     <td>${reps}</td>
     `;
-  workoutTable.appendChild(newSet);
+    workoutTable.appendChild(newSet);
+  }
 });
 
 //change workout name
 changeWorkoutNameButton.addEventListener("click", () => {
   changeWorkoutNameInput.style.display = "inline";
+  changeWorkoutNameInput.value = workoutName.innerHTML;
   changeWorkoutNameButton.style.display = "none";
   workoutName.style.display = "none";
   saveWorkoutNameButton.style.display = "inline";
