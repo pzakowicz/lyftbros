@@ -1,16 +1,15 @@
 Epics: 
 
-- Make user email unique in the schema
-- Available lyfts
-    - add primary and secondary body part (tell people how long since they exercised a body part - when they are de-training)
-    - exercise already exists (message)
-
 - Log your training
+    - create a training table with foreign keys to users and lifts
     - create a popup
-    - add own exercise name
     - choose from exercise list
     - log number of reps
     - log number of sets
+
+- Available lyfts
+    - add primary and secondary body part (tell people how long since they exercised a body part - when they are de-training)
+    - exercise already exists (message)
 
 - Authenticate
     - deny access to feed when use is not logged in
@@ -41,7 +40,7 @@ Epics:
 - introduce react
 - introduce redux
 
-
+- navigation via links or GET requests? 
 
 Screens: 
 1. Login / create account
