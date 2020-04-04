@@ -1,11 +1,20 @@
-Epics: 
+---- Functionality ---------------------------------
 
 - Log your training
     - create a training table with foreign keys to users and lifts
-    - create a popup
+    - create a page for loggin training
     - choose from exercise list
     - log number of reps
     - log number of sets
+    - add new exercise
+    - add date 
+    - add comment
+    - add how easy / hard it was
+
+- User account
+    - create a larget table for user details
+    - create a page for viewing / editing user details
+    - show a summary of stats on the feed page
 
 - Available lyfts
     - add primary and secondary body part (tell people how long since they exercised a body part - when they are de-training)
@@ -15,12 +24,10 @@ Epics:
     - deny access to feed when use is not logged in
     - sign-in / sign-out
 
-- Account information
-    - complete account information
-
 - Create user
-    - check if the user already exists by email
-    - write some unit tests
+    - show an error message if user with this email already exists
+    - send a confirmation email
+    - give ability to reset password
 
 - Add a friend
     - search for a friend
@@ -34,16 +41,21 @@ Epics:
             - age, height, weight
             - max bench, max squat, max deadlift, max military press, max barbell row
 
+---- Technology ------------------------------------
+
 - add webquries for all pages to RWF for mobile
 - clean up css
 - introduce templates
 - introduce react
 - introduce redux
-
+- implement mocha and write unit tests
 - navigation via links or GET requests? 
 
-Screens: 
+---- Screens ----------------------------------------
 1. Login / create account
 2. Account screen
 3. Add exercise screen
 4. Lyft feed screen
+5. Exercise screen
+6. Diary screen
+7. Reports screen
