@@ -42,6 +42,11 @@ app.get("/exercises", (req, res) => {
   res.sendFile(path.join(__dirname, "./static/exercises.html"));
 });
 
+//get log-training page
+app.get("/log-training", (req, res) => {
+  res.sendFile(path.join(__dirname, "./static/training.html"));
+});
+
 //GET all users
 app.get("/api/users", (req, res, next) => {
   db.all("SELECT * FROM Users", (err, rows) => {

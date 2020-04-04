@@ -2,6 +2,7 @@
 const exerciseTable = document.getElementById("exercise-table");
 const exerciseRowContainer = document.getElementById("exercise-rows");
 const addExerciseButton = document.getElementById("add-exercise-button");
+const logTrainingButton = document.getElementById("log-training-button");
 
 //helper functions
 function findEquipment() {
@@ -79,3 +80,12 @@ function main() {
 
 //execute funcions
 main();
+
+//get pages
+logTrainingButton.addEventListener('click', () => {
+  window.location.href = "/log-training";
+})
+
+exercisesButton.addEventListener('click', () => {
+  window.location.href = "/exercises";
+})

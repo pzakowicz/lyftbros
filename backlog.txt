@@ -2,14 +2,15 @@
 
 - Log your training
     - create a training table with foreign keys to users and lifts
-    - create a page for loggin training
-    - choose from exercise list
-    - log number of reps
-    - log number of sets
-    - add new exercise
-    - add date 
+    - change the logging method depending on measurement type
+    - delete set
+    - edit set
     - add comment
     - add how easy / hard it was
+    - separate sets of exercises
+    - save training
+        - add date 
+    - warning message against navigating away from page
 
 - User account
     - create a larget table for user details

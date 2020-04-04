@@ -8,7 +8,7 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon" />
-    <title>Lyft feed</title>
+    <title>Log training</title>
   </head>
   <body>
     <header>
@@ -27,18 +27,37 @@
         <img id="account-pic" src="resources/profile pic.png" />
       </div>
     </header>
-    <main id="feed-main">
-      <div class="container-box tile" id="stat-container">
-        <h4>Your stats</h4>
+    <main id="training-main">
+      <div class="container-box tile" id="log-training-container">
+        <h4>Log your lyfts</h4>
+        <form id="log-training-form">
+          <label for="lyft" class="training-label">Lyft:</label>
+          <select id="lyft" name="lyft">
+          </select>
+          <br />
+          <label for="weight" class="training-label">Weight(kg):</label>
+          <input type="number" id="weight">
+          <br />
+          <label for="reps" class="training-label">Reps:</label>
+          <input type="number" id="reps">
+          <br />
+          <button type="button" id="submit-set-button">Add set</button>
+        </form>
       </div>
-      <div class="container-box tile" id="feed-container">
-        <h4>Your feed</h4>
-      </div>
-      <div class="container-box tile" id="bros-container">
-        <h4>Your bros</h4>
-        <div id="users-container"></div>
+      <div class="container-box tile" id="workout-container">
+        <h4>Your workout</h4>
+        <div id="workout-table-container">
+          <table id="workout-table">
+            <tr>
+              <th>Lyft</th>
+              <th>Weight (kg)</th>
+              <th>Reps</th>
+            </tr>
+          </table>
+
+        </div>
       </div>
     </main>
-    <script src="./feed.js"></script>
+    <script src="./training.js"></script>
   </body>
 </html>

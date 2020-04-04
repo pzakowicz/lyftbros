@@ -1,6 +1,7 @@
 // get elements
 const usersContainer = document.getElementById("users-container");
 const exercisesButton = document.getElementById("exercises-button");
+const logTrainingButton = document.getElementById("log-training-button");
 
 //functions
 function getAllUsers() {
@@ -25,6 +26,10 @@ function getAllUsers() {
 
 exercisesButton.addEventListener('click', () => {
   window.location.href = "/exercises";
+})
+
+logTrainingButton.addEventListener('click', () => {
+  window.location.href = "/log-training";
 })
 
 function main() {

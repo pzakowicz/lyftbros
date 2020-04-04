@@ -1,3 +1,5 @@
+/* ------------------------- Login ------------------------- */
+
 html, body {
   font-family: sans-serif;
   margin: 0;
@@ -42,7 +44,6 @@ a:visited {
 
 main {
   display: flex;
-  justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
   height: 100%;
@@ -66,10 +67,35 @@ main {
   display: inline-block;
 }
 
+
+table {
+  font-size: 0.8em;
+  width: 600px;
+}
+
+th {
+  text-align: left;
+  width: 25%;
+  background-color: rgb(243, 243, 243);
+}
+
+th, td {
+  padding: 8px;
+}
+
+table, th, td {
+  border: 1px solid rgb(233, 233, 233);
+  border-collapse: collapse;
+}
+
 /* ------------------------- Login ------------------------- */
 
 #login-header {
   justify-content: start;
+}
+
+#login-main {
+  justify-content: center;
 }
 
 #title {
@@ -101,10 +127,6 @@ label {
 
 input, select {
   margin: 5px 0px;
-}
-
-select {
-  width: 100%;
 }
 
 button {
@@ -150,8 +172,6 @@ button:hover {
 
 #feed-main {
   justify-content: space-around;
-  align-items: flex-start;
-  background-color: rgb(247, 247, 250);
 }
 
 #stat-container {
@@ -175,26 +195,45 @@ button:hover {
 
 }
 
-table {
-  font-size: 0.8em;
-  width: 600px;
-}
-
-th {
-  text-align: left;
-  width: 25%;
-  background-color: rgb(243, 243, 243);
-}
-
-th, td {
-  padding: 8px;
-}
-
-table, th, td {
-  border: 1px solid rgb(233, 233, 233);
-  border-collapse: collapse;
-}
 
 #add-exercise-button {
   margin: 10px 0px;
 }
+
+#measurement {
+  width: 100%;
+}
+
+/* ------------------------- Log training ------------------------- */
+
+#training-main {
+  justify-content: center;
+}
+
+
+#log-training-container {
+  min-width: 250px;
+}
+
+#log-training-form {
+  min-width: 250px;
+  display: inline-block;
+}
+
+#log-training-form input {
+  width: 150px;
+}
+
+#log-training-form select {
+  width: 155px;
+}
+
+#log-training-form label {
+  display: inline-block;
+}
+
+.training-label {
+  display: inline-block;
+  width: 70px;
+}
+
