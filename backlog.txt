@@ -2,16 +2,26 @@
 
 - Log your training
     - create tables for workouts and sets (google sheets)
+        - save workout
+        - save sets
+    - show workout and sets on the feed
     - change the logging method depending on measurement type
-    - delete set
-    - edit set
     - add how easy / hard it was
     - add comment
     - separate sets of exercises
     - save training
         - add date 
-        - add workout stats
     - warning message against navigating away from page
+
+- Lyftfeed
+    - view friends and their workouts
+    - view workout details
+        - show workout stats
+    - view user details
+        - make user clickable on the feed
+        - give users more details:
+            - age, height, weight
+            - max bench, max squat, max deadlift, max military press, max barbell row
 
 - User account
     - create a larget table for user details
@@ -35,13 +45,6 @@
     - search for a friend
     - add a friend
 
-- Lyftfeed
-    - view friends and your activity
-    - view user details
-        - make user clickable on the feed
-        - give users more details:
-            - age, height, weight
-            - max bench, max squat, max deadlift, max military press, max barbell row
 
 ---- Technology ------------------------------------
 

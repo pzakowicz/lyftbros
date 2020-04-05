@@ -65,9 +65,9 @@ addSetButton.addEventListener("click", () => {
     let newSet = document.createElement("tr");
     newSet.innerHTML = `
     <td width="40%">${lyft}</td>
-    <td width="20%">${weight}</td>
-    <td width="20%">${reps}</td>
-    <td width="20%"><i class="fas fa-pen edit-set-button"></i><i class="fas fa-trash delete-set-button"></i></td>
+    <td width="20%" contenteditable='true'>${weight}</td>
+    <td width="20%" contenteditable='true'>${reps}</td>
+    <td width="20%"></i><i class="fas fa-trash delete-set-button" onclick="deleteRow(this)"></i></td>
     `;
     workoutTable.appendChild(newSet);
   }
@@ -105,7 +105,10 @@ body.addEventListener("click", () => {
 */
 
 //delete set
-
+function deleteRow(r) {
+  var i = r.parentNode.parentNode.rowIndex;
+  document.getElementById("workout-table").deleteRow(i);
+}
 
 
 

@@ -256,6 +256,10 @@ button:hover {
   display: none;
 }
 
+td[contenteditable] {
+  
+}
+
 #workout-owner {
   margin-top: 15px;
 }
