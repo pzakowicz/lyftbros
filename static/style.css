@@ -81,10 +81,11 @@ th {
 
 th, td {
   padding: 8px;
+
 }
 
 table, th, td {
-  border: 1px solid rgb(233, 233, 233);
+  border-bottom: 1px solid rgb(233, 233, 233);
   border-collapse: collapse;
 }
 

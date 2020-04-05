@@ -10,6 +10,8 @@ const workoutName = document.getElementById("workout-name");
 const changeWorkoutNameButton = document.getElementById("change-workout-name-button");
 const saveWorkoutNameButton = document.getElementById("save-workout-name-button");
 const changeWorkoutNameInput = document.getElementById("workout-name-input");
+//const editSetButton = document.getElementsByClassName("edit-set-button");
+//const deleteSetButton = document.getElementsByClassName("delete-set-button");
 
 // get pages
 exercisesButton.addEventListener('click', () => {
@@ -62,9 +64,10 @@ addSetButton.addEventListener("click", () => {
   if (lyft && weight && reps) {
     let newSet = document.createElement("tr");
     newSet.innerHTML = `
-    <td>${lyft}</td>
-    <td>${weight}</td>
-    <td>${reps}</td>
+    <td width="40%">${lyft}</td>
+    <td width="20%">${weight}</td>
+    <td width="20%">${reps}</td>
+    <td width="20%"><i class="fas fa-pen edit-set-button"></i><i class="fas fa-trash delete-set-button"></i></td>
     `;
     workoutTable.appendChild(newSet);
   }
@@ -89,6 +92,20 @@ saveWorkoutNameButton.addEventListener("click", () => {
     saveWorkoutNameButton.style.display = "none";
   }
 })
+
+//edit set
+/*
+body.addEventListener("click", () => {
+  if (event.target !== editSetButton) {
+    return;
+  } else {
+    editSetButton.style.display = "none";
+  }
+});
+*/
+
+//delete set
+
 
 
 
