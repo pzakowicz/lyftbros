@@ -47,6 +47,9 @@
 
 ---- Technology ------------------------------------
 
+- find a way to get values by id synchronously - async await !!!
+    - rewrite hrlper function to be async await
+    - create a wrapper listener function which is also async and await functions which need to end first
 - move getter functions to utils
 - add webquries for all pages to RWF for mobile
 - clean up css

@@ -13,6 +13,7 @@ const changeWorkoutNameInput = document.getElementById("workout-name-input");
 const saveWorkoutButton = document.getElementById("save-workout-button");
 const userId = document.getElementById("user-id");
 const lyftId = document.getElementById("lyft-id");
+const workoutId = document.getElementById("workout-id");
 
 // get pages
 exercisesButton.addEventListener('click', () => {
@@ -93,14 +94,14 @@ workoutOwnerDropdown.addEventListener("change", () => {
 // add set to workout
 addSetButton.addEventListener("click", () => {
   let lyft = document.getElementById("lyft").value;
-  let lyftId = document.getElementById("lyftId").value;
+  let id = document.getElementById("lyft-id").textContent;
   let weight = document.getElementById("weight").value;
   let reps = document.getElementById("reps").value;
-  if (lyft && weight && reps) {
+  if (lyft && id && weight && reps) {
     let newSet = document.createElement("tr");
     newSet.innerHTML = `
     <td width="40%">${lyft}</td>
-    <td width="10%">
+    <td width="10%">${id}</td>
     <td width="20%" contenteditable='true'>${weight}</td>
     <td width="20%" contenteditable='true'>${reps}</td>
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>
@@ -135,8 +136,9 @@ function deleteRow(r) {
   document.getElementById("workout-table").deleteRow(i);
 };
 
+
 //save workout helper function
-function saveWorkout() {
+async function saveWorkout() {
   const name = workoutName.textContent;
   const id = userId.textContent;
   const data = {
@@ -144,28 +146,46 @@ function saveWorkout() {
     userId: id
   };
   console.log(data);
-  fetch(`/api/workouts/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
+  let response = await fetch(`/api/workouts/`,
+   {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data.workout);
-  })
-}
+  let json = await response.json();
+  console.log("Created workout: ", json);
+  workoutId.innerHTML = json.workout.id;
+};
 
 //save sets helper function
 function saveSets() {
-
+  const data = {};
+  data.workoutId = workoutId.textContent;
+  /*for (let i = 0, row; row = workoutTable.rows[i]; i++) {
+   //iterate through rows, rows would be accessed using the "row" variable assigned in the for loop
+   data.set = {
+     exerciseId: row[1],
+     weight: row[2],
+     reps: row[3]
+   };
+   //for (let j = 0, col; col = row.cells[j]; j++) {
+     //iterate through columns, columns would be accessed using the "col" variable assigned in the for loop
+   //}  
+  }
+  let exerciseId;
+  let weight;
+  let reps; 
+*/
+  console.log("Workoutid to save in Sets table: ", data);
 }
 
-//POST save workout
-saveWorkoutButton.addEventListener("click", () => {
-  saveWorkout();
 
+//POST save workout
+saveWorkoutButton.addEventListener("click", async () => {
+  await saveWorkout();
+  saveSets();
 });
 
 
