@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 4000;
 //middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan("tiny"));
+app.use(morgan("dev"));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "./static")));
 app.use(errorhandler());
@@ -58,13 +58,14 @@ app.get("/api/users", (req, res, next) => {
   });
 });
 
-//GET user by first_name
-app.get("/api/users/:first_name", (req, res, next) => {
-  console.log(req.params);
+// GET userId by email
+app.get("/api/users/:email", (req, res, next) => {
+  console.log("Requested userId for user email: ", req.params);
   db.get(
-    "SELECT * FROM Users WHERE first_name = $first_name",
-    { $first_name: req.params.first_name },
+    "SELECT id FROM Users WHERE email = $email",
+    { $email: req.params.email },
     (error, row) => {
+      console.log("Returned user with id: ", row);
       res.status(200).json({ user: row });
     }
   );
@@ -77,7 +78,6 @@ app.post("/api/users/", (req, res, next) => {
   const gender = req.body.gender;
   const email = req.body.email;
   const password = req.body.password;
-
   if (!name || !surname || !gender || !email || !password) {
     return res.sendStatus(400);
   } else {
@@ -123,16 +123,6 @@ app.get("/api/users/login/:email-:password", (req, res, next) => {
   );
 });
 
-app.get("/api/users/:first_name", (req, res, next) => {
-  console.log(req.params);
-  db.get(
-    "SELECT * FROM Users WHERE first_name = $first_name",
-    { $first_name: req.params.first_name },
-    (error, row) => {
-      res.status(200).json({ user: row });
-    }
-  );
-});
 
 //GET all exercises
 app.get("/api/exercises", (req, res, next) => {
@@ -140,25 +130,36 @@ app.get("/api/exercises", (req, res, next) => {
     if (err) {
       return console.error(err.message);
     }
-    console.log(rows);
     res.status(200).json({ exercise: rows });
+    console.log(rows);
   });
+});
+
+//GET exerciseId by name
+app.get("/api/exercises/:name", (req, res, next) => {
+  console.log("Requested exerciseId for name: ", req.params);
+  db.get(
+    "SELECT id FROM Lifts WHERE name = $name",
+    { $name: req.params.name },
+    (error, row) => {
+      console.log("Returned exercise with id: ", row);
+      res.status(200).json({ exercise: row });
+    }
+  );
 });
 
 //POST new exercise
 app.post("/api/exercises/", (req, res, next) => {
   const name = req.body.name;
-  const equipment = req.body.equipment;
   const measurement = req.body.measurement;
-  if (!name || !equipment || !measurement) {
+  if (!name || !measurement) {
     return res.sendStatus(400);
   } else {
     console.log(req.body);
     db.run(
-      "INSERT INTO Lifts (name, equipment, measurement) VALUES ($name, $equipment, $measurement)",
+      "INSERT INTO Lifts (name, measurement) VALUES ($name, $measurement)",
       {
         $name: name,
-        $equipment: equipment,
         $measurement: measurement,
       },
       function(error) {
@@ -169,6 +170,38 @@ app.post("/api/exercises/", (req, res, next) => {
             `SELECT * FROM Lifts WHERE id = ${this.lastID}`,
             (error, row) => {
               res.status(201).json({ exercise: row });
+            }
+          );
+        }
+      }
+    );
+  }
+});
+
+//POST new workout
+app.post("/api/workouts/", (req, res, next) => {
+  const name = req.body.name;
+  const userId = req.body.userId;
+  if (!name || !userId) {
+    console.log("Insufficient data to post a new workout.");
+    return res.sendStatus(400);
+  } else {
+    console.log("Requested to post the workout: ", req.body);
+    db.run(
+      "INSERT INTO Workouts (name, user_id) VALUES ($name, $userId)",
+      {
+        $name: name,
+        $userId: userId
+      },
+      function(error) {
+        if (error) {
+          next(error);
+        } else {
+          db.get(
+            `SELECT * FROM Workouts WHERE id = ${this.lastID}`,
+            (error, row) => {
+              res.status(201).json({ workout: row });
+              console.log("Added new workout: ", row);
             }
           );
         }

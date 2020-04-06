@@ -132,7 +132,7 @@ i:hover {
   font-size: small;
 }
 
-label {
+label, span {
   font-size: small;
 }
 
@@ -254,10 +254,6 @@ button:hover {
 
 #save-workout-name-button {
   display: none;
-}
-
-td[contenteditable] {
-  
 }
 
 #workout-owner {

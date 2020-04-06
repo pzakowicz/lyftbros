@@ -3,13 +3,9 @@ const exerciseTable = document.getElementById("exercise-table");
 const exerciseRowContainer = document.getElementById("exercise-rows");
 const addExerciseButton = document.getElementById("add-exercise-button");
 const logTrainingButton = document.getElementById("log-training-button");
+const exercisesButton = document.getElementById("exercises-button");
 
 //helper functions
-function findEquipment() {
-  let equipmentList = document.getElementById("equipment");
-  let selected = equipmentList.options[equipmentList.selectedIndex].text;
-  return selected
-}
 
 function findMeasurement() {
   let measurementList = document.getElementById("measurement");
@@ -30,7 +26,7 @@ function getAllExercises() {
       const tableHeader = document.createElement("tr");
       tableHeader.innerHTML = `
       <th>Name</th>
-      <th>Equipment</th>
+
       <th>Measurement</th>
       `;
       exerciseTable.appendChild(tableHeader);
@@ -38,7 +34,6 @@ function getAllExercises() {
         const newExercise = document.createElement("tr");
         newExercise.innerHTML = `
         <td>${element.name}</td>
-        <td>${element.equipment}</td>
         <td>${element.measurement}</td>
         `;
         exerciseTable.appendChild(newExercise);
@@ -49,12 +44,12 @@ function getAllExercises() {
 //POST new exercise
 addExerciseButton.addEventListener("click", () => {
   const name = document.getElementById("name").value;
-  const equipment = findEquipment();
+
   const measurement = findMeasurement();
   const data = {
     name: name,
-    equipment: equipment,
-    measurement: measurement,
+
+    measurement: measurement
   };
   console.log(data);
   fetch(`/api/exercises/`, {

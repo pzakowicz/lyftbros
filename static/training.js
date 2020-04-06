@@ -10,8 +10,9 @@ const workoutName = document.getElementById("workout-name");
 const changeWorkoutNameButton = document.getElementById("change-workout-name-button");
 const saveWorkoutNameButton = document.getElementById("save-workout-name-button");
 const changeWorkoutNameInput = document.getElementById("workout-name-input");
-//const editSetButton = document.getElementsByClassName("edit-set-button");
-//const deleteSetButton = document.getElementsByClassName("delete-set-button");
+const saveWorkoutButton = document.getElementById("save-workout-button");
+const userId = document.getElementById("user-id");
+const lyftId = document.getElementById("lyft-id");
 
 // get pages
 exercisesButton.addEventListener('click', () => {
@@ -33,11 +34,28 @@ function getAllExercises() {
     exerciseDropdown.innerHTML = "";
     exerciseArray.forEach(element => {
       const newExercise = document.createElement("option");
-      newExercise.innerHTML = `${element.equipment} ${element.name}`; 
+      newExercise.innerHTML = `${element.name}`; 
       exerciseDropdown.appendChild(newExercise);
     });
+    lyftId.innerHTML = exerciseArray[0].id;
   });
 };
+
+//change exerciseId on dropdown change
+exerciseDropdown.addEventListener("change", () => {
+  let name = exerciseDropdown.value;
+  fetch(`/api/exercises/${name}`)
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    console.log("User id is: " + data.exercise.id);
+    lyftId.innerHTML = data.exercise.id;
+  });
+})
+
+
+
 
 //GET all users and add them to dropdown as options
 function getAllUsers() {
@@ -50,24 +68,42 @@ function getAllUsers() {
     workoutOwnerDropdown.innerHTML = "";
     userArray.forEach(element => {
       const newUser = document.createElement("option");
-      newUser.innerHTML = `${element.first_name} ${element.surname}`; 
+      newUser.innerHTML = `${element.email}`; 
       workoutOwnerDropdown.appendChild(newUser);
     });
+    userId.innerHTML = userArray[0].id;
   });
 };
+
+
+//change userId in box on change
+workoutOwnerDropdown.addEventListener("change", () => {
+  let email = workoutOwnerDropdown.value;
+  fetch(`/api/users/${email}`)
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    console.log("User id is: " + data.user.id);
+    userId.innerHTML = data.user.id;
+  });
+})
+
 
 // add set to workout
 addSetButton.addEventListener("click", () => {
   let lyft = document.getElementById("lyft").value;
+  let lyftId = document.getElementById("lyftId").value;
   let weight = document.getElementById("weight").value;
   let reps = document.getElementById("reps").value;
   if (lyft && weight && reps) {
     let newSet = document.createElement("tr");
     newSet.innerHTML = `
     <td width="40%">${lyft}</td>
+    <td width="10%">
     <td width="20%" contenteditable='true'>${weight}</td>
     <td width="20%" contenteditable='true'>${reps}</td>
-    <td width="20%"></i><i class="fas fa-trash delete-set-button" onclick="deleteRow(this)"></i></td>
+    <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>
     `;
     workoutTable.appendChild(newSet);
   }
@@ -93,23 +129,44 @@ saveWorkoutNameButton.addEventListener("click", () => {
   }
 })
 
-//edit set
-/*
-body.addEventListener("click", () => {
-  if (event.target !== editSetButton) {
-    return;
-  } else {
-    editSetButton.style.display = "none";
-  }
-});
-*/
-
 //delete set
 function deleteRow(r) {
   var i = r.parentNode.parentNode.rowIndex;
   document.getElementById("workout-table").deleteRow(i);
+};
+
+//save workout helper function
+function saveWorkout() {
+  const name = workoutName.textContent;
+  const id = userId.textContent;
+  const data = {
+    name: name,
+    userId: id
+  };
+  console.log(data);
+  fetch(`/api/workouts/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data.workout);
+  })
 }
 
+//save sets helper function
+function saveSets() {
+
+}
+
+//POST save workout
+saveWorkoutButton.addEventListener("click", () => {
+  saveWorkout();
+
+});
 
 
 //main function
