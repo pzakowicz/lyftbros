@@ -59,11 +59,24 @@ app.get("/api/users", (req, res, next) => {
 });
 
 // GET userId by email
-app.get("/api/users/:email", (req, res, next) => {
+app.get("/api/users/email/:email", (req, res, next) => {
   console.log("Requested userId for user email: ", req.params);
   db.get(
     "SELECT id FROM Users WHERE email = $email",
     { $email: req.params.email },
+    (error, row) => {
+      console.log("Returned user with id: ", row);
+      res.status(200).json({ user: row });
+    }
+  );
+});
+
+// GET user by id
+app.get("/api/users/id/:id", (req, res, next) => {
+  console.log("Requested user for id: ", req.params);
+  db.get(
+    "SELECT * FROM Users WHERE id = $id",
+    { $email: req.params.id },
     (error, row) => {
       console.log("Returned user with id: ", row);
       res.status(200).json({ user: row });
@@ -131,6 +144,17 @@ app.get("/api/exercises", (req, res, next) => {
       return console.error(err.message);
     }
     res.status(200).json({ exercise: rows });
+    console.log(rows);
+  });
+});
+
+//GET all workouts for the feed
+app.get("/api/feed", (req, res, next) => {
+  db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Lifts.name as 'lift_name', Sets.weight, 	Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.id = 1;", (err, rows) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.status(200).json({ workout: rows });
     console.log(rows);
   });
 });

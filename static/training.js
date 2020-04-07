@@ -80,7 +80,7 @@ function getAllUsers() {
 //change userId in box on change
 workoutOwnerDropdown.addEventListener("change", () => {
   let email = workoutOwnerDropdown.value;
-  fetch(`/api/users/${email}`)
+  fetch(`/api/users/email/${email}`)
   .then(response => {
     return response.json();
   })

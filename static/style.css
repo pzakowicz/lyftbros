@@ -193,6 +193,21 @@ button:hover {
   width: 45%;
 }
 
+.user-name {
+  margin: 2px 0px;
+}
+
+.workout-date {
+  font-size: 12px;
+  margin: 2px 0px;
+  color: rgb(148, 148, 148);
+
+}
+
+.sets-table {
+  width: 400px;
+}
+
 #bros-container {
   width: 20%;
 }

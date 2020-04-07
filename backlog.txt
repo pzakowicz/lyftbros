@@ -11,9 +11,11 @@
     - warning message against navigating away from page
 
 - Lyftfeed
+    - add dashboard button
     - view friends and their workouts
     - view workout details
         - show workout stats
+        - allow to chest bump
     - view user details
         - make user clickable on the feed
         - give users more details:
