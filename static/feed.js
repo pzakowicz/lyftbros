@@ -15,11 +15,7 @@ function getAllUsers() {
       usersContainer.innerHTML = "";
       userArray.forEach(element => {
         const newUser = document.createElement("div");
-        let content = "";
-        content += element.first_name;
-        content += " ";
-        content += element.surname;
-        newUser.innerHTML = content;
+        newUser.innerHTML = `<a href="/users/email/${element.email}"><p class="user-list-item">${element.first_name} ${element.surname}</p></a>`;
         usersContainer.appendChild(newUser);
       });
     });

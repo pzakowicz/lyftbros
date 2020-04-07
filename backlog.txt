@@ -1,9 +1,7 @@
 ---- Functionality ---------------------------------
 
 - Lyftfeed
-    - add dashboard button
     - view user details
-        - make user clickable on the feed
         - show user's activity history
         - give users more details:
             - age, height, weight
