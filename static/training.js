@@ -160,26 +160,26 @@ async function saveWorkout() {
 };
 
 //save sets helper function
-function saveSets() {
+async function saveSets() {
   const data = {};
-  data.workoutId = workoutId.textContent;
-  /*for (let i = 0, row; row = workoutTable.rows[i]; i++) {
-   //iterate through rows, rows would be accessed using the "row" variable assigned in the for loop
-   data.set = {
-     exerciseId: row[1],
-     weight: row[2],
-     reps: row[3]
-   };
-   //for (let j = 0, col; col = row.cells[j]; j++) {
-     //iterate through columns, columns would be accessed using the "col" variable assigned in the for loop
-   //}  
-  }
-  let exerciseId;
-  let weight;
-  let reps; 
-*/
-  console.log("Workoutid to save in Sets table: ", data);
-}
+  data.sets = [];
+  for (let i = 1; i < workoutTable.rows.length; i++) { 
+    data.sets.push([Number(workoutTable.rows[i].cells[1].innerHTML), Number(workoutTable.rows[i].cells[2].innerHTML), Number(workoutTable.rows[i].cells[3].innerHTML), Number(workoutId.textContent)]);
+  };
+  console.log("Sets to be saved: ", data);
+  let response = await fetch(`/api/sets/`,
+  {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json"
+   },
+   body: JSON.stringify(data)
+ })
+  let json = await response;
+  console.log("Sets", response.statusText);
+};
+
+
 
 
 //POST save workout

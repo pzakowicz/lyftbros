@@ -1,8 +1,6 @@
 ---- Functionality ---------------------------------
 
 - Log your training
-    - create tables for workouts and sets (google sheets)
-        - save sets
     - show workout and sets on the feed
     - change the logging method depending on measurement type
     - add how easy / hard it was

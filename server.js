@@ -5,7 +5,7 @@ const errorhandler = require("errorhandler");
 const morgan = require("morgan");
 const express = require("express");
 const path = require("path");
-const sqlite3 = require("sqlite3");
+const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("./database.sqlite");
 
 // create application
@@ -206,6 +206,31 @@ app.post("/api/workouts/", (req, res, next) => {
           );
         }
       }
+    );
+  }
+});
+
+//POST sets 
+app.post("/api/sets/", (req, res, next) => {
+  const exerciseArray = req.body.sets
+  if (!req.body.sets) {
+    console.log("Insufficient data to post sets.");
+    return res.sendStatus(400);
+  } else {
+    console.log("Requested to post sets: ", req.body.sets);
+    let placeholders = exerciseArray.map(() => "(?, ?, ?, ?)").join(', ');
+    let query = `INSERT INTO Sets(exercise_id, weight, reps, workout_id) VALUES${placeholders}`;
+    console.log(query);
+    let flatExerciseArray = [];
+    exerciseArray.forEach((arr) => { arr.forEach((item) => { flatExerciseArray.push(item) }) });
+    db.run(query, flatExerciseArray, function(error) {
+        if (error) {
+          next(error);
+        } else {
+          res.status(201).send("Sets added correctly");
+          console.log(`Sets inserted ${this.changes}`);
+        }
+    }
     );
   }
 });
