@@ -15,15 +15,6 @@ const userId = document.getElementById("user-id");
 const lyftId = document.getElementById("lyft-id");
 const workoutId = document.getElementById("workout-id");
 
-// get pages
-exercisesButton.addEventListener('click', () => {
-  window.location.href = "/exercises";
-});
-
-logTrainingButton.addEventListener('click', () => {
-  window.location.href = "/log-training";
-});
-
 //GET all exercises and add them to dropdown as options
 function getAllExercises() {
   fetch("/api/exercises")
@@ -54,9 +45,6 @@ exerciseDropdown.addEventListener("change", () => {
     lyftId.innerHTML = data.exercise.id;
   });
 })
-
-
-
 
 //GET all users and add them to dropdown as options
 function getAllUsers() {
@@ -178,8 +166,6 @@ async function saveSets() {
   let json = await response;
   console.log("Sets", response.statusText);
 };
-
-
 
 
 //POST save workout

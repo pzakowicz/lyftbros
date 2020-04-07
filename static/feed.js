@@ -87,70 +87,8 @@ function getFeedData() {
         feedContainer.appendChild(newWorkout);
       }
     });
-    /*
-    for (let i = 1; i < workoutArray.lenght; i++) {
-      if (existingWorkoutsArray.includes(workoutArray[i].id)) {
-        console.log("add to existing workout");
-        let newSet = document.createElement("tr");
-        newSet.innerHTML = `
-        <td width="60%">${workoutArray[i].lift_name}</td>
-        <td width="20%">${workoutArray[i].weight}</td>
-        <td width="20%">${workoutArray[i].reps}</td>
-        `;
-        document.getElementById("sets-table-0").appendChild(newSet);
-      } else {
-        console.log("create new workout");
-      }
-    };
-    */
-    /*
-    let workoutArray = data[0];
-    feedContainer.innerHTML = "";
-    const newWorkout = document.createElement("div");
-    newWorkout.innerHTML = `
-    <div class="container-box tile">
-      <h4 class="user-name">${workoutArray[0].first_name} ${workoutArray[0].surname}</h4>
-      <p class="workout-date">${workoutArray[0].date_time}</p>
-      <h3 class="workout-name">${workoutArray[0].workout_name}</h3>
-      <table class="sets-table">
-        <tr>
-          <th>Lyft</th>
-          <th>Weight</th>
-          <th>Reps</th>
-        </tr>
-        <tr>
-          <td width="60%">${workoutArray[0].lift_name}</td>
-          <td width="20%">${workoutArray[0].weight}</td>
-          <td width="20%">${workoutArray[0].reps}</td>
-        </tr>
-        <tr>
-          <td>${workoutArray[1].lift_name}</td>
-          <td>${workoutArray[1].weight}</td>
-          <td>${workoutArray[1].reps}</td>
-        </tr>
-        <tr>
-          <td>${workoutArray[2].lift_name}</td>
-          <td>${workoutArray[2].weight}</td>
-          <td>${workoutArray[2].reps}</td>
-        </tr>
-      </table>
-    </div>
-    `;
-    feedContainer.appendChild(newWorkout);
-    */
   });
-}
-
-
-
-//Menu button event lsiteners
-exercisesButton.addEventListener('click', () => {
-  window.location.href = "/exercises";
-})
-
-logTrainingButton.addEventListener('click', () => {
-  window.location.href = "/log-training";
-})
+};
 
 //main function
 function main() {

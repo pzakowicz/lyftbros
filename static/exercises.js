@@ -75,12 +75,3 @@ function main() {
 
 //execute funcions
 main();
-
-//get pages
-logTrainingButton.addEventListener('click', () => {
-  window.location.href = "/log-training";
-})
-
-exercisesButton.addEventListener('click', () => {
-  window.location.href = "/exercises";
-})
