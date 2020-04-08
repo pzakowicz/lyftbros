@@ -27,11 +27,6 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./static/login.html"));
 });
 
-//GET users page
-app.get("/users", (req, res) => {
-  res.sendFile(path.join(__dirname, "./static/users.html"));
-});
-
 //GET feed page
 app.get("/feed", (req, res) => {
   res.sendFile(path.join(__dirname, "./static/feed.html"));
@@ -45,6 +40,11 @@ app.get("/exercises", (req, res) => {
 //get log-training page
 app.get("/log-training", (req, res) => {
   res.sendFile(path.join(__dirname, "./static/training.html"));
+});
+
+//get user details page
+app.get("/users/email/:email", (req, res) => {
+  res.sendFile(path.join(__dirname, "./static/users.html"));
 });
 
 //GET all users
@@ -62,7 +62,7 @@ app.get("/api/users", (req, res, next) => {
 app.get("/api/users/email/:email", (req, res, next) => {
   console.log("Requested userId for user email: ", req.params);
   db.get(
-    "SELECT id FROM Users WHERE email = $email",
+    "SELECT * FROM Users WHERE email = $email",
     { $email: req.params.email },
     (error, row) => {
       console.log("Returned user with id: ", row);

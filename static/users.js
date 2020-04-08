@@ -1,44 +1,19 @@
-const getAllUsers = document.getElementById("get-users");
-const usersContainer = document.getElementById("users-container");
+let url = window.location.pathname;
+let arr = url.split("/");
+let email = arr.slice(-1)[0];
+console.log(email);
 
-const getUserByNameInput = document.getElementById("first-name");
-const getUserByNameButton = document.getElementById("get-user");
-const userContainer = document.getElementById("user-container");
 
-getAllUsers.addEventListener("click", () => {
-  fetch("/api/users")
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      let userArray = data.user;
-      usersContainer.innerHTML = "";
-      userArray.forEach(element => {
-        const newUser = document.createElement("div");
-        let content = "";
-        content += element.first_name;
-        content += " ";
-        content += element.surname;
-        newUser.innerHTML = content;
-        usersContainer.appendChild(newUser);
-      });
-    });
-});
+//get user data by email
+function getUserData() {
 
-getUserByNameButton.addEventListener("click", () => {
-  let name = getUserByNameInput.value;
-  if (name) {
-    fetch(`/api/users/${name}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        console.log(data.user);
-        userContainer.innerHTML = "";
-        let name = data.user.first_name;
-        let surname = data.user.surname;
-        let content = name + " " + surname;
-        userContainer.innerHTML = content;
-      });
-  }
-});
+  let email = workoutOwnerDropdown.value;
+  fetch(`/api/users/email/${email}`)
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    console.log("User id is: " + data.user.id);
+    userId.innerHTML = data.user.id;
+  });
+}

@@ -1,4 +1,4 @@
-/* ------------------------- Login ------------------------- */
+/* ------------------------- General ------------------------- */
 
 html, body {
   font-family: sans-serif;
@@ -209,7 +209,7 @@ button:hover {
 }
 
 .sets-table {
-  width: 400px;
+  width: 100%;
 }
 
 #bros-container {

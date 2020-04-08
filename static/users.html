@@ -3,29 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link rel="stylesheet" type="text/css" href="../../style.css" />
     <link
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon" />
-    <title>Users</title>
+    <link rel="icon" href="../../resources/Lbs logo fat.PNG" type="image/x-icon" />
+    <title>User details</title>
   </head>
   <body>
     <header>
-      <img id="logo-img" src="resources/Lbs logo fat.PNG" />
-      <h2 id="logo-text">Lyftbros (lbs)</h2>
+      <nav>
+        <a href="feed.html">
+          <div class="flex-container">
+            <img id="logo-img" src="../../resources/Lbs logo fat.PNG" />
+            <h2 id="logo-text">Lyftbros</h2>
+          </div>
+        </a>
+        <a href="../../training.html">
+          <button type="button" class="nav-button primary-button" id="log-training-button">Log training</button>
+        </a>
+        <a href="../../feed.html">
+          <button type="button" class="nav-button secondary-button" id="dashboard-button">Dashboard</button>
+        </a>
+        <a href="../../exercises.html">
+          <button type="button" class="nav-button secondary-button" id="exercises-button">The lyfts</button>
+        </a>
+          <button type="button" class="nav-button secondary-button" id="diary-button">The diary</button>
+      </nav>
+      <div class="flex-container" id="account-container">
+        <img id="account-pic" src="../../resources/profile pic.png" />
+      </div>
     </header>
-    <main>
-      <div>
-        <h2>Existing users</h2>
-        <button id="get-users">Get all users</button>
-        <div id="users-container"></div>
-        <label for="first-name"></label>
-        <input type="text" id="first-name" value="" required />
-        <button id="get-user">Get user by first name</button>
-        <div id="user-container"></div>
+    <main id="user-main">
+      <div class="container-box tile" id="user-summary-container">
+        <h4>Bro's summary</h4>
+      </div>
+      <div class="container-box tile" id="user-activity-container">
+        <h4>Bro's workouts</h4>
+      </div>
+      <div class="container-box tile" id="user-prs-container">
+        <h4>Bro's PRs</h4>
       </div>
     </main>
-    <script src="./users.js"></script>
+    <script src="../../users.js"></script>
   </body>
 </html>

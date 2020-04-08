@@ -11,6 +11,7 @@
         - allow to chest bump
 
 - Log your training
+    - remove the IDs from the page with async await
     - change the logging method depending on measurement type
     - add how easy / hard it was
     - add comment
