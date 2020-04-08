@@ -4,8 +4,10 @@
     - view user details
         - show user's activity history
         - give users more details:
-            - age, height, weight
-            - max bench, max squat, max deadlift, max military press, max barbell row
+            - expand the user table
+                - age, height, weight
+                - max bench, max squat, max deadlift, max military press, max barbell row
+            - show that information on the user page
     - view workout details
         - show workout stats
         - allow to chest bump
@@ -46,16 +48,18 @@
 ---- Technology ------------------------------------
 
 - find a way to get values by id synchronously - async await !!!
-    - rewrite hrlper function to be async await
+    - rewrite helper functions to be async await (remove ids from training page, instead get the id first)
+    - alternatively do a table joint to get all information at one time
     - create a wrapper listener function which is also async and await functions which need to end first
 - move getter functions to utils
 - add webquries for all pages to RWF for mobile
-- clean up css
-- introduce templates
+- clean up css (get rid of unused things, find a better way to select element rather than giving everything ids)
+- introduce templates  
+    - with handlebars
+    - with react
 - introduce react
 - introduce redux
 - implement mocha and write unit tests
-- navigation via links or GET requests? 
 
 ---- Screens ----------------------------------------
 1. Login / create account
