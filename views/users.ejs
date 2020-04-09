@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../style.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" href="../../resources/Lbs logo fat.PNG" type="image/x-icon" />
+    <title>User details</title>
+  </head>
+  <body>
+
+    <%- include("_header") -%>
+    
+    <main id="user-main">
+      <div class="container-box tile" id="user-summary-container">
+        <h4>Bro's summary</h4>
+        <p>Name: <%= user.first_name %> <%= user.surname %></p>
+        <p>Gender: <%= user.gender %></p>
+      </div>
+      <div class="container-box tile" id="user-activity-container">
+        <h4>Bro's workouts</h4>
+      </div>
+      <div class="container-box tile" id="user-prs-container">
+        <h4>Bro's PRs</h4>
+      </div>
+      <div>
+
+
+      </div>
+    </main>
+    <script src="../../users.js"></script>
+  </body>
+</html>

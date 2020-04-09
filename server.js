@@ -12,7 +12,9 @@ const db = new sqlite3.Database("./database.sqlite");
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-//middleware
+//setting template engine and middleware
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "./views"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
@@ -20,7 +22,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "./static")));
 app.use(errorhandler());
 
-//ROUTES
+//ROUTES ----------------------------------
 
 //GET login page
 app.get("/", (req, res) => {
@@ -46,6 +48,23 @@ app.get("/log-training", (req, res) => {
 app.get("/users/email/:email", (req, res) => {
   res.sendFile(path.join(__dirname, "./static/users.html"));
 });
+
+//get EJS user details page
+app.get("/users/:email", (req, res) => {
+  const email = req.params.email;
+  const sql = "SELECT * FROM Users WHERE email = ?";
+  db.get(sql, email, (err, user) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render("users", { 
+      user: user,
+      workouts: workouts
+     });
+  });
+});
+
+//API-----------------------------------------
 
 //GET all users
 app.get("/api/users", (req, res, next) => {

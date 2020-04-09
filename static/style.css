@@ -285,4 +285,9 @@ button:hover {
 }
 
 
+/* ------------------------- User details ------------------------- */
 
+ #user-summary-container p {
+   font-size: 14px;
+   margin: 5px 0px;
+ }
