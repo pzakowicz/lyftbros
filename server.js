@@ -7,6 +7,7 @@ const express = require("express");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("./database.sqlite");
+const ejsLint = require('ejs-lint');
 
 // create application
 const app = express();
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 4000;
 //setting template engine and middleware
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
@@ -52,15 +54,13 @@ app.get("/users/email/:email", (req, res) => {
 //get EJS user details page
 app.get("/users/:email", (req, res) => {
   const email = req.params.email;
-  const sql = "SELECT * FROM Users WHERE email = ?";
-  db.get(sql, email, (err, user) => {
+  const sql = "SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.gender, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = ?;";
+  db.all(sql, email, (err, rows) => {
     if (err) {
       return console.error(err.message);
     }
-    res.render("users", { 
-      user: user,
-      workouts: workouts
-     });
+    console.log(rows);
+    res.render("users", { model: rows });
   });
 });
 

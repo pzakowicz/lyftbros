@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="../../style.css" />
     <link
-      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      href="https:#stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="icon" href="../../resources/Lbs logo fat.PNG" type="image/x-icon" />
     <title>User details</title>
@@ -17,17 +17,53 @@
     <main id="user-main">
       <div class="container-box tile" id="user-summary-container">
         <h4>Bro's summary</h4>
-        <p>Name: <%= user.first_name %> <%= user.surname %></p>
-        <p>Gender: <%= user.gender %></p>
+        <p>Name: <%= model[0].first_name %> <%= model[0].surname %></p>
+        <p>Gender: <%= model[0].gender %></p>
       </div>
-      <div class="container-box tile" id="user-activity-container">
-        <h4>Bro's workouts</h4>
-      </div>
+      <div id="feed-container">
+        <div class="container-box tile">
+          <% let existingWorkoutsArray = [] %>
+          <% existingWorkoutsArray.push(model[0].id); %> 
+          <h4 class="user-name"><%= model[0].first_name %> <%= model[0].surname %></h4>
+          <p class="workout-date"><%= model[0].date_time %></p>
+          <h3 class="workout-name"><%= model[0].workout_name %></h3>
+          <table class= "sets-table" id="sets-table-1">
+            <tr>
+              <th>Lyft</th>
+              <th>Weight</th>
+              <th>Reps</th>
+            </tr>
+          <%for (let i = 0; i < model.length; i++) { %>
+            <% if (existingWorkoutsArray.includes(model[i].id)) { %>
+              <tr>
+                <td width="60%"><%= model[i].lift_name %></td>
+                <td width="20%"><%= model[i].weight %></td>
+                <td width="20%"><%= model[i].reps %></td>  
+              </tr>
+          <%  } else { %>
+            <% existingWorkoutsArray.push(model[i].id); %>
+          </table>
+        </div>
+        <div class="container-box tile">
+          <h4 class="user-name"><%= model[i].first_name %> <%= model[i].surname%></h4>
+          <p class="workout-date"><%= model[i].date_time %></p>
+          <h3 class="workout-name"><%= model[i].workout_name %></h3>
+          <table class= "sets-table" id="sets-table-<%= model[i].id %>">
+            <tr>
+              <th>Lyft</th>
+              <th>Weight</th>
+              <th>Reps</th>
+            </tr>
+            <% } %>
+            <% } %>
+          </table>
+        </div>
+      </div>  
+
       <div class="container-box tile" id="user-prs-container">
         <h4>Bro's PRs</h4>
       </div>
       <div>
-
 
       </div>
     </main>

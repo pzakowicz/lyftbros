@@ -9,6 +9,7 @@
     "chai": "^4.2.0",
     "cors": "^2.8.5",
     "ejs": "^3.0.2",
+    "ejs-lint": "^1.0.1",
     "error-handler": "^1.0.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",

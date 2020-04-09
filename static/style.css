@@ -46,14 +46,16 @@ a:visited {
 main {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
   width: 100%;
+  min-height: 90%;
   background-color: rgb(247, 247, 250);
 }
 
 .container-box {
   margin: 10px;
-  box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 1px 5px rgba(0,0,0,0.15);
   padding: 15px;
   background-color: white;
   border-radius: 4px;
@@ -103,10 +105,6 @@ i:hover {
 
 #login-header {
   justify-content: start;
-}
-
-#login-main {
-  justify-content: center;
 }
 
 #title {
@@ -185,10 +183,6 @@ button:hover {
   margin: auto 40px;
 }
 
-#feed-main {
-  justify-content: space-around;
-}
-
 #stat-container {
   width: 20%;
 }
@@ -240,11 +234,6 @@ button:hover {
 }
 
 /* ------------------------- Log training ------------------------- */
-
-#training-main {
-  justify-content: center;
-}
-
 
 #log-training-container {
   min-width: 250px;
