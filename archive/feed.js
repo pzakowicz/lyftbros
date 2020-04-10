@@ -88,8 +88,8 @@ function getFeedData() {
 
 //main function
 function main() {
-  getAllUsers();
-  getFeedData();
+  //getAllUsers();
+  //getFeedData();
 }
 
 //execute funcions

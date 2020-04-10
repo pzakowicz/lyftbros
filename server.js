@@ -7,7 +7,6 @@ const express = require("express");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("./database.sqlite");
-const ejsLint = require('ejs-lint');
 
 // create application
 const app = express();
@@ -33,7 +32,25 @@ app.get("/", (req, res) => {
 
 //GET feed page
 app.get("/feed", (req, res) => {
-  res.sendFile(path.join(__dirname, "./static/feed.html"));
+  let users;
+  db.serialize(() => {
+
+    db.all("SELECT * FROM Users", (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      users = rows;
+    });
+
+
+    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Lifts.name as 'lift_name', Sets.weight, 	Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id ORDER BY Workouts.date_time DESC;", (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("feed", { model: rows, bros: users });      
+    });
+
+  });
 });
 
 //get exercises page
@@ -59,7 +76,6 @@ app.get("/users/:email", (req, res) => {
       prs = rows;
       console.log(prs);
     })
-    
     
     db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.gender, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email ORDER BY Workouts.date_time DESC;", { $email: req.params.email }, (err, rows) => {
       if (err) {
