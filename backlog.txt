@@ -1,16 +1,21 @@
 ---- Functionality ---------------------------------
 
+
+- move all pages to EJS!
+
 - Lyftfeed
+    - make each workout more compact
     - view user details
-        - show user's activity history
         - give users more details:
             - expand the user table
                 - age, height, weight
                 - max bench, max squat, max deadlift, max military press, max barbell row
-            - show that information on the user page
+                - add new PR's table?
+                - user workout stats in last few weeks 
     - view workout details
         - show workout stats
         - allow to chest bump
+    - limit the amount of workouts shown
 
 - Log your training
     - remove the IDs from the page with async await
@@ -47,7 +52,6 @@
 
 ---- Technology ------------------------------------
 
-- move all pages to EJS!
 - find a way to get values by id synchronously - async await !!!
     - rewrite helper functions to be async await (remove ids from training page, instead get the id first)
     - alternatively do a table joint to get all information at one time
