@@ -46,23 +46,32 @@ app.get("/log-training", (req, res) => {
   res.sendFile(path.join(__dirname, "./static/training.html"));
 });
 
-//get user details page
-app.get("/users/email/:email", (req, res) => {
-  res.sendFile(path.join(__dirname, "./static/users.html"));
-});
-
 //get EJS user details page
 app.get("/users/:email", (req, res) => {
-  const email = req.params.email;
-  const sql = "SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.gender, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = ? ORDER BY Workouts.date_time DESC;";
-  db.all(sql, email, (err, rows) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log(rows);
-    res.render("users", { model: rows });
+  let prs;
+  db.serialize(() => {
+
+    db.all("SELECT Sub1.name, Sub1.five_reps, Sub2.ten_reps FROM (SELECT Lifts.name, MAX(Sets.weight) as five_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Sets.reps = 5 GROUP BY Lifts.name) AS Sub1 JOIN (SELECT Lifts.name, MAX(Sets.weight) as ten_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Sets.reps = 10 GROUP BY Lifts.name) AS Sub2 ON Sub1.name = Sub2.name GROUP BY Sub1.name;", { $email: req.params.email }, (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      } 
+      console.log("Got PRs");
+      prs = rows;
+      console.log(prs);
+    })
+    
+    
+    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.gender, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email ORDER BY Workouts.date_time DESC;", { $email: req.params.email }, (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      } 
+      console.log("Got user data");
+      console.log(rows);
+      res.render("users", { model: rows, prs: prs }) 
+    });
   });
 });
+    
 
 //API-----------------------------------------
 
@@ -95,7 +104,7 @@ app.get("/api/users/id/:id", (req, res, next) => {
   console.log("Requested user for id: ", req.params);
   db.get(
     "SELECT * FROM Users WHERE id = $id",
-    { $email: req.params.id },
+    { $id: req.params.id },
     (error, row) => {
       console.log("Returned user with id: ", row);
       res.status(200).json({ user: row });
@@ -174,7 +183,6 @@ app.get("/api/feed", (req, res, next) => {
       return console.error(err.message);
     }
     res.status(200).json({ workout: rows });
-    console.log(rows);
   });
 });
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon" />
+    <title>Lyft feed</title>
+  </head>
+  <body>
+    <%- include("_header") -%>
+    
+    <main id="feed-main">
+      <div class="container-box tile" id="stat-container">
+        <h4>Your stats</h4>
+      </div>
+      <div class="container" id="feed-container">
+        <h4>Your feed</h4>
+      </div>
+      <div class="container-box tile" id="bros-container">
+        <h4>Your bros</h4>
+        <div id="users-container"></div>
+      </div>
+    </main>
+    <script src="./feed.js"></script>
+  </body>
+</html>

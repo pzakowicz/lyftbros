@@ -16,14 +16,15 @@
         <p>Name: <%= model[0].first_name %> <%= model[0].surname %></p>
         <p>Gender: <%= model[0].gender %></p>
       </div>
-      <div id="feed-container">
+      <div id="user-activity-container">
         <div class="container-box tile">
-          <% let existingWorkoutsArray = [] %>
-          <% existingWorkoutsArray.push(model[0].id); %> 
+          <% let existingWorkoutsArray = []; %>
+          <% existingWorkoutsArray.push(model[0].id); %>
+          <% console.log(existingWorkoutsArray) %>  
           <h4 class="user-name"><%= model[0].first_name %> <%= model[0].surname %></h4>
           <p class="workout-date"><%= model[0].date_time %></p>
           <h3 class="workout-name"><%= model[0].workout_name %></h3>
-          <table class= "sets-table" id="sets-table-1">
+          <table class= "sets-table" id="sets-table-<%= model[0].id %>">
             <tr>
               <th>Lyft</th>
               <th>Weight</th>
@@ -38,6 +39,7 @@
               </tr>
           <%  } else { %>
             <% existingWorkoutsArray.push(model[i].id); %>
+            <% console.log(existingWorkoutsArray) %> 
           </table>
         </div>
         <div class="container-box tile">
@@ -50,6 +52,11 @@
               <th>Weight</th>
               <th>Reps</th>
             </tr>
+            <tr>
+              <td width="60%"><%= model[i].lift_name %></td>
+              <td width="20%"><%= model[i].weight %></td>
+              <td width="20%"><%= model[i].reps %></td>  
+            </tr>
             <% } %>
             <% } %>
           </table>
@@ -58,8 +65,23 @@
 
       <div class="container-box tile" id="user-prs-container">
         <h4>Bro's PRs</h4>
-      </div>
-      <div>
+        <table>
+          <tr>
+            <th>Lyft</th>
+            <th>10 reps</th>
+            <th>5 reps</th>
+          </tr>
+          <tr>
+            <%for (let i = 0; i < prs.length; i++) { %>
+            </tr>
+              <td width="40%"><%= prs[i].name %></td>
+              <td width="10%"><%= prs[i].ten_reps %></td>
+              <td width="10%"><%= prs[i].five_reps %></td>
+            <tr>
+            <% } %>
+            
+          </tr>
+        </table>
       </div>
     </main>
     <script src="../../users.js"></script>

@@ -9,8 +9,6 @@
         - give users more details:
             - expand the user table
                 - age, height, weight
-                - max bench, max squat, max deadlift, max military press, max barbell row
-                - add new PR's table?
                 - user workout stats in last few weeks 
     - view workout details
         - show workout stats

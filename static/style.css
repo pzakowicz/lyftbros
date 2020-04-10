@@ -276,7 +276,23 @@ button:hover {
 
 /* ------------------------- User details ------------------------- */
 
+#user-summary-container {
+  width: 25%;
+}
+
  #user-summary-container p {
    font-size: 14px;
    margin: 5px 0px;
+ }
+
+ #user-activity-container {
+   width: 30%;
+ }
+ 
+ #user-prs-container {
+   width: 25%;
+ }
+
+ #user-prs-container table {
+  width: 100%;
  }
