@@ -243,7 +243,6 @@ button:hover {
   display: none;
 }
 
-
 #workout-name {
   display: inline-block;
 }
@@ -258,6 +257,10 @@ button:hover {
 
 #workout-owner {
   margin-top: 15px;
+}
+
+.id {
+  display: none;
 }
 
 

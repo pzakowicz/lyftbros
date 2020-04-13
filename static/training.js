@@ -1,8 +1,5 @@
 // get elements
-const exercisesButton = document.getElementById("exercises-button");
-const logTrainingButton = document.getElementById("log-training-button");
 const addSetButton = document.getElementById("submit-set-button");
-const workoutTableContainer = document.getElementById("workout-table-container");
 const workoutTable = document.getElementById("workout-table");
 const exerciseDropdown = document.getElementById("lyft");
 const workoutOwnerDropdown = document.getElementById("workout-owner");
@@ -17,12 +14,6 @@ const workoutId = document.getElementById("workout-id");
 const addNewLyftButton = document.getElementById("add-new-lyft-button"); // button to get a form view
 const saveNewLyftButton = document.getElementById("save-lyft-button");
 
-
-
-
-
-
-
 //change exerciseId on dropdown change
 exerciseDropdown.addEventListener("change", () => {
   let name = exerciseDropdown.value;
@@ -35,7 +26,6 @@ exerciseDropdown.addEventListener("change", () => {
     lyftId.innerHTML = data.exercise.id;
   });
 })
-
 
 //change userId in box on change
 workoutOwnerDropdown.addEventListener("change", () => {
@@ -50,8 +40,7 @@ workoutOwnerDropdown.addEventListener("change", () => {
   });
 })
 
-
-//show add new lyft tile
+//show new lyft tile
 addNewLyftButton.addEventListener("click", ()=> {
   document.getElementById("log-training-container").style.display = "none";
   document.getElementById("add-lyft-container").style.display = "inline-block";
@@ -67,7 +56,7 @@ addSetButton.addEventListener("click", () => {
     let newSet = document.createElement("tr");
     newSet.innerHTML = `
     <td width="40%">${lyft}</td>
-    <td width="10%">${id}</td>
+    <td class="id" width="0%">${id}</td>
     <td width="20%" contenteditable='true'>${weight}</td>
     <td width="20%" contenteditable='true'>${reps}</td>
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>
@@ -101,7 +90,6 @@ function deleteRow(r) {
   var i = r.parentNode.parentNode.rowIndex;
   document.getElementById("workout-table").deleteRow(i);
 };
-
 
 //save workout helper function
 async function saveWorkout() {
@@ -146,7 +134,7 @@ async function saveSets() {
 };
 
 
-//POST save workout
+//POST workout
 saveWorkoutButton.addEventListener("click", async () => {
   await saveWorkout();
   saveSets();
@@ -172,6 +160,7 @@ async function addNewLyft() {
   console.log(response.statusText);
 }
 
+//get all lifts helper function
 async function getAllExercises() {
   let response = await fetch("/api/exercises");
   let json = await response.json();
