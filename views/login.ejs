@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon" />
+    <title>Login</title>
+  </head>
+  <body>
+    <header class="flex-container" id="login-header">
+      <img id="logo-img" src="resources/Lbs logo fat.PNG" />
+      <h2 id="logo-text">Lyftbros</h2>
+    </header>
+    <div id="title"><h1 id="title-text">The #1 app for lifting with your bros</h1></div>
+    <main id="login-main">
+      <div class="flex-container">
+        <form class="container-box tile" id="login">
+          <h4>Login</h4>
+          <label for="username">Email</label>
+          <br />
+          <input type="text" id="email" required />
+          <br />
+          <label for="password">Password</label>
+          <br />
+          <input type="password" id="password" required />
+          <br />
+          <button class="nav-button" type="button" id="login-button">Login</button>
+          <br />
+          <p class="error-message" id="user-not-found">
+            Wrong email and/or password.
+          </p>
+        </form>
+        <form class="container-box" id="create-form">
+          <h4>Create account</h4>
+          <label for="name">Name</label>
+          <br />
+          <input type="text" id="name" value="" required />
+          <br />
+          <label for="name">Surname</label>
+          <br />
+          <input type="text" id="surname" value="" required />
+          <br />
+          <label for="male">Male</label>
+          <input id="male" name="gender" type="radio" value="male" />
+          <label for="female">Female</label>
+          <input id="female" name="gender" type="radio" value="female" />
+          <br />
+          <label for="name">Email</label>
+          <br />
+          <input type="text" id="email-create" value="" required />
+          <br />
+          <label for="name">Password</label>
+          <br />
+          <input type="password" id="password-create" value="" required />
+          <br />
+          <button type="button" class="nav-button" id="create-user">Create account</button>
+          <p class="error-message" id="email-taken">Email already taken!</p>
+        </form>
+        <div class="container-box" id="user-created">
+          <h4>User successfully created!</h4>
+        </div>
+      </div>
+    </main>
+    <script src="./login.js"></script>
+  </body>
+</html>

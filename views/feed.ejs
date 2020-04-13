@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon" />
+    <title>Lyft feed</title>
+  </head>
+  <body>
+    <%- include("_header") -%>
+
+    <main id="feed-main">
+      <div class="container-box tile" id="stat-container">
+        <h4>Your stats</h4>
+      </div>
+      <div class="container" id="feed-container">
+        <div class="container-box tile">
+          <% let existingWorkoutsArray = []; %>
+          <% existingWorkoutsArray.push(model[0].id); %>
+          <% console.log(existingWorkoutsArray) %>  
+          <h4 class="user-name"><%= model[0].first_name %> <%= model[0].surname %></h4>
+          <p class="workout-date"><%= model[0].date_time %></p>
+          <h3 class="workout-name"><%= model[0].workout_name %></h3>
+          <table class= "sets-table" id="sets-table-<%= model[0].id %>">
+            <tr>
+              <th>Lyft</th>
+              <th>Weight</th>
+              <th>Reps</th>
+            </tr>
+          <%for (let i = 0; i < model.length; i++) { %>
+            <% if (existingWorkoutsArray.includes(model[i].id)) { %>
+              <tr>
+                <td width="60%"><%= model[i].lift_name %></td>
+                <td width="20%"><%= model[i].weight %></td>
+                <td width="20%"><%= model[i].reps %></td>  
+              </tr>
+          <%  } else { %>
+            <% existingWorkoutsArray.push(model[i].id); %>
+            <% console.log(existingWorkoutsArray) %> 
+          </table>
+        </div>
+        <div class="container-box tile">
+          <h4 class="user-name"><%= model[i].first_name %> <%= model[i].surname%></h4>
+          <p class="workout-date"><%= model[i].date_time %></p>
+          <h3 class="workout-name"><%= model[i].workout_name %></h3>
+          <table class= "sets-table" id="sets-table-<%= model[i].id %>">
+            <tr>
+              <th>Lyft</th>
+              <th>Weight</th>
+              <th>Reps</th>
+            </tr>
+            <tr>
+              <td width="60%"><%= model[i].lift_name %></td>
+              <td width="20%"><%= model[i].weight %></td>
+              <td width="20%"><%= model[i].reps %></td>  
+            </tr>
+            <% } %>
+            <% } %>
+          </table>
+        </div>
+      </div>
+      <div class="container-box tile" id="bros-container">
+        <h4>Your bros</h4>
+        <div id="users-container"></div>
+        <%for (let i = 0; i < bros.length; i++) { %>
+        <a href="/users/<%= bros[i].email %>"><p class="user-list-item"><%= bros[i].first_name %> <%= bros[i].surname %></p></a>
+        <% } %>
+      </div>
+    </main>
+    <script src="./feed.js"></script>
+  </body>
+</html>

@@ -27,6 +27,12 @@ FROM
 	LEFT JOIN Lifts on Sets.exercise_id = Lifts.id
 	LEFT JOIN Users on Workouts.user_id = Users.id;
 	*/
+-- query for PRs
+/*SELECT Sub1.name, Sub1.five_reps, Sub2.ten_reps 
+FROM (SELECT Lifts.name, MAX(Sets.weight) as five_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = "piotr.zakowicz@gmail.com" AND Sets.reps = 5 GROUP BY Lifts.name) AS Sub1
+JOIN (SELECT Lifts.name, MAX(Sets.weight) as ten_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = "piotr.zakowicz@gmail.com" AND Sets.reps = 10 GROUP BY Lifts.name) AS Sub2
+ON Sub1.name = Sub2.name
+GROUP BY Sub1.name*/
 	
 
 	

@@ -15,7 +15,7 @@ function getAllUsers() {
       usersContainer.innerHTML = "";
       userArray.forEach(element => {
         const newUser = document.createElement("div");
-        newUser.innerHTML = `<a href="/users/email/${element.email}"><p class="user-list-item">${element.first_name} ${element.surname}</p></a>`;
+        newUser.innerHTML = `<a href="/users/${element.email}"><p class="user-list-item">${element.first_name} ${element.surname}</p></a>`;
         usersContainer.appendChild(newUser);
       });
     });
@@ -41,7 +41,7 @@ function getFeedData() {
       <h4 class="user-name">${workoutArray[0].first_name} ${workoutArray[0].surname}</h4>
       <p class="workout-date">${workoutArray[0].date_time}</p>
       <h3 class="workout-name">${workoutArray[0].workout_name}</h3>
-      <table class= "sets-table" id="sets-table-1">
+      <table class= "sets-table" id="sets-table-${workoutArray[0].id}">
         <tr>
           <th>Lyft</th>
           <th>Weight</th>
@@ -88,8 +88,8 @@ function getFeedData() {
 
 //main function
 function main() {
-  getAllUsers();
-  getFeedData();
+  //getAllUsers();
+  //getFeedData();
 }
 
 //execute funcions

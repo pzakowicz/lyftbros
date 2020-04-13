@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon" />
+    <script src="https://kit.fontawesome.com/e6936a79ca.js" crossorigin="anonymous"></script>
+    <title>Log training</title>
+  </head>
+  <body>
+
+    <%- include("_header") -%>
+
+    <main id="training-main">
+      
+      <div class="container-box tile" id="log-training-container">
+        <h4>Log your lyfts</h4>
+        <form id="log-training-form">
+          <label for="lyft">Lyft:</label>
+          <select id="lyft" name="lyft" required>
+            <%for (let i = 0; i < lifts.length; i++) { %>
+              <option><%= lifts[i].name %></option> 
+              <% } %>
+          </select>
+          <span class="id">Id: </span><span class="id" id="lyft-id"><%= lifts[0].id %></span>
+          <br />
+          <label for="weight">Weight(kg):</label>
+          <input type="number" id="weight" required>
+          <br />
+          <label for="reps">Reps:</label>
+          <input type="number" id="reps" required>
+          <br />
+          <button type="button" class="nav-button" id="submit-set-button">Save set</button>
+          <button type="button" class="nav-button secondary-button" id="add-new-lyft-button">Add new lyft</button>
+        </form>
+      </div>
+      <div class="container-box tile" id="add-lyft-container">
+        <h4>Add a lyft</h4>
+        <label for="name">Name</label>
+        <br />
+        <input type="text" id="name" value="" required />
+        <br />
+        <label for="name">Measurement</label>
+        <br />
+        <select id="measurement" name="measurement">
+          <option value="Weight & reps">Weight & reps</option>
+          <option value="Dumbell">Reps</option>
+          <option value="Bodyweight">Time</option>
+        </select>
+        <br />
+        <button type="button" class="nav-button" id="save-lyft-button">Add lyft</button>
+      </div>
+      <div class="container-box tile" id="workout-container">
+        <h4 id="workout-name">Lyft session</h4><span class="id">Id: </span><span class="id" id="workout-id"></span>
+        <input type="text" id="workout-name-input" required>
+        <i class="fas fa-check" id="save-workout-name-button"></i>
+        <i class="fas fa-pen" id="change-workout-name-button"></i>
+        <div id="workout-table-container">
+          <table id="workout-table">
+            <tr>
+              <th width="40%">Lyft</th>
+              <th class="id">Lyft id</th>
+              <th width="20%">Weight (kg)</th>
+              <th width="20%">Reps</th>
+              <th width="10%"></th>
+            </tr>
+          </table>
+          <label for="workout-owner">Workout by:</label>
+          <select id="workout-owner" name="workout-owner">
+            <%for (let i = 0; i < users.length; i++) { %>
+            <option><%= users[i].email %></option> 
+            <% } %>
+          </select>
+          <span class="id">Id: </span><span id="user-id" class="id"><%= users[0].id %></span>
+          <br />
+          <button type="button" class="nav-button" id="save-workout-button">Save workout</button>
+        </div>
+      </div>
+      
+    </main>
+    <script src="./training.js"></script>
+
+  </body>
+</html>
