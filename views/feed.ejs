@@ -18,32 +18,33 @@
         <h4>Your stats</h4>
       </div>
       <div class="container" id="feed-container">
+        <% if (typeof model[0] !== "undefined") { %>
         <div class="container-box tile">
-          <% let existingWorkoutsArray = []; %>
-          <% existingWorkoutsArray.push(model[0].id); %>
-          <% console.log(existingWorkoutsArray) %>  
-          <h4 class="user-name"><%= model[0].first_name %> <%= model[0].surname %></h4>
-          <p class="workout-date"><%= model[0].date_time %></p>
-          <h3 class="workout-name"><%= model[0].workout_name %></h3>
-          <table class= "sets-table" id="sets-table-<%= model[0].id %>">
-            <tr>
-              <th>Lyft</th>
-              <th>Weight</th>
-              <th>Reps</th>
-            </tr>
-          <%for (let i = 0; i < model.length; i++) { %>
-            <% if (existingWorkoutsArray.includes(model[i].id)) { %>
+            <% let existingWorkoutsArray = []; %>
+            <% existingWorkoutsArray.push(model[0].id); %>
+            <% console.log(existingWorkoutsArray) %>  
+            <h4 class="user-name"><%= model[0].first_name %> <%= model[0].surname %></h4>
+            <p class="workout-date"><%= model[0].date_time %></p>
+            <h3 class="workout-name"><%= model[0].workout_name %></h3>
+            <table class= "sets-table" id="sets-table-<%= model[0].id %>">
               <tr>
-                <td width="60%"><%= model[i].lift_name %></td>
-                <td width="20%"><%= model[i].weight %></td>
-                <td width="20%"><%= model[i].reps %></td>  
-              </tr>
-          <%  } else { %>
-            <% existingWorkoutsArray.push(model[i].id); %>
-            <% console.log(existingWorkoutsArray) %> 
-          </table>
-        </div>
-        <div class="container-box tile">
+                <th>Lyft</th>
+                <th>Weight</th>
+                <th>Reps</th>
+                </tr>
+                <%for (let i = 0; i < model.length; i++) { %>
+              <% if (existingWorkoutsArray.includes(model[i].id)) { %>
+                <tr>
+                  <td width="60%"><%= model[i].lift_name %></td>
+                  <td width="20%"><%= model[i].weight %></td>
+                  <td width="20%"><%= model[i].reps %></td>  
+                  </tr>
+                  <%  } else { %>
+                    <% existingWorkoutsArray.push(model[i].id); %>
+                    <% console.log(existingWorkoutsArray) %> 
+                  </table>
+                </div>
+                <div class="container-box tile">
           <h4 class="user-name"><%= model[i].first_name %> <%= model[i].surname%></h4>
           <p class="workout-date"><%= model[i].date_time %></p>
           <h3 class="workout-name"><%= model[i].workout_name %></h3>
@@ -62,13 +63,17 @@
             <% } %>
           </table>
         </div>
+        <% }  %>
       </div>
       <div class="container-box tile" id="bros-container">
         <h4>Your bros</h4>
-        <div id="users-container"></div>
-        <%for (let i = 0; i < bros.length; i++) { %>
-        <a href="/users/<%= bros[i].email %>"><p class="user-list-item"><%= bros[i].first_name %> <%= bros[i].surname %></p></a>
-        <% } %>
+        <div id="users-container">
+          <% if (bros[0]) { %>
+            <%for (let i = 0; i < bros.length; i++) { %>
+            <a href="/users/<%= bros[i].email %>"><p class="user-list-item"><%= bros[i].first_name %> <%= bros[i].surname %></p></a>
+            <% } %>
+          <% } %>
+        </div>
       </div>
     </main>
     <script src="./feed.js"></script>

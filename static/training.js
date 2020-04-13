@@ -138,6 +138,7 @@ async function saveSets() {
 saveWorkoutButton.addEventListener("click", async () => {
   await saveWorkout();
   saveSets();
+  window.location.href = "/feed";
 });
 
 //save new exercise helper function
