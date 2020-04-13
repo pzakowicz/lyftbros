@@ -1,6 +1,8 @@
 ---- Functionality ---------------------------------
 
-
+- Authenticate
+    - deny access to feed when use is not logged in
+    - sign-in / sign-out
 
 - Lyftfeed
     - make each workout more compact
@@ -10,22 +12,22 @@
                 - age, height, weight
                 - user workout stats in last few weeks 
     - view workout details
-        - show workout stats
-        - allow to chest bump
+        - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
+        - give stars to lifts
+        - allow to fist bump
     - limit the amount of workouts shown
 
 - Log your training
-    - remove the IDs from the page with async await
     - change the logging method depending on measurement type
     - add how easy / hard it was
     - add comment
     - separate sets of exercises
-    - save training
-        - add date 
     - warning message against navigating away from page
+    - give stars to lifts
+    - remove the IDs from the page with async await
 
 - User account
-    - create a larget table for user details
+    - create a larger table for user details
     - create a page for viewing / editing user details
     - show a summary of stats on the feed page
 
@@ -33,9 +35,6 @@
     - add primary and secondary body part (tell people how long since they exercised a body part - when they are de-training)
     - exercise already exists (message)
 
-- Authenticate
-    - deny access to feed when use is not logged in
-    - sign-in / sign-out
 
 - Create user
     - show an error message if user with this email already exists
@@ -55,12 +54,8 @@
     - rewrite helper functions to be async await (remove ids from training page, instead get the id first)
     - alternatively do a table joint to get all information at one time
     - create a wrapper listener function which is also async and await functions which need to end first
-- move getter functions to utils
 - add webquries for all pages to RWF for mobile
 - clean up css (get rid of unused things, find a better way to select element rather than giving everything ids)
-- introduce templates  
-    - with handlebars
-    - with react
 - introduce react
 - introduce redux
 - implement mocha and write unit tests

@@ -42,7 +42,7 @@ app.get("/feed", (req, res) => {
       users = rows;
     });
 
-    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Lifts.name as 'lift_name', Sets.weight, 	Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id ORDER BY Workouts.date_time DESC;", (err, rows) => {
+    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Lifts.name as 'lift_name', Sets.weight, 	Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id ORDER BY Workouts.date_time DESC LIMIT 30;", (err, rows) => {
       if (err) {
         return console.error(err.message);
       }
@@ -81,7 +81,7 @@ app.get("/log-training", (req, res) => {
 app.get("/users/:email", (req, res) => {
   let prs;
   db.serialize(() => {
-
+    //get PR data
     db.all("SELECT Sub1.name, Sub1.five_reps, Sub2.ten_reps FROM (SELECT Lifts.name, MAX(Sets.weight) as five_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Sets.reps = 5 GROUP BY Lifts.name) AS Sub1 JOIN (SELECT Lifts.name, MAX(Sets.weight) as ten_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Sets.reps = 10 GROUP BY Lifts.name) AS Sub2 ON Sub1.name = Sub2.name GROUP BY Sub1.name;", { $email: req.params.email }, (err, rows) => {
       if (err) {
         return console.error(err.message);
@@ -90,8 +90,8 @@ app.get("/users/:email", (req, res) => {
       prs = rows;
       console.log(prs);
     })
-    
-    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.gender, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email ORDER BY Workouts.date_time DESC;", { $email: req.params.email }, (err, rows) => {
+    //get workout data
+    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.gender, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email ORDER BY Workouts.date_time DESC LIMIT 30;", { $email: req.params.email }, (err, rows) => {
       if (err) {
         return console.error(err.message);
       } 
