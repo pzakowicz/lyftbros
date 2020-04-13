@@ -15,7 +15,7 @@
         - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
         - give stars to lifts
         - allow to fist bump
-    - limit the amount of workouts shown
+    - make bros look clickable
 
 - Log your training
     - change the logging method depending on measurement type
@@ -23,7 +23,7 @@
     - add comment
     - separate sets of exercises
     - warning message against navigating away from page
-    - give stars to lifts
+    - give stars to lifts (strength standards)
     - remove the IDs from the page with async await
 
 - User account
