@@ -2,6 +2,7 @@
 
 
 - move all pages to EJS!
+    - finishe log-training page and then move others
 
 - Lyftfeed
     - make each workout more compact
@@ -46,6 +47,8 @@
 - Add a friend
     - search for a friend
     - add a friend
+
+- Goals
 
 
 ---- Technology ------------------------------------

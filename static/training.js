@@ -14,24 +14,14 @@ const saveWorkoutButton = document.getElementById("save-workout-button");
 const userId = document.getElementById("user-id");
 const lyftId = document.getElementById("lyft-id");
 const workoutId = document.getElementById("workout-id");
+const addNewLyftButton = document.getElementById("add-new-lyft-button"); // button to get a form view
+const saveNewLyftButton = document.getElementById("save-lyft-button");
 
-//GET all exercises and add them to dropdown as options
-function getAllExercises() {
-  fetch("/api/exercises")
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    let exerciseArray = data.exercise;
-    exerciseDropdown.innerHTML = "";
-    exerciseArray.forEach(element => {
-      const newExercise = document.createElement("option");
-      newExercise.innerHTML = `${element.name}`; 
-      exerciseDropdown.appendChild(newExercise);
-    });
-    lyftId.innerHTML = exerciseArray[0].id;
-  });
-};
+
+
+
+
+
 
 //change exerciseId on dropdown change
 exerciseDropdown.addEventListener("change", () => {
@@ -45,24 +35,6 @@ exerciseDropdown.addEventListener("change", () => {
     lyftId.innerHTML = data.exercise.id;
   });
 })
-
-//GET all users and add them to dropdown as options
-function getAllUsers() {
-  fetch("/api/users")
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    let userArray = data.user;
-    workoutOwnerDropdown.innerHTML = "";
-    userArray.forEach(element => {
-      const newUser = document.createElement("option");
-      newUser.innerHTML = `${element.email}`; 
-      workoutOwnerDropdown.appendChild(newUser);
-    });
-    userId.innerHTML = userArray[0].id;
-  });
-};
 
 
 //change userId in box on change
@@ -78,6 +50,12 @@ workoutOwnerDropdown.addEventListener("change", () => {
   });
 })
 
+
+//show add new lyft tile
+addNewLyftButton.addEventListener("click", ()=> {
+  document.getElementById("log-training-container").style.display = "none";
+  document.getElementById("add-lyft-container").style.display = "inline-block";
+})
 
 // add set to workout
 addSetButton.addEventListener("click", () => {
@@ -164,7 +142,7 @@ async function saveSets() {
    body: JSON.stringify(data)
  })
   let json = await response;
-  console.log("Sets", response.statusText);
+  console.log("Sets", json.statusText);
 };
 
 
@@ -174,11 +152,45 @@ saveWorkoutButton.addEventListener("click", async () => {
   saveSets();
 });
 
+//save new exercise helper function
+async function addNewLyft() {
+  const name = document.getElementById("name").value;
+  const measurement = document.getElementById("measurement").value;
+  const data = {
+    name: name,
+    measurement: measurement
+  };
+  console.log(data);
+  let response = await fetch(`/api/exercises/`,
+  {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json"
+   },
+   body: JSON.stringify(data)
+ })
+  console.log(response.statusText);
+}
 
-//main function
-function main() {
-  getAllExercises();
-  getAllUsers();
+async function getAllExercises() {
+  let response = await fetch("/api/exercises");
+  let json = await response.json();
+  console.log(json);
+  let exerciseArray = json.exercises;
+  exerciseDropdown.innerHTML = "";
+  exerciseArray.forEach(element => {
+    const newExercise = document.createElement("option");
+    newExercise.innerHTML = `${element.name}`; 
+    exerciseDropdown.appendChild(newExercise);
+  });
+  lyftId.innerHTML = exerciseArray[0].id;
 };
 
-main();
+//POST new exercise
+saveNewLyftButton.addEventListener("click", async () => {
+  await addNewLyft();
+  getAllExercises();
+  alert("Lyft added successfully");
+  document.getElementById("log-training-container").style.display = "inline-block";
+  document.getElementById("add-lyft-container").style.display = "none";
+});

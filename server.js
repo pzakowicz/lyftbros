@@ -42,7 +42,6 @@ app.get("/feed", (req, res) => {
       users = rows;
     });
 
-
     db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Lifts.name as 'lift_name', Sets.weight, 	Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id ORDER BY Workouts.date_time DESC;", (err, rows) => {
       if (err) {
         return console.error(err.message);
@@ -60,7 +59,27 @@ app.get("/exercises", (req, res) => {
 
 //get log-training page
 app.get("/log-training", (req, res) => {
-  res.sendFile(path.join(__dirname, "./static/training.html"));
+  let users;
+  let lifts;
+  db.serialize(() => {
+
+    db.all("SELECT * FROM Users", (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      users = rows;
+    });
+
+    db.all("SELECT * FROM Lifts", (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      lifts = rows;
+      res.render("training", { users: users, lifts: lifts })     
+    });
+
+  })
+
 });
 
 //get EJS user details page
@@ -92,15 +111,17 @@ app.get("/users/:email", (req, res) => {
 //API-----------------------------------------
 
 //GET all users
-app.get("/api/users", (req, res, next) => {
-  db.all("SELECT * FROM Users", (err, rows) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    console.log(rows);
-    res.status(200).json({ user: rows });
+
+  app.get("/api/users", (req, res, next) => {
+    db.all("SELECT * FROM Users", (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(rows);
+      res.status(200).json({ user: rows });
+    });
   });
-});
+
 
 // GET userId by email
 app.get("/api/users/email/:email", (req, res, next) => {
@@ -182,15 +203,16 @@ app.get("/api/users/login/:email-:password", (req, res, next) => {
 
 
 //GET all exercises
-app.get("/api/exercises", (req, res, next) => {
-  db.all("SELECT * FROM Lifts", (err, rows) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    res.status(200).json({ exercise: rows });
-    console.log(rows);
+  app.get("/api/exercises", (req, res, next) => {
+    db.all("SELECT * FROM Lifts", (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.status(200).json({ exercises: rows });
+      console.log(rows);
+    });
   });
-});
+
 
 //GET all workouts for the feed
 app.get("/api/feed", (req, res, next) => {
@@ -233,12 +255,7 @@ app.post("/api/exercises/", (req, res, next) => {
         if (error) {
           next(error);
         } else {
-          db.get(
-            `SELECT * FROM Lifts WHERE id = ${this.lastID}`,
-            (error, row) => {
-              res.status(201).json({ exercise: row });
-            }
-          );
+        res.status(201).send("Lyft added successfully");
         }
       }
     );

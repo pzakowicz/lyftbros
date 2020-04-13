@@ -215,24 +215,6 @@ button:hover {
   font-size: 15px;
 }
 
-/* ------------------------- Exercises ------------------------- */
-
-
-
-#exercise-table-container {
-  margin: 10px;
-
-}
-
-
-#add-exercise-button {
-  margin: 10px 0px;
-}
-
-#measurement {
-  width: 100%;
-}
-
 /* ------------------------- Log training ------------------------- */
 
 #log-training-container {
@@ -256,6 +238,11 @@ button:hover {
   display: inline-block;
   width: 70px;
 }
+
+#add-lyft-container {
+  display: none;
+}
+
 
 #workout-name {
   display: inline-block;
