@@ -1,8 +1,6 @@
 ---- Functionality ---------------------------------
 
 
-- move all pages to EJS!
-    - finishe log-training page and then move others
 
 - Lyftfeed
     - make each workout more compact

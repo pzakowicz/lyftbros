@@ -27,7 +27,7 @@ app.use(errorhandler());
 
 //GET login page
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "./static/login.html"));
+  res.render("login");  
 });
 
 //GET feed page
@@ -52,12 +52,7 @@ app.get("/feed", (req, res) => {
   });
 });
 
-//get exercises page
-app.get("/exercises", (req, res) => {
-  res.sendFile(path.join(__dirname, "./static/exercises.html"));
-});
-
-//get log-training page
+//GET log-training page
 app.get("/log-training", (req, res) => {
   let users;
   let lifts;
@@ -82,7 +77,7 @@ app.get("/log-training", (req, res) => {
 
 });
 
-//get EJS user details page
+//GET user details page
 app.get("/users/:email", (req, res) => {
   let prs;
   db.serialize(() => {
