@@ -22,7 +22,6 @@
         <div class="container-box tile">
             <% let existingWorkoutsArray = []; %>
             <% existingWorkoutsArray.push(model[0].id); %>
-            <% console.log(existingWorkoutsArray) %>  
             <h4 class="user-name"><%= model[0].first_name %> <%= model[0].surname %></h4>
             <p class="workout-date"><%= model[0].date_time %></p>
             <h3 class="workout-name"><%= model[0].workout_name %></h3>
@@ -41,7 +40,6 @@
                   </tr>
                   <%  } else { %>
                     <% existingWorkoutsArray.push(model[i].id); %>
-                    <% console.log(existingWorkoutsArray) %> 
                   </table>
                 </div>
                 <div class="container-box tile">
