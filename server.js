@@ -1,5 +1,6 @@
 // imports
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const errorhandler = require("errorhandler");
 const morgan = require("morgan");
@@ -7,6 +8,8 @@ const express = require("express");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 const apiRouter = require("./api/api");
+const session = require("express-session");
+const SQLiteStore = require("connect-sqlite3")(session);
 
 
 
@@ -20,6 +23,14 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+  secret: "dkjghb4987345789",
+  resave: true,
+  saveUninitialized: false,
+  store: new SQLiteStore,
+  cookie: { maxAge: 60 * 60 * 1000 }
+}));
 app.use(morgan("dev"));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "./static")));
@@ -32,6 +43,7 @@ app.use("/api/", apiRouter);
 
 //GET login page
 app.get("/", (req, res) => {
+  console.log(req.session.visits);
   res.render("login");  
 });
 

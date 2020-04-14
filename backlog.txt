@@ -5,6 +5,7 @@
     - deny access to feed when user is not logged in
     - sign-in / sign-out
     - drop salt from user table
+    - redirect to feed from server not client
 
 - Lyftfeed
     - make each workout more compact
