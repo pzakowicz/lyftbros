@@ -53,32 +53,38 @@ createUserButton.addEventListener("click", () => {
     .then(response => response.json())
     .then(data => {
       console.log(data.user);
+      userCreatedMessage();
     })
     .catch(error => {
       console.error("Error:", error);
     });
-  userCreatedMessage();
 });
 
 //Login request
-loginButton.addEventListener("click", () => {
+loginButton.addEventListener("click", async () => {
   let email = emailInput.value;
   let password = passwordInput.value;
-  if (email && password) {
-    fetch(`/api/users/login/${email}-${password}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        if (data.user) {
-          console.log("login successful");
-          document.getElementById("user-not-found").innerHTML = "";
-          window.location.href = "/feed";
-        } else {
-          console.log("No matching user found");
-          userNotFoundMessage();
-        }
-      });
+  let data = {
+    email: email,
+    password: password
+  };
+  if (data.email && data.password) {
+    let response = await fetch(`/api/users/login/`,
+    {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json"
+     },
+     body: JSON.stringify(data)
+   })
+   console.log(response);
+    if (response.status === 200) {
+      console.log("login successfully");
+      window.location.href = "/feed";
+    } else if (response.status === 400){
+      console.log("No matching user found");
+      userNotFoundMessage();
+    }
+
   }
 });

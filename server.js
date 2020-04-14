@@ -9,6 +9,7 @@ const sqlite3 = require("sqlite3").verbose();
 const apiRouter = require("./api/api");
 
 
+
 // create application
 const app = express();
 const db = new sqlite3.Database("./data/database.sqlite");
@@ -83,7 +84,18 @@ app.get("/log-training", (req, res) => {
 //GET user details page
 app.get("/users/:email", (req, res) => {
   let prs;
+  let user;
   db.serialize(() => {
+
+    //get user data
+    db.get("SELECT first_name, surname, gender FROM Users WHERE email = $email;", { $email: req.params.email }, (err, row) => {
+      if (err) {
+        return console.error(err.message);
+      } 
+      console.log("Got User data");
+      console.log(row);
+      user = row;
+    });
 
     //get PR data
     db.all("SELECT Sub1.name, Sub1.five_reps, Sub2.ten_reps FROM (SELECT Lifts.name, MAX(Sets.weight) as five_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Sets.reps = 5 GROUP BY Lifts.name) AS Sub1 LEFT JOIN (SELECT Lifts.name, MAX(Sets.weight) as ten_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Sets.reps = 10 GROUP BY Lifts.name) AS Sub2 ON Sub1.name = Sub2.name GROUP BY Sub1.name;", { $email: req.params.email }, (err, rows) => {
@@ -91,17 +103,19 @@ app.get("/users/:email", (req, res) => {
         return console.error(err.message);
       } 
       console.log("Got PRs");
+
       prs = rows;
 
-    })
+    });
 
-    //get workout data
-    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.gender, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email ORDER BY Workouts.date_time DESC LIMIT 30;", { $email: req.params.email }, (err, rows) => {
+    //get user and workout data
+    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email ORDER BY Workouts.date_time DESC LIMIT 30;", { $email: req.params.email }, (err, rows) => {
       if (err) {
         return console.error(err.message);
       } 
-      console.log("Got user data");
-      res.render("users", { model: rows, prs: prs });
+      console.log("Got workout data");
+
+      res.render("users", { model: rows, prs: prs, user: user });
     });
   });
 });

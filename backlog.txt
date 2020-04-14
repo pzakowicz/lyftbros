@@ -1,8 +1,10 @@
 ---- Functionality ---------------------------------
 
 - Authenticate
+    - implement a session
     - deny access to feed when user is not logged in
     - sign-in / sign-out
+    - drop salt from user table
 
 - Lyftfeed
     - make each workout more compact
