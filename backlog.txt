@@ -51,7 +51,6 @@
 
 ---- Technology ------------------------------------
 
-- add routers to split the server into multiple files
 - find a way to get values by id synchronously - async await !!!
     - rewrite helper functions to be async await (remove ids from training page, instead get the id first)
     - alternatively do a table joint to get all information at one time
