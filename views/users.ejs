@@ -17,6 +17,7 @@
         <p>Gender: <%= user.gender %></p>
       </div>
       <div id="user-activity-container">
+        <% if (model[0]) { %>
         <div class="container-box tile">
           <% let existingWorkoutsArray = []; %>
           <% existingWorkoutsArray.push(model[0].id); %>
@@ -39,8 +40,10 @@
           <%  } else { %>
             <% existingWorkoutsArray.push(model[i].id); %>
           </table>
+
         </div>
         <div class="container-box tile">
+
           <h4 class="user-name"><%= model[i].first_name %> <%= model[i].surname%></h4>
           <p class="workout-date"><%= model[i].date_time %></p>
           <h3 class="workout-name"><%= model[i].workout_name %></h3>
@@ -59,6 +62,11 @@
             <% } %>
           </table>
         </div>
+        <% } else {%>
+          <div class="container-box tile">
+            <h4>No workouts logged yet! Get lyftin!</h4>
+          </div>
+        <% } %>
       </div>  
 
       <div class="container-box tile" id="user-prs-container">

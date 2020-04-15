@@ -40,6 +40,12 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "./static")));
 app.use(errorhandler());
 
+//helper functions
+function redirectToLogin(req, res, next) {
+  if (req.user) return next();
+  return res.redirect('/');
+}
+
 //ROUTES ----------------------------------
 
 //mounting routers
@@ -51,7 +57,7 @@ app.get("/", (req, res) => {
 });
 
 //GET feed page
-app.get("/feed", (req, res) => {
+app.get("/feed", redirectToLogin, (req, res) => {
   let users;
   db.serialize(() => {
 
@@ -66,8 +72,6 @@ app.get("/feed", (req, res) => {
       if (err) {
         return console.error(err.message);
       }
-      console.log("Req user: ", req.user);
-      console.log("Req session: ", req.session);
       res.render("feed", { model: rows, bros: users, user: req.user });      
     });
 
@@ -75,7 +79,7 @@ app.get("/feed", (req, res) => {
 });
 
 //GET log-training page
-app.get("/log-training", (req, res) => {
+app.get("/log-training", redirectToLogin, (req, res) => {
   let users;
   let lifts;
   db.serialize(() => {
@@ -100,7 +104,7 @@ app.get("/log-training", (req, res) => {
 });
 
 //GET user details page
-app.get("/users/:email", (req, res) => {
+app.get("/users/:email", redirectToLogin, (req, res) => {
   let prs;
   let user;
   db.serialize(() => {
