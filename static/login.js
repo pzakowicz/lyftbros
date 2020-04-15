@@ -72,10 +72,12 @@ loginButton.addEventListener("click", async () => {
     let response = await fetch(`/api/users/login/`,
     {
        method: "POST",
+       credentials: "include",
        headers: {
          "Content-Type": "application/json"
      },
-     body: JSON.stringify(data)
+     body: JSON.stringify(data),
+     
    })
    console.log(response);
     if (response.status === 200) {

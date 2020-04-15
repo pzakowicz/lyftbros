@@ -1,8 +1,8 @@
 //imports
 const express = require("express");
 const sqlite3 = require("sqlite3");
-//const bcrypt = require("bcrypt");
-//const SALT_ROUNDS = 12;
+const bcrypt = require("bcrypt");
+const SALT_ROUNDS = 12;
 const passport = require("passport");
 
 //create router
@@ -96,6 +96,7 @@ if (!name || !surname || !gender || !email || !password) {
 //GET login as a created user
 
 userRouter.post("/login/", passport.authenticate('local', { 
+  session: true,
   successRedirect: '/feed'
   //failureRedirect: '/'
   }

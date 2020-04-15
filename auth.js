@@ -31,14 +31,16 @@ passport.use(new LocalStrategy(/*{ usernameField: 'email' },*/ async (username, 
 }))
 
 passport.serializeUser(function(user, done) {
+  console.log("User serialised");
   return done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  db.get('SELECT id, username FROM Users WHERE id = ?', id, function(err, row) {
+  db.get('SELECT * FROM Users WHERE id = ?', id, function(err, row) {
     if (!row) {
       return done(null, false);
     }
+    console.log("User deserialised");
     return done(null, row);
   });
 });

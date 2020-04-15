@@ -26,11 +26,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-  secret: "dkjghb4987345789",
+  secret: "some secret 1234",
   resave: true,
   saveUninitialized: false,
   store: new SQLiteStore,
-  cookie: { maxAge: 60 * 60 * 1000 }
+  cookie : { secure : false, maxAge : (24 * 60 * 60 * 1000) }
 }));
 app.use(auth.initialize);
 app.use(auth.session);
@@ -66,7 +66,9 @@ app.get("/feed", (req, res) => {
       if (err) {
         return console.error(err.message);
       }
-      res.render("feed", { model: rows, bros: users });      
+      console.log("Req user: ", req.user);
+      console.log("Req session: ", req.session);
+      res.render("feed", { model: rows, bros: users, user: req.user });      
     });
 
   });
@@ -90,6 +92,7 @@ app.get("/log-training", (req, res) => {
         return console.error(err.message);
       }
       lifts = rows;
+ 
       res.render("training", { users: users, lifts: lifts })     
     });
 
@@ -133,6 +136,13 @@ app.get("/users/:email", (req, res) => {
       res.render("users", { model: rows, prs: prs, user: user });
     });
   });
+});
+
+//GET logout page
+app.get("/logout", (req, res) => {
+  req.logout();
+  console.log("User logged out");
+  return res.render("logout");  
 });
     
 //starting app

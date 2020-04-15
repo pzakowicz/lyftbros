@@ -16,6 +16,9 @@
     <main id="feed-main">
       <div class="container-box tile" id="stat-container">
         <h4>Your stats</h4>
+        <% if (user) { %>
+          <%= user.first_name %>
+       <% } %>
       </div>
       <div class="container" id="feed-container">
         <% if (typeof model[0] !== "undefined") { %>

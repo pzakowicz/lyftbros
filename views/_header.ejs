@@ -1,4 +1,5 @@
 <header>
+  <script src="https://kit.fontawesome.com/e6936a79ca.js" crossorigin="anonymous"></script>
   <nav>
     <a href="../../feed">
       <div class="flex-container">
@@ -13,7 +14,11 @@
       <button type="button" class="nav-button secondary-button" id="dashboard-button">Dashboard</button>
     </a>
   </nav>
-  <div class="flex-container" id="account-container">
-    <img id="account-pic" src="../../resources/profile pic.png" />
-  </div>
+    <div class="dropdown flex-container">
+      <img class="dropbtn" id="account-pic" src="../../resources/profile pic.png" /><i class="fas fa-caret-down"></i>
+      <div class="dropdown-content">
+        <a>Account</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </div>
 </header>
