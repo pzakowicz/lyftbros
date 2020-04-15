@@ -6,7 +6,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 
 
-passport.use(new LocalStrategy(/*{ usernameField: 'email' },*/ async (username, password, done) => { //usernameField may not be necessary
+passport.use(new LocalStrategy( async (username, password, done) => { 
   try {
     db.get("SELECT * FROM Users WHERE email = ?", username, (error, row) => {
         if (!row) {
