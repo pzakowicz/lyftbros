@@ -1,11 +1,14 @@
 ---- Functionality ---------------------------------
 
-- Authenticate
-
-
-
-    - drop salt from user table
-    - try catch the login unauthorized error
+- Log your training
+    - remove the workout owner dropdown
+    - change the logging method depending on measurement type
+    - add how easy / hard it was
+    - add comment
+    - separate sets of exercises
+    - warning message against navigating away from page
+    - give stars to lifts (strength standards)
+    - remove the IDs from the page with async await
 
 - Lyftfeed
     - make each workout more compact
@@ -20,14 +23,6 @@
         - allow to fist bump
     - make bros look clickable
 
-- Log your training
-    - change the logging method depending on measurement type
-    - add how easy / hard it was
-    - add comment
-    - separate sets of exercises
-    - warning message against navigating away from page
-    - give stars to lifts (strength standards)
-    - remove the IDs from the page with async await
 
 - User account
     - create a larger table for user details
@@ -50,6 +45,9 @@
     - add a friend
 
 - Goals
+
+- Authenticate
+    - try catch the login unauthorized error
 
 
 ---- Technology ------------------------------------
