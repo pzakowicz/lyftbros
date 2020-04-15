@@ -29,7 +29,7 @@ db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time,
 //POST new workout
 apiRouter.post("/workouts/", (req, res, next) => {
 const name = req.body.name;
-const userId = req.body.userId;
+const userId = req.user.id;
 if (!name || !userId) {
   console.log("Insufficient data to post a new workout.");
   return res.sendStatus(400);

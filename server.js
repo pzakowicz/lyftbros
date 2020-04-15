@@ -96,7 +96,6 @@ app.get("/log-training", redirectToLogin, (req, res) => {
         return console.error(err.message);
       }
       lifts = rows;
- 
       res.render("training", { users: users, lifts: lifts })     
     });
 

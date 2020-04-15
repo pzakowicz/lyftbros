@@ -69,13 +69,6 @@
               <th width="10%"></th>
             </tr>
           </table>
-          <label for="workout-owner">Workout by:</label>
-          <select id="workout-owner" name="workout-owner">
-            <%for (let i = 0; i < users.length; i++) { %>
-            <option><%= users[i].email %></option> 
-            <% } %>
-          </select>
-          <span class="id">Id: </span><span id="user-id" class="id"><%= users[0].id %></span>
           <br />
           <button type="button" class="nav-button" id="save-workout-button">Save workout</button>
         </div>

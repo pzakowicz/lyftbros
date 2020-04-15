@@ -330,3 +330,12 @@ button:hover {
  #user-prs-container table {
   width: 100%;
  }
+
+ /* ------------------------- User details ------------------------- */
+
+ #logout-main {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+ }

@@ -1,7 +1,6 @@
 ---- Functionality ---------------------------------
 
 - Log your training
-    - remove the workout owner dropdown
     - change the logging method depending on measurement type
     - add how easy / hard it was
     - add comment

@@ -2,7 +2,6 @@
 const addSetButton = document.getElementById("submit-set-button");
 const workoutTable = document.getElementById("workout-table");
 const exerciseDropdown = document.getElementById("lyft");
-const workoutOwnerDropdown = document.getElementById("workout-owner");
 const workoutName = document.getElementById("workout-name");
 const changeWorkoutNameButton = document.getElementById("change-workout-name-button");
 const saveWorkoutNameButton = document.getElementById("save-workout-name-button");
@@ -24,19 +23,6 @@ exerciseDropdown.addEventListener("change", () => {
   .then(data => {
     console.log("User id is: " + data.exercise.id);
     lyftId.innerHTML = data.exercise.id;
-  });
-})
-
-//change userId in box on change
-workoutOwnerDropdown.addEventListener("change", () => {
-  let email = workoutOwnerDropdown.value;
-  fetch(`/api/users/email/${email}`)
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    console.log("User id is: " + data.user.id);
-    userId.innerHTML = data.user.id;
   });
 })
 
@@ -94,10 +80,8 @@ function deleteRow(r) {
 //save workout helper function
 async function saveWorkout() {
   const name = workoutName.textContent;
-  const id = userId.textContent;
   const data = {
-    name: name,
-    userId: id
+    name: name
   };
   console.log(data);
   let response = await fetch(`/api/workouts/`,
