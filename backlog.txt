@@ -6,6 +6,7 @@
     - sign-in / sign-out
     - drop salt from user table
     - redirect to feed from server not client
+    - try catch the login unauthorized error
 
 - Lyftfeed
     - make each workout more compact

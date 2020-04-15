@@ -1,8 +1,9 @@
 //imports
 const express = require("express");
 const sqlite3 = require("sqlite3");
-const bcrypt = require("bcrypt");
-const SALT_ROUNDS = 12;
+//const bcrypt = require("bcrypt");
+//const SALT_ROUNDS = 12;
+const passport = require("passport");
 
 //create router
 const userRouter = express.Router();
@@ -94,56 +95,11 @@ if (!name || !surname || !gender || !email || !password) {
 
 //GET login as a created user
 
-userRouter.post("/login/", (req, res, next) => {
-  let email = req.body.email;
-  let password = req.body.password;
-
-  if (!email || !password) {
-    return res.sendStatus(400);
-  } else {
-    console.log(req.body);
-
-    db.get(
-      "SELECT * FROM Users WHERE email = $email",
-      {
-        $email: email
-      },
-      (error, row) => {
-        console.log(row);
-        bcrypt.compare(password, row.password, function (err, result) {
-          if (result === true) {
-            console.log("login successful");
-            res.status(200).send("login successful");
-          } else if (result === false) {
-            console.log("login failed");
-            res.status(400).send("login failed");
-          }
-        })
-      }
-    );
-
+userRouter.post("/login/", passport.authenticate('local', { 
+  successRedirect: '/feed'
+  //failureRedirect: '/'
   }
-
-
-})
-
-
-
-/*userRouter.get("/login/:email-:password", (req, res, next) => {
-console.log(req.params);
-db.get(
-  "SELECT * FROM Users WHERE email = $email AND password = $password",
-  {
-    $email: req.params.email,
-    $password: req.params.password
-  },
-  (error, row) => {
-    console.log(row);
-    res.status(200).json({ user: row });
-  }
-);
-});*/
-
+  )); 
 
 //exports
 module.exports = userRouter;

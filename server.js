@@ -10,6 +10,7 @@ const sqlite3 = require("sqlite3").verbose();
 const apiRouter = require("./api/api");
 const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
+const auth = require("./auth");
 
 
 
@@ -31,6 +32,9 @@ app.use(session({
   store: new SQLiteStore,
   cookie: { maxAge: 60 * 60 * 1000 }
 }));
+app.use(auth.initialize);
+app.use(auth.session);
+app.use(auth.setUser);
 app.use(morgan("dev"));
 app.use(cors());
 app.use(express.static(path.join(__dirname, "./static")));
@@ -43,7 +47,6 @@ app.use("/api/", apiRouter);
 
 //GET login page
 app.get("/", (req, res) => {
-  console.log(req.session.visits);
   res.render("login");  
 });
 

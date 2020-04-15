@@ -65,10 +65,10 @@ loginButton.addEventListener("click", async () => {
   let email = emailInput.value;
   let password = passwordInput.value;
   let data = {
-    email: email,
+    username: email,
     password: password
   };
-  if (data.email && data.password) {
+  if (data.username && data.password) {
     let response = await fetch(`/api/users/login/`,
     {
        method: "POST",
@@ -79,10 +79,10 @@ loginButton.addEventListener("click", async () => {
    })
    console.log(response);
     if (response.status === 200) {
-      console.log("login successfully");
-      window.location.href = "/feed";
-    } else if (response.status === 400){
-      console.log("No matching user found");
+      console.log("login successful");
+      window.location.href = response.url;
+    } else if (response.status === 401){
+      console.log("Incorrect password or user");
       userNotFoundMessage();
     }
 
