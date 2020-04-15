@@ -1,16 +1,15 @@
 ---- Functionality ---------------------------------
 
-- Log your training
-    - change the logging method depending on measurement type
-    - add how easy / hard it was
-    - add comment
-    - separate sets of exercises
-    - warning message against navigating away from page
-    - give stars to lifts (strength standards)
-    - remove the IDs from the page with async await
-
+- User account
+    - create a larger table for user details
+    - add a profile pic
+    - create a page for viewing / editing user details
+    - show a summary of stats on the feed page
+    - create an outer join for PRs to show table when not all rep ranges have been logged
+    
 - Lyftfeed
     - make each workout more compact
+    - remove yourself from bros
     - view user details
         - give users more details:
             - expand the user table
@@ -21,18 +20,21 @@
         - give stars to lifts
         - allow to fist bump
     - make bros look clickable
+    - add leaderboard (most workouts, highest volume, biggest progress)
 
 
-- User account
-    - create a larger table for user details
-    - create a page for viewing / editing user details
-    - show a summary of stats on the feed page
-    - create an outer join for PRs to show table when not all rep ranges have been logged
+- Log your training
+    - change the logging method depending on measurement type
+    - add how easy / hard it was
+    - add comment
+    - separate sets of exercises
+    - warning message against navigating away from page
+    - give stars to lifts (strength standards)
+    - remove the IDs from the page with async await
 
 - Available lyfts
     - add primary and secondary body part (tell people how long since they exercised a body part - when they are de-training)
     - exercise already exists (message)
-
 
 - Create user
     - show an error message if user with this email already exists
@@ -60,6 +62,7 @@
 - introduce react
 - introduce redux
 - implement mocha and write unit tests
+- make accessible from outside of the network
 
 ---- Screens ----------------------------------------
 1. Login / create account
