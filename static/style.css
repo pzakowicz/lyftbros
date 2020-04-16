@@ -230,7 +230,7 @@ button:hover {
 }
 
 #feed-container {
-  width: 40%;
+  width: 35%;
 }
 
 #bros-container {
@@ -242,7 +242,7 @@ button:hover {
 }
 
 .workout-date {
-  font-size: 12px;
+  font-size: 11px;
   margin: 2px 0px;
   color: rgb(148, 148, 148);
 
@@ -252,7 +252,31 @@ button:hover {
   width: 100%;
 }
 
+#comment-section {
+  align-items: center;
+  justify-content: space-between;
+}
 
+#comment-section span {
+  font-size: 12px;
+}
+
+.comment-button { 
+  height: 30px;
+  width: 50px;
+  border: none;
+  border-radius: 4px;
+}
+
+.comment-button:hover { 
+background-color: white;
+
+}
+
+.comment-button i {
+  color: black;
+
+}
 
 .user-list-item {
   margin: 4px 0px;

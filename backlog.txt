@@ -2,6 +2,14 @@
 
     
 - Lyftfeed
+        - allow to fist bump
+            - add table with fist bumps
+            - change icon color
+            - prevent button from being clickable
+            - refresh element after adding
+            - allow to see a lift of first bumps in a pop-up window
+
+        - allow to comment
     - show a summary of stats on the feed page
         - user workout stats in last month, year, all time
         - number of workouts, volume, level increase
@@ -14,8 +22,6 @@
     - view workout details
         - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
         - give stars to lifts
-        - allow to fist bump
-        - allow to comment
     - make bros look clickable
     - add leaderboard (most workouts, highest volume, biggest progress)
 

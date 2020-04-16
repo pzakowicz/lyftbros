@@ -12,7 +12,6 @@
   </head>
   <body>
     <%- include("_header") -%>
-
     <main id="feed-main">
       <div class="container-box tile" id="stat-container">
         <h4>Your summary</h4>
@@ -25,7 +24,8 @@
         <div class="container-box tile">
             <% let existingWorkoutsArray = []; %>
             <% existingWorkoutsArray.push(model[0].id); %>
-            <h4 class="user-name"><%= model[0].first_name %> <%= model[0].surname %></h4>
+            <span class="hidden" id=""></span>
+            <h5 class="user-name"><%= model[0].first_name %> <%= model[0].surname %></h5>
             <p class="workout-date"><%= model[0].date_time %></p>
             <h3 class="workout-name"><%= model[0].workout_name %></h3>
             <table class= "sets-table" id="sets-table-<%= model[0].id %>">
@@ -44,9 +44,16 @@
                   <%  } else { %>
                     <% existingWorkoutsArray.push(model[i].id); %>
                   </table>
+                  <div class="flex-container" id="comment-section">
+                    <span id="comment-summary-<%= model[i].id %>">Be the first one to fist bump your bro!</span>
+                    <div id="button-container">
+                      <button type="button" class="comment-button" id="<%= model[i].id %>" onclick="addFistBump(this)"><i class="far fa-hand-rock"></i></button>
+                      <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
+                    </div> 
+                  </div>
                 </div>
                 <div class="container-box tile">
-          <h4 class="user-name"><%= model[i].first_name %> <%= model[i].surname%></h4>
+          <h5 class="user-name"><%= model[i].first_name %> <%= model[i].surname%></h5>
           <p class="workout-date"><%= model[i].date_time %></p>
           <h3 class="workout-name"><%= model[i].workout_name %></h3>
           <table class= "sets-table" id="sets-table-<%= model[i].id %>">
@@ -63,6 +70,14 @@
             <% } %>
             <% } %>
           </table>
+          <div class="flex-container" id="comment-section">
+            <span>Be the first one to fist bump your bro!</span>
+            <div id="button-container">
+              <button type="button" class="comment-button" id="fist-bump" ><i class="far fa-hand-rock"></i></button>
+              <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
+            </div> 
+          </div>
+      </div>
         </div>
         <% } else { %>
           <div class="container-box tile">
@@ -81,6 +96,6 @@
         </div>
       </div>
     </main>
-
+    <script src="./feed.js"></script>
   </body>
 </html>
