@@ -15,9 +15,9 @@
 
     <main id="feed-main">
       <div class="container-box tile" id="stat-container">
-        <h4>Your stats</h4>
+        <h4>Your summary</h4>
         <% if (user) { %>
-          <%= user.first_name %>
+          <%= user.first_name %> <%= user.surname %>
        <% } %>
       </div>
       <div class="container" id="feed-container">
