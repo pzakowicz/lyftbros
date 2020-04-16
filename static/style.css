@@ -331,7 +331,7 @@ button:hover {
   width: 100%;
  }
 
- /* ------------------------- User details ------------------------- */
+ /* ------------------------- Logout ------------------------- */
 
  #logout-main {
   flex-direction: column;
@@ -339,3 +339,26 @@ button:hover {
   align-items: center;
 
  }
+
+/* ------------------------- Account ------------------------- */
+
+ #account-details-container {
+   width: 60%;
+ }
+
+ #account-details-container p {
+  font-size: small;
+}
+
+#account-details-container span {
+  font-weight: bold;
+  font-size: small;
+}
+
+#account-details-container input, select {
+  display: none;
+}
+
+.hidden {
+  display: none;
+}

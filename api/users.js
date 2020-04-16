@@ -85,15 +85,55 @@ if (!name || !surname || !gender || !email || !password) {
         }
       }
     );
-
-
   })
-
-
 }
 });
 
-//GET login as a created user
+//PUT - update user details
+userRouter.put("/", (req, res, next) => {
+  const id = req.user.id;
+  const name = req.body.name;
+  const surname = req.body.surname;
+  const email = req.body.email;
+  const gender = req.body.gender;
+  const dob = req.body.dob;
+  const weight = req.body.weight;
+  if (!id || !name || !surname || !gender || !email || !dob || !weight) {
+    console.log("Insufficient data to update account.")
+    return res.sendStatus(400);
+  } else {
+    console.log(req.body);  
+    db.run(
+      "UPDATE Users SET first_name = $name, surname = $surname, email = $email, gender = $gender, date_of_birth = $dob, weight = $weight WHERE id = $id",
+      {
+        $id: id,
+        $name: name,
+        $surname: surname,
+        $email: email,
+        $gender: gender,
+        $dob: dob,
+        $weight: weight
+      },
+      function(error) {
+        if (error) {
+          next(error);
+        } else {
+          db.get(
+            `SELECT * FROM Users WHERE id = ${req.user.id}`,
+            (error, row) => {
+              res.status(201).json({ user: row });
+            }
+          );
+        }
+      }
+    );
+
+  }
+  });
+
+
+
+//POST - Login as a created user
 
 userRouter.post("/login/", passport.authenticate('local', { 
   session: true,

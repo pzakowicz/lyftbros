@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <link
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="icon" href="./resources/Lbs logo fat.PNG" type="image/x-icon" />
+    <script src="https://kit.fontawesome.com/e6936a79ca.js" crossorigin="anonymous"></script>
+    <title>Your account</title>
+  </head>
+  <body>
+
+    <%- include("_header") -%>
+
+    <main id="account-main">
+      <div class="container-box tile" id="account-details-container">
+        <h4>Your account details</h4>
+        <% if (user) { %>
+          <p>Name: <span id="user-name"><%= user.first_name %></span><input type="text" id="user-name-input" required></p>
+          <p>Surname: <span id="user-surname"><%= user.surname %></span><input type="text" id="user-surname-input" required></p>
+          <p>Email: <span id="user-email"><%= user.email %></span><input type="email" id="user-email-input" required></p>
+          <p>Gender: <span id="user-gender"><%= user.gender %></span>
+            <select id="user-gender-input" name="gender" required>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </p>
+          <p>Date of birth: <span id="user-dob"><% if (user.date_of_birth) { %><%= user.date_of_birth %><% } %></span><input type="date" id="user-dob-input" required></p>
+          <p>Weight (kg): <span id="user-weight"><% if (user.weight) { %><%= user.weight %><% } %></span><input type="number" id="user-weight-input" required></p>
+       <% } %>
+       <button type="button" id="edit-account-button">Edit</button>
+       <button type="button" class="hidden" id="save-account-button">Save</button>
+       <button type="button" class="hidden" id="cancel-changes-button">Cancel</button>
+      </div>      
+    </main>
+    <script src="./account.js"></script>
+  </body>
+</html>

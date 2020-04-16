@@ -141,6 +141,11 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
   });
 });
 
+//GET account page
+app.get("/account", redirectToLogin, (req, res) => {
+  return res.render("account", { user: req.user });  
+});
+
 //GET logout page
 app.get("/logout", (req, res) => {
   req.logout();

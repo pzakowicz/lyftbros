@@ -2,9 +2,13 @@
 
 - User account
     - create a larger table for user details
+        - add weight / measurements table
+        - add birth date
     - add a profile pic
     - create a page for viewing / editing user details
     - show a summary of stats on the feed page
+    - change password
+    - delete account
     - create an outer join for PRs to show table when not all rep ranges have been logged
     
 - Lyftfeed
