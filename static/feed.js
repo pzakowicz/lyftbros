@@ -29,11 +29,13 @@ async function addFistBump(e) {
       let newText = document.createElement("span");
       newText.innerHTML = " fist bumps!";
       let container = document.getElementById(`comment-summary-${workoutId}`);
+      container.innerHTML = "";
       container.appendChild(newCount);
       container.appendChild(newText);
     }
     //update the icon button
-    let icon = e.childNodes[0];
+    //let icon = e.childNodes[0];
+    let icon = document.getElementById(`fist-${workoutId}`);
     icon.className = "fas fa-hand-rock";
   }
 };

@@ -270,6 +270,7 @@ button:hover {
 
 .comment-button:hover { 
 background-color: white;
+cursor: pointer;
 
 }
 
