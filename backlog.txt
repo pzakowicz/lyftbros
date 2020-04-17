@@ -2,12 +2,7 @@
 
     
 - Lyftfeed
-        - allow to fist bump
-            - add table with fist bumps
-            - change icon color
-            - prevent button from being clickable
-            - refresh element after adding
-            - allow to see a lift of first bumps in a pop-up window
+    - allow to see a lift of first bumps in a pop-up window
 
         - allow to comment
     - show a summary of stats on the feed page

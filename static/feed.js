@@ -34,7 +34,6 @@ async function addFistBump(e) {
       container.appendChild(newText);
     }
     //update the icon button
-    //let icon = e.childNodes[0];
     let icon = document.getElementById(`fist-${workoutId}`);
     icon.className = "fas fa-hand-rock";
   }

@@ -380,7 +380,7 @@ cursor: pointer;
   font-size: small;
 }
 
-#account-details-container input, select {
+#account-details-container input, #account-details-container select  {
   display: none;
 }
 
