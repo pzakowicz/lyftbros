@@ -81,13 +81,8 @@ apiRouter.post("/workouts/fist-bump/", (req, res, next) => {
             if (error) {
               next(error);
             } else {
-              db.get(
-                `SELECT * FROM Fist_bumps WHERE id = ${this.lastID}`,
-                (error, row) => {
-                  res.status(201).json({ fist_bump: row });
-                  console.log("Added new fist-bump: ", row);
-                }
-              );
+              console.log("Added new fist-bump.");
+              return res.sendStatus(201);
             }
           }
         );

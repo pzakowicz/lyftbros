@@ -48,7 +48,7 @@
                     <span id="comment-summary-<%= model[i].id %>">
                       <% bumps: for (let j = 0; j < bumps.length; j++) { %>
                         <% if (model[i].id === bumps[j].workout_id) { %>
-                          <%= bumps[j].count %> fist bumps!
+                        <span id="fist-bump-count-<%= model[i].id %>"><%= bumps[j].count %></span><span> fist bumps!</span>   
                           <% break %>
                         <% } %>   
                     <% } %>

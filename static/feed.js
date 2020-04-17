@@ -1,8 +1,6 @@
 
-
-
 //add fist bump helper function
-async function saveFistBump(e) {
+async function addFistBump(e) {
   const workoutId = e.id;
   const data = {
     workoutId: workoutId
@@ -16,19 +14,23 @@ async function saveFistBump(e) {
     },
     body: JSON.stringify(data)
   })
-  let json = await response.json();
-  console.log("Fist bump added: ", json);
 
-};
-
-
-
-function addFistBump(e) {
-  saveFistBump(e)
-  let id = e.id;
-  //let newIcon = document.createElement("i");
-  //newIcon.classList.add("fas fa-hand-rock");
-  //e.replaceChild(newIcon, e.childNodes[0]);
-  //document.getElementById("id").style.background-color = "black";
-  document.getElementById(`comment-summary-${id}`).innerHTML = "1 fist bump";
+  if (response.status === 201) {
+    console.log("Fist bump added");
+    let elementToUpdate = document.getElementById(`fist-bump-count-${workoutId}`);
+    if (elementToUpdate) {
+      let currentCount = Number(document.getElementById(`fist-bump-count-${workoutId}`).innerHTML);
+      currentCount ++;
+      document.getElementById(`fist-bump-count-${workoutId}`).innerHTML = currentCount;
+    } else {
+      let newCount = document.createElement("span");
+      newCount.setAttribute("id", `fist-bump-count-${workoutId}`)
+      newCount.innerHTML = "1";
+      let newText = document.createElement("span");
+      newText.innerHTML = " fist bumps!";
+      let container = document.getElementById(`comment-summary-${workoutId}`);
+      container.appendChild(newCount);
+      container.appendChild(newText);
+    }
+  }
 };
