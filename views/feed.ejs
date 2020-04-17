@@ -25,7 +25,7 @@
             <% let existingWorkoutsArray = []; %>
             <% existingWorkoutsArray.push(model[0].id); %>
             <span class="hidden" id=""></span>
-            <h5 class="user-name"><%= model[0].first_name %> <%= model[0].surname %></h5>
+            <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
             <p class="workout-date"><%= model[0].date_time %></p>
             <h3 class="workout-name"><%= model[0].workout_name %></h3>
             <table class= "sets-table" id="sets-table-<%= model[0].id %>">
@@ -71,7 +71,7 @@
                   </div>
                 </div>
                 <div class="container-box tile">
-          <h5 class="user-name"><%= model[i].first_name %> <%= model[i].surname%></h5>
+          <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
           <p class="workout-date"><%= model[i].date_time %></p>
           <h3 class="workout-name"><%= model[i].workout_name %></h3>
           <table class= "sets-table" id="sets-table-<%= model[i].id %>">

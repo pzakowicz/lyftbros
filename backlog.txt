@@ -2,8 +2,6 @@
 
     
 - Lyftfeed
-    - allow to see a lift of first bumps in a pop-up window
-
         - allow to comment
     - show a summary of stats on the feed page
         - user workout stats in last month, year, all time

@@ -320,7 +320,11 @@ cursor: pointer;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 40%; /* Could be more or less, depending on screen size */
+}
+
+#fist-bumps-table {
+  width: 100%;
 }
 
 /* The Close Button */

@@ -56,7 +56,6 @@ async function showModal(e) {
   let workoutId = idArray[2];
   let response = await fetch(`/api/workouts/fist-bumps/${workoutId}`);
   let json = await response.json();
-  console.log(json);
   let fistBumpArray = json.bumps;
   fistBumpArray.forEach(element => {
     let newFistBump = document.createElement("tr");
