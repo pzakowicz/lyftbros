@@ -34,7 +34,7 @@
                 <th>Weight</th>
                 <th>Reps</th>
                 </tr>
-                <%for (let i = 0; i < model.length; i++) { %>
+                <% workouts: for (let i = 0; i < model.length; i++) { %>
               <% if (existingWorkoutsArray.includes(model[i].id)) { %>
                 <tr>
                   <td width="60%"><%= model[i].lift_name %></td>
@@ -45,7 +45,15 @@
                     <% existingWorkoutsArray.push(model[i].id); %>
                   </table>
                   <div class="flex-container" id="comment-section">
-                    <span id="comment-summary-<%= model[i].id %>">Be the first one to fist bump your bro!</span>
+                    <span id="comment-summary-<%= model[i].id %>">
+                      <% bumps: for (let j = 0; j < bumps.length; j++) { %>
+                        <% if (model[i].id === bumps[j].workout_id) { %>
+                          <%= bumps[j].count %> fist bumps!
+                          <% break %>
+                        <% } %>   
+                    <% } %>
+                    </span>
+
                     <div id="button-container">
                       <button type="button" class="comment-button" id="<%= model[i].id %>" onclick="addFistBump(this)"><i class="far fa-hand-rock"></i></button>
                       <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
@@ -70,13 +78,7 @@
             <% } %>
             <% } %>
           </table>
-          <div class="flex-container" id="comment-section">
-            <span>Be the first one to fist bump your bro!</span>
-            <div id="button-container">
-              <button type="button" class="comment-button" id="fist-bump" ><i class="far fa-hand-rock"></i></button>
-              <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
-            </div> 
-          </div>
+
       </div>
         </div>
         <% } else { %>

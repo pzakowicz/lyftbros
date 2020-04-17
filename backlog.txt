@@ -24,6 +24,7 @@
         - give stars to lifts
     - make bros look clickable
     - add leaderboard (most workouts, highest volume, biggest progress)
+    - hide the last item on the list or make it clickable
 
 
 - Log your training

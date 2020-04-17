@@ -59,6 +59,7 @@ app.get("/", (req, res) => {
 //GET feed page
 app.get("/feed", redirectToLogin, (req, res) => {
   let users;
+  let fistBumps;
   db.serialize(() => {
 
     db.all("SELECT * FROM Users", (err, rows) => {
@@ -68,11 +69,19 @@ app.get("/feed", redirectToLogin, (req, res) => {
       users = rows;
     });
 
+    db.all("SELECT Sub1.workout_id, Sub1.user_id, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id", (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log(rows);
+      fistBumps = rows;
+    });
+
     db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Lifts.name as 'lift_name', Sets.weight, 	Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id ORDER BY Workouts.date_time DESC LIMIT 30;", (err, rows) => {
       if (err) {
         return console.error(err.message);
       }
-      res.render("feed", { model: rows, bros: users, user: req.user });      
+      res.render("feed", { model: rows, bros: users, user: req.user, bumps: fistBumps });      
     });
 
   });

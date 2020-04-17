@@ -35,9 +35,7 @@ if (!name || !userId) {
   return res.sendStatus(400);
 } else {
   console.log("Requested to post the workout: ", req.body);
-  db.run(
-    "INSERT INTO Workouts (name, user_id) VALUES ($name, $userId)",
-    {
+  db.run("INSERT INTO Workouts (name, user_id) VALUES ($name, $userId)", {
       $name: name,
       $userId: userId
     },
@@ -57,6 +55,48 @@ if (!name || !userId) {
   );
 }
 });
+
+//POST a fist-bump
+apiRouter.post("/workouts/fist-bump/", (req, res, next) => {
+  const workoutId = req.body.workoutId;
+  const userId = req.user.id;
+  if (!workoutId || !userId) {
+    console.log("Insufficient data to post a fist-bump.");
+    return res.sendStatus(400);
+  } else {
+    console.log("Requested to post the fist-bump: ", req.body);
+    db.get("SELECT * FROM Fist_bumps WHERE workout_id = $workoutId AND user_id = $userId", {
+      $workoutId: workoutId,
+      $userId: userId
+    }, function(error, row) {
+      if (row) {
+        console.log("Fist-bump already given by this user.")
+        return res.sendStatus(400);
+      } else {
+        db.run("INSERT INTO Fist_bumps (workout_id, user_id) VALUES ($workoutId, $userId)", {
+          $workoutId: workoutId,
+          $userId: userId
+          },
+          function(error) {
+            if (error) {
+              next(error);
+            } else {
+              db.get(
+                `SELECT * FROM Fist_bumps WHERE id = ${this.lastID}`,
+                (error, row) => {
+                  res.status(201).json({ fist_bump: row });
+                  console.log("Added new fist-bump: ", row);
+                }
+              );
+            }
+          }
+        );
+
+      }
+    })
+
+  }
+  });
 
 //POST sets 
 apiRouter.post("/sets/", (req, res, next) => {
