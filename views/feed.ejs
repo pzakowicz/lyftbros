@@ -44,8 +44,8 @@
                   <%  } else { %>
                     <% existingWorkoutsArray.push(model[i].id); %>
                   </table>
-                  <div class="flex-container" id="comment-section">
-                    <span id="comment-summary-<%= model[i].id %>">
+                  <div class="flex-container comment-section">
+                    <span id="comment-summary-<%= model[i].id %>" onclick="showModal(this)">
                       <% bumps: for (let j = 0; j < bumps.length; j++) { %>
                         <% if (model[i].id === bumps[j].workout_id) { %>
                         <span id="fist-bump-count-<%= model[i].id %>"><%= bumps[j].count %></span><span> fist bumps!</span>   
@@ -105,6 +105,13 @@
             <a href="/users/<%= bros[i].email %>"><p class="user-list-item"><%= bros[i].first_name %> <%= bros[i].surname %></p></a>
             <% } %>
           <% } %>
+        </div>
+      </div>
+      <div id="commentModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <table id="fist-bumps-table">
+          </table>
         </div>
       </div>
     </main>

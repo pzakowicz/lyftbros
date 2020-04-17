@@ -57,7 +57,7 @@ if (!name || !userId) {
 });
 
 //POST a fist-bump
-apiRouter.post("/workouts/fist-bump/", (req, res, next) => {
+apiRouter.post("/workouts/fist-bumps/add/", (req, res, next) => {
   const workoutId = req.body.workoutId;
   const userId = req.user.id;
   if (!workoutId || !userId) {
@@ -92,6 +92,19 @@ apiRouter.post("/workouts/fist-bump/", (req, res, next) => {
 
   }
   });
+
+//GET fist-bumps and users
+apiRouter.get("/workouts/fist-bumps/:workoutid", (req, res, next) => {
+    console.log("Requested fist-bumps for workout id: ", req.params);
+    db.all(
+      "SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub3.email, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname, Users.email FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id WHERE Sub1.workout_id = $workoutId",
+      { $workoutId: req.params.workoutid }, 
+      (error, rows) => {
+        console.log("Returned fist-bumps: ", rows);
+        res.status(200).json({ bumps: rows });
+      }
+    );
+    });
 
 //POST sets 
 apiRouter.post("/sets/", (req, res, next) => {
