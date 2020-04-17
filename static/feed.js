@@ -5,7 +5,6 @@ async function addFistBump(e) {
   const data = {
     workoutId: workoutId
   };
-  console.log(data);
   let response = await fetch(`/api/workouts/fist-bump/`,
    {
       method: "POST",
@@ -14,15 +13,16 @@ async function addFistBump(e) {
     },
     body: JSON.stringify(data)
   })
-
+  // check if fist bump has been added
   if (response.status === 201) {
     console.log("Fist bump added");
     let elementToUpdate = document.getElementById(`fist-bump-count-${workoutId}`);
-    if (elementToUpdate) {
+    if (elementToUpdate) {  //check if a counter element already exists
+      //increment counter
       let currentCount = Number(document.getElementById(`fist-bump-count-${workoutId}`).innerHTML);
       currentCount ++;
       document.getElementById(`fist-bump-count-${workoutId}`).innerHTML = currentCount;
-    } else {
+    } else {   // add new counter
       let newCount = document.createElement("span");
       newCount.setAttribute("id", `fist-bump-count-${workoutId}`)
       newCount.innerHTML = "1";
@@ -32,5 +32,8 @@ async function addFistBump(e) {
       container.appendChild(newCount);
       container.appendChild(newText);
     }
+    //update the icon button
+    let icon = e.childNodes[0];
+    icon.className = "fas fa-hand-rock";
   }
 };

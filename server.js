@@ -73,7 +73,7 @@ app.get("/feed", redirectToLogin, (req, res) => {
       if (err) {
         return console.error(err.message);
       }
-      console.log(rows);
+
       fistBumps = rows;
     });
 
