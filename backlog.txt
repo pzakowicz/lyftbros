@@ -3,9 +3,9 @@
     
 - Lyftfeed
     - show a summary of stats on the feed page
+        - most recent workout
         - user workout stats in last month, year, all time
         - number of workouts, volume, level increase in strength
-        - most recent workout
     - achievements (PR, top3 lift, level up)
     - make each workout more compact
         - show volument, top lift
@@ -13,8 +13,6 @@
             - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
             - give stars to lifts
         - allow to comment
-
-    - remove yourself from bros
     - add leaderboard (most workouts, highest volume, biggest progress)
 
 - Notifications
