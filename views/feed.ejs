@@ -132,18 +132,25 @@
       <div class="container-box tile" id="leaderboard-container">
         <h4>Leaderboards</h4>
         <h6>(Last 4 weeks)</h6>
-        <div class="inner-container" id="users-container">
+        <div class="inner-container">
           <% if (totalLeaderboard[0]) { %>
             <h5>Most workouts:</h5>
             <% for (let i = 0; i < totalLeaderboard.length; i++) { %>
-                <a href="/users/<%= totalLeaderboard[i].email %>"><p class="user-list-item"><%= i+1 %>. <%= totalLeaderboard[i].first_name %> <%= totalLeaderboard[i].surname %> <%= totalLeaderboard[i].workouts %></p></a>
+                <div class="flex-container list-item">
+                  <a href="/users/<%= totalLeaderboard[i].email %>"><span><%= i+1 %>. <%= totalLeaderboard[i].first_name %> <%= totalLeaderboard[i].surname %> </a></span><span class="value"><%= totalLeaderboard[i].workouts %></span>
+                </div>
             <% } %>
           <% } %>
+        </div>
+        <div class="inner-container">
+
           <% if (volumeLeaderboard[0]) { %>
             <h5>Most volume:</h5>
             <% for (let i = 0; i < volumeLeaderboard.length; i++) { %>
-                <a href="/users/<%= volumeLeaderboard[i].email %>"><p class="user-list-item"><%= i+1 %>. <%= volumeLeaderboard[i].first_name %> <%= volumeLeaderboard[i].surname %> <%= volumeLeaderboard[i].volume %> kg</p></a>
-            <% } %>
+              <div class="flex-container list-item">
+                <a href="/users/<%= volumeLeaderboard[i].email %>"><span class="user-list-item"><%= i+1 %>. <%= volumeLeaderboard[i].first_name %> <%= volumeLeaderboard[i].surname %></span></a><span class="value"><%= (volumeLeaderboard[i].volume/1000).toFixed(1) %> tons</span>
+              </div>
+                <% } %>
           <% } %>
         </div>
       </div>

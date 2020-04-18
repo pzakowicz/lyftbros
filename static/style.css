@@ -249,6 +249,19 @@ button:hover {
 #leaderboard-container {
   width: 20%;
 }
+#leaderboard-container span {
+  font-size: small;
+  margin: 2px 0px;
+}
+
+.value {
+  font-weight: bold;
+}
+
+.list-item {
+  width: 70%;
+  justify-content: space-between;
+}
 
 .user-name {
   margin: 2px 0px;
