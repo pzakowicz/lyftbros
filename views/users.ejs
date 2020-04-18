@@ -13,8 +13,46 @@
     <main id="user-main">
       <div class="container-box tile" id="user-summary-container">
         <h4>Bro's summary</h4>
-        <p>Name: <%= user.first_name %> <%= user.surname %></p>
-        <p>Gender: <%= user.gender %></p>
+        <div class="flex-container list-item">
+          <span>Name: </span><span class="value"><%= user.first_name %> <%= user.surname %></span>
+        </div>
+        <div class="flex-container list-item">
+          <span>Gender: </span><span class="value"><%= user.gender %></span>
+        </div>
+
+        <div class="inner-container">
+          <h5>Last 4 weeks:</h5>
+          
+            <% let countedWorkouts = []; %>
+            <% for (let i = 0; i < model.length; i++) { %>   
+              <% if (model[i].email === user.email && !countedWorkouts.includes(model[i].id)) { %>
+                <% countedWorkouts.push(model[i].id) %>
+                <% } %> 
+                <% } %>
+            <div class="flex-container list-item">
+              <span>Workouts: </span><span class="value"><%= countedWorkouts.length %></span> 
+            </div> 
+            <% let totalVolume = 0; %>
+            <% let totalSets = 0; %>
+            <% let totalReps = 0; %>
+            <% for (let i = 0; i < model.length; i++) { %>   
+              <% if (model[i].email === user.email) { %>
+                <% totalVolume += (model[i].weight * model[i].reps); %>
+                <% totalSets ++; %>
+                <% totalReps += model[i].reps; %>
+                <% } %> 
+                <% } %>
+              <div class="flex-container list-item">
+                <span>Sets: </span><span class="value"><%= totalSets %></span>
+              </div>
+              <div class="flex-container list-item">
+                <span>Reps: </span><span class="value"><%= totalReps %></span>
+              </div>
+              <div class="flex-container list-item">
+                <span>Volume: </span><span class="value"><%= (totalVolume/1000).toFixed(1) %> t</span>
+              </div>
+
+        </div>
       </div>
       <div id="user-activity-container">
         <% if (model[0]) { %>

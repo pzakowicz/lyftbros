@@ -27,26 +27,36 @@
           </div>
           <div class="inner-container">
             <h5>Last 4 weeks:</h5>
-            <% let countedWorkouts = []; %>
-            <% for (let i = 0; i < model.length; i++) { %>   
-              <% if (model[i].email === user.email && !countedWorkouts.includes(model[i].id)) { %>
-                <% countedWorkouts.push(model[i].id) %>
-                <% } %> 
-                <% } %> 
-            <p>Workouts: <%= countedWorkouts.length %></p>
-            <% let totalVolume = 0; %>
-            <% let totalSets = 0; %>
-            <% let totalReps = 0; %>
-            <% for (let i = 0; i < model.length; i++) { %>   
-              <% if (model[i].email === user.email) { %>
-                <% totalVolume += (model[i].weight * model[i].reps); %>
-                <% totalSets ++; %>
-                <% totalReps += model[i].reps; %>
-                <% } %> 
-                <% } %>
-                <p>Sets: <%= totalSets %></p>
-                <p>Reps: <%= totalReps %></p>
-                <p>Volume: <%= totalVolume %> kg</p>
+            
+              <% let countedWorkouts = []; %>
+              <% for (let i = 0; i < model.length; i++) { %>   
+                <% if (model[i].email === user.email && !countedWorkouts.includes(model[i].id)) { %>
+                  <% countedWorkouts.push(model[i].id) %>
+                  <% } %> 
+                  <% } %>
+              <div class="flex-container list-item">
+                <span>Workouts: </span><span class="value"><%= countedWorkouts.length %></span> 
+              </div> 
+              <% let totalVolume = 0; %>
+              <% let totalSets = 0; %>
+              <% let totalReps = 0; %>
+              <% for (let i = 0; i < model.length; i++) { %>   
+                <% if (model[i].email === user.email) { %>
+                  <% totalVolume += (model[i].weight * model[i].reps); %>
+                  <% totalSets ++; %>
+                  <% totalReps += model[i].reps; %>
+                  <% } %> 
+                  <% } %>
+                <div class="flex-container list-item">
+                  <span>Sets: </span><span class="value"><%= totalSets %></span>
+                </div>
+                <div class="flex-container list-item">
+                  <span>Reps: </span><span class="value"><%= totalReps %></span>
+                </div>
+                <div class="flex-container list-item">
+                  <span>Volume: </span><span class="value"><%= (totalVolume/1000).toFixed(1) %> t</span>
+                </div>
+
           </div>
         <% } %>
       </div>
@@ -148,7 +158,7 @@
             <h5>Most volume:</h5>
             <% for (let i = 0; i < volumeLeaderboard.length; i++) { %>
               <div class="flex-container list-item">
-                <a href="/users/<%= volumeLeaderboard[i].email %>"><span class="user-list-item"><%= i+1 %>. <%= volumeLeaderboard[i].first_name %> <%= volumeLeaderboard[i].surname %></span></a><span class="value"><%= (volumeLeaderboard[i].volume/1000).toFixed(1) %> tons</span>
+                <a href="/users/<%= volumeLeaderboard[i].email %>"><span class="user-list-item"><%= i+1 %>. <%= volumeLeaderboard[i].first_name %> <%= volumeLeaderboard[i].surname %></span></a><span class="value"><%= (volumeLeaderboard[i].volume/1000).toFixed(1) %> t</span>
               </div>
                 <% } %>
           <% } %>
