@@ -237,6 +237,12 @@ button:hover {
   width: 15%;
 }
 
+#stat-container p {
+  font-size: small;
+  margin: 2px 0px;
+
+}
+
 #feed-container {
   width: 35%;
 }

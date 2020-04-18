@@ -2,18 +2,23 @@
 
     
 - Lyftfeed
-    - show a summary of stats on the feed page
-        - most recent workout
-        - user workout stats in last month, year, all time
-        - number of workouts, volume, level increase in strength
     - achievements (PR, top3 lift, level up)
     - make each workout more compact
-        - show volument, top lift
-        - details in separate page
-            - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
-            - give stars to lifts
-        - allow to comment
+        - show volume, top lift, achivements
+    - allow to comment
+    - get data from last month
+    
+
+-Workout details
+    - details in separate page
+        - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
+        - give stars to lifts
     - add leaderboard (most workouts, highest volume, biggest progress)
+
+- User details
+    - show a summary of stats on the feed page
+        - user workout stats in last year, all time
+        - level increase in strength
 
 - Notifications
     - when someone has given you a fist bump
@@ -48,6 +53,11 @@
     - add a friend
 
 - Goals
+
+- Coach
+    - tell people whether to increase volume / reps
+    - which body part to exercise
+    - create workout plans
 
 - Authenticate
     - try catch the login unauthorized error

@@ -60,8 +60,10 @@ app.get("/", (req, res) => {
 app.get("/feed", redirectToLogin, (req, res) => {
   let users;
   let fistBumps;
+  let stats;
   db.serialize(() => {
 
+    //get all users
     db.all("SELECT * FROM Users", (err, rows) => {
       if (err) {
         return console.error(err.message);
@@ -69,6 +71,7 @@ app.get("/feed", redirectToLogin, (req, res) => {
       users = rows;
     });
 
+    //get list and count of fist bumps
     db.all("SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id", (err, rows) => {
       if (err) {
         return console.error(err.message);
@@ -77,6 +80,16 @@ app.get("/feed", redirectToLogin, (req, res) => {
       fistBumps = rows;
     });
 
+    //get stats 
+    db.all("SELECT * FROM Workouts ORDER BY date_time DESC LIMIT 1", (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+
+      fistBumps = rows;
+    });
+
+    //get list of workouts and send response
     db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as 'lift_name', Sets.weight, 	Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id ORDER BY Workouts.date_time DESC LIMIT 30;", (err, rows) => {
       if (err) {
         return console.error(err.message);
