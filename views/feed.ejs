@@ -35,12 +35,45 @@
                 <th>Reps</th>
                 </tr>
                 <% workouts: for (let i = 0; i < model.length; i++) { %>
-              <% if (existingWorkoutsArray.includes(model[i].id)) { %>
+              <% if (existingWorkoutsArray.includes(model[i].id) && i < model.length - 1) { %>
                 <tr>
                   <td width="60%"><%= model[i].lift_name %></td>
                   <td width="20%"><%= model[i].weight %></td>
                   <td width="20%"><%= model[i].reps %></td>  
                   </tr>
+                  <%  } else if (existingWorkoutsArray.includes(model[i].id) && i === model.length - 1) { %>
+                    <tr>
+                      <td width="60%"><%= model[i].lift_name %></td>
+                      <td width="20%"><%= model[i].weight %></td>
+                      <td width="20%"><%= model[i].reps %></td>  
+                      </tr>
+                    </table>
+                    <div class="flex-container comment-section">
+                      <span id="comment-summary-<%= model[i].id %>" onclick="showModal(this)">
+                        <% bumps: for (let j = 0; j < bumps.length; j++) { %>
+                          <% if (model[i].id === bumps[j].workout_id) { %>
+                          <span id="fist-bump-count-<%= model[i].id %>"><%= bumps[j].count %></span><span> fist bumps!</span>   
+                            <% break %>
+                          <% } else if (j === bumps.length -1 ) { %>   
+                            <span>Be the first one to bump your bro!</span>
+                          <% } %> 
+                      <% } %>
+                      </span>
+                      <div id="button-container">
+                        <button type="button" class="comment-button" id="<%= model[i].id %>" onclick="addFistBump(this)">
+                          <% bumps2: for (let j = 0; j < bumps.length; j++) { %>
+                            <% if (model[i].id === bumps[j].workout_id && user.id === bumps[j].user_id) { %>
+                              <i class="fas fa-hand-rock" id="fist-<%= bumps[j].workout_id %>"></i>
+                              <% break  bumps2 %>
+                            <% } else if (j === bumps.length -1 ) { %>
+                              <i class="far fa-hand-rock" id="fist-<%= model[i].id %>"></i>
+                          <% } %>
+                          <% } %>
+                          </button>
+                        <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
+                      </div> 
+                    </div>
+                  </div>
                   <%  } else { %>
                     <% existingWorkoutsArray.push(model[i].id); %>
                   </table>
@@ -87,10 +120,7 @@
             </tr>
             <% } %>
             <% } %>
-          </table>
-
       </div>
-        </div>
         <% } else { %>
           <div class="container-box tile">
             <h4>No workouts logged yet! Get lyftin!</h4>
