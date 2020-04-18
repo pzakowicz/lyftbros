@@ -11,46 +11,51 @@
   <body>
     <%- include("_header") -%>
     <main id="feed-main">
+
+      <!-- container with user stats -->
       <div class="container-box tile" id="stat-container">
         <% if (user) { %>
           <h4>Welcome <a href="/users/<%= user.email %>/"><%= user.first_name %>!</a></h4>
-          <h5>Your last workout:</h5>
+          <div class="inner-container">
+            <h5>Your last workout:</h5>
             <% for (let i = 0; i < model.length; i++) { %>   
               <% if (model[i].email === user.email) { %>
-              <p><%= model[i].workout_name %> @ <%= model[i].date_time %></p>
-               <% break %>
-              <% } %> 
-              <% } %> 
-          <h5>Last 4 weeks:</h5>
-          <% let countedWorkouts = []; %>
-          <% for (let i = 0; i < model.length; i++) { %>   
-            <% if (model[i].email === user.email && !countedWorkouts.includes(model[i].id)) { %>
-              <% countedWorkouts.push(model[i].id) %>
-              <% } %> 
-              <% } %> 
-          <p>Workouts / week: <%= Math.ceil(countedWorkouts.length / 4) %></p>
-          <% let totalVolume = 0; %>
-          <% let totalSets = 0; %>
-          <% let totalReps = 0; %>
-          <% for (let i = 0; i < model.length; i++) { %>   
-            <% if (model[i].email === user.email) { %>
-              <% totalVolume += (model[i].weight * model[i].reps); %>
-              <% totalSets ++; %>
-              <% totalReps += model[i].reps; %>
-              <% } %> 
-              <% } %>
-              <p>Sets / week: <%= Math.ceil(totalSets / 4) %></p>
-              <p>Reps / week: <%= Math.ceil(totalReps / 4) %></p>
-              <p>Volume / week: <%= Math.ceil(totalVolume / 4) %> kg</p>
-
-
-
-
-       <% } %>
+                <p><%= model[i].workout_name %> @ <%= model[i].date_time %></p>
+                <% break %>
+                <% } %> 
+                <% } %> 
+          </div>
+          <div class="inner-container">
+            <h5>Last 4 weeks:</h5>
+            <% let countedWorkouts = []; %>
+            <% for (let i = 0; i < model.length; i++) { %>   
+              <% if (model[i].email === user.email && !countedWorkouts.includes(model[i].id)) { %>
+                <% countedWorkouts.push(model[i].id) %>
+                <% } %> 
+                <% } %> 
+            <p>Workouts: <%= countedWorkouts.length %></p>
+            <% let totalVolume = 0; %>
+            <% let totalSets = 0; %>
+            <% let totalReps = 0; %>
+            <% for (let i = 0; i < model.length; i++) { %>   
+              <% if (model[i].email === user.email) { %>
+                <% totalVolume += (model[i].weight * model[i].reps); %>
+                <% totalSets ++; %>
+                <% totalReps += model[i].reps; %>
+                <% } %> 
+                <% } %>
+                <p>Sets: <%= totalSets %></p>
+                <p>Reps: <%= totalReps %></p>
+                <p>Volume: <%= totalVolume %> kg</p>
+          </div>
+        <% } %>
       </div>
+
+      <!-- container with the feed-->
       <div class="container" id="feed-container">
-        <% if (typeof model[0] !== "undefined") { %>
-        <div class="container-box tile">
+
+          <!-- add the beginning of first workout container -->
+          <div class="container-box tile">
             <% let existingWorkoutsArray = []; %>
             <% existingWorkoutsArray.push(model[0].id); %>
             <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
@@ -61,112 +66,89 @@
                 <th>Lyft</th>
                 <th>Weight</th>
                 <th>Reps</th>
-                </tr>
-                <% workouts: for (let i = 0; i < model.length; i++) { %>
+              </tr>
+
+            <!-- loop throught the workout list -->  
+            <% for (let i = 0; i < model.length; i++) { %>
+              <!-- add to existing container if set belongs to an added workout and it's not the last row -->
               <% if (existingWorkoutsArray.includes(model[i].id) && i < model.length - 1) { %>
-                <tr>
-                  <td width="60%"><%= model[i].lift_name %></td>
-                  <td width="20%"><%= model[i].weight %></td>
-                  <td width="20%"><%= model[i].reps %></td>  
-                  </tr>
-                  <%  } else if (existingWorkoutsArray.includes(model[i].id) && i === model.length - 1) { %>
-                    <tr>
-                      <td width="60%"><%= model[i].lift_name %></td>
-                      <td width="20%"><%= model[i].weight %></td>
-                      <td width="20%"><%= model[i].reps %></td>  
-                      </tr>
-                    </table>
-                    <div class="flex-container comment-section">
-                      <span id="comment-summary-<%= model[i].id %>" onclick="showModal(this)">
-                        <% bumps: for (let j = 0; j < bumps.length; j++) { %>
-                          <% if (model[i].id === bumps[j].workout_id) { %>
-                          <span id="fist-bump-count-<%= model[i].id %>"><%= bumps[j].count %></span><span> fist bumps!</span>   
-                            <% break %>
-                          <% } else if (j === bumps.length -1 ) { %>   
-                            <span>Be the first one to bump your bro!</span>
-                          <% } %> 
-                      <% } %>
-                      </span>
-                      <div id="button-container">
-                        <button type="button" class="comment-button" id="<%= model[i].id %>" onclick="addFistBump(this)">
-                          <% bumps2: for (let j = 0; j < bumps.length; j++) { %>
-                            <% if (model[i].id === bumps[j].workout_id && user.id === bumps[j].user_id) { %>
-                              <i class="fas fa-hand-rock" id="fist-<%= bumps[j].workout_id %>"></i>
-                              <% break  bumps2 %>
-                            <% } else if (j === bumps.length -1 ) { %>
-                              <i class="far fa-hand-rock" id="fist-<%= model[i].id %>"></i>
-                          <% } %>
-                          <% } %>
-                          </button>
-                        <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
-                      </div> 
-                    </div>
-                  </div>
-                  <%  } else { %>
-                    <% existingWorkoutsArray.push(model[i].id); %>
+                  <tr>
+                    <td width="60%"><%= model[i].lift_name %></td>
+                    <td width="20%"><%= model[i].weight %></td>
+                    <td width="20%"><%= model[i].reps %></td>  
+                    </tr>
+              <!-- close the container and start a new one -->      
+              <% } else if (!existingWorkoutsArray.includes(model[i].id)) { %>
+                <% existingWorkoutsArray.push(model[i].id); %>
                   </table>
                   <div class="flex-container comment-section">
                     <span id="comment-summary-<%= model[i].id %>" onclick="showModal(this)">
-                      <% bumps: for (let j = 0; j < bumps.length; j++) { %>
+                      <% for (let j = 0; j < bumps.length; j++) { %>
                         <% if (model[i].id === bumps[j].workout_id) { %>
-                        <span id="fist-bump-count-<%= model[i].id %>"><%= bumps[j].count %></span><span> fist bumps!</span>   
+                          <span id="fist-bump-count-<%= model[i].id %>"><%= bumps[j].count %></span><span> fist bumps!</span>   
                           <% break %>
                         <% } else if (j === bumps.length -1 ) { %>   
                           <span>Be the first one to bump your bro!</span>
                         <% } %> 
-                    <% } %>
+                      <% } %>
                     </span>
                     <div id="button-container">
                       <button type="button" class="comment-button" id="<%= model[i].id %>" onclick="addFistBump(this)">
-                        <% bumps2: for (let j = 0; j < bumps.length; j++) { %>
+                        <% for (let j = 0; j < bumps.length; j++) { %>
                           <% if (model[i].id === bumps[j].workout_id && user.id === bumps[j].user_id) { %>
                             <i class="fas fa-hand-rock" id="fist-<%= bumps[j].workout_id %>"></i>
-                            <% break  bumps2 %>
+                            <% break %>
                           <% } else if (j === bumps.length -1 ) { %>
                             <i class="far fa-hand-rock" id="fist-<%= model[i].id %>"></i>
+                          <% } %>
                         <% } %>
-                        <% } %>
-                        </button>
+                      </button>
                       <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
-                    </div> 
-                  </div>
-                </div>
-                <div class="container-box tile">
-          <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
-          <p class="workout-date"><%= model[i].date_time %></p>
-          <h3 class="workout-name"><%= model[i].workout_name %></h3>
-          <table class= "sets-table" id="sets-table-<%= model[i].id %>">
-            <tr>
-              <th>Lyft</th>
-              <th>Weight</th>
-              <th>Reps</th>
-            </tr>
-            <tr>
-              <td width="60%"><%= model[i].lift_name %></td>
-              <td width="20%"><%= model[i].weight %></td>
-              <td width="20%"><%= model[i].reps %></td>  
-            </tr>
-            <% } %>
-            <% } %>
-      </div>
-        <% } else { %>
-          <div class="container-box tile">
-            <h4>No workouts logged yet! Get lyftin!</h4>
-          </div>
-        <% } %>
-      </div>
-      <div class="container-box tile" id="bros-container">
-        <h4>Your bros</h4>
-        <div id="users-container">
-          <% if (bros[0]) { %>
-            <% for (let i = 0; i < bros.length; i++) { %>
-              <% if (user.email !== bros[i].email) { %>
-                <a href="/users/<%= bros[i].email %>"><p class="user-list-item"><%= bros[i].first_name %> <%= bros[i].surname %></p></a>
+                    </div> <!-- closing the button container -->
+                  </div> <!-- closing the comment section -->
+                </div> <!-- close the previous workout container -->
+                <div class="container-box tile">  <!-- opening new workout container -->
+                  <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
+                  <p class="workout-date"><%= model[i].date_time %></p>
+                  <h3 class="workout-name"><%= model[i].workout_name %></h3>
+                  <table class= "sets-table" id="sets-table-<%= model[i].id %>">
+                    <tr>
+                      <th>Lyft</th>
+                      <th>Weight</th>
+                      <th>Reps</th>
+                    </tr>
+                    <tr>
+                      <td width="60%"><%= model[i].lift_name %></td>
+                      <td width="20%"><%= model[i].weight %></td>
+                      <td width="20%"><%= model[i].reps %></td>  
+                    </tr>
               <% } %>
+            <% } %>
+            </table> <!-- closing the last table -->
+          </div> <!-- closing the last workout container -->
+      </div> <!-- closing the feed container -->
+
+      <!-- Leaderboard container -->
+      <div class="container-box tile" id="leaderboard-container">
+        <h4>Leaderboards</h4>
+        <h6>(Last 4 weeks)</h6>
+        <div class="inner-container" id="users-container">
+          <% if (totalLeaderboard[0]) { %>
+            <h5>Most workouts:</h5>
+            <% for (let i = 0; i < totalLeaderboard.length; i++) { %>
+                <a href="/users/<%= totalLeaderboard[i].email %>"><p class="user-list-item"><%= i+1 %>. <%= totalLeaderboard[i].first_name %> <%= totalLeaderboard[i].surname %> <%= totalLeaderboard[i].workouts %></p></a>
+            <% } %>
+          <% } %>
+          <% if (volumeLeaderboard[0]) { %>
+            <h5>Most volume:</h5>
+            <% for (let i = 0; i < volumeLeaderboard.length; i++) { %>
+                <a href="/users/<%= volumeLeaderboard[i].email %>"><p class="user-list-item"><%= i+1 %>. <%= volumeLeaderboard[i].first_name %> <%= volumeLeaderboard[i].surname %> <%= volumeLeaderboard[i].volume %> kg</p></a>
             <% } %>
           <% } %>
         </div>
       </div>
+
+      <!-- hidden modal container -->
       <div id="commentModal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>

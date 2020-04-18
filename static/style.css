@@ -6,7 +6,7 @@ html, body {
   height: 100%;
 }
 
-h4 {
+h4, h5, h6 {
   margin: 10px 0px;
 }
 
@@ -197,10 +197,6 @@ button:hover {
   margin-right: 60px;
 }
 
-
-
-
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -234,21 +230,24 @@ button:hover {
 /* ------------------------- Feed ------------------------- */
 
 #stat-container {
-  width: 15%;
+  width: 20%;
 }
 
 #stat-container p {
   font-size: small;
   margin: 2px 0px;
+}
 
+.inner-container {
+  margin: 30px 0px;
 }
 
 #feed-container {
-  width: 35%;
+  width: 30%;
 }
 
-#bros-container {
-  width: 15%;
+#leaderboard-container {
+  width: 20%;
 }
 
 .user-name {
