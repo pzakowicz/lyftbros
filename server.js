@@ -99,7 +99,7 @@ app.get("/feed", redirectToLogin, (req, res) => {
 });
 
 //GET log-training page
-app.get("/log-training", redirectToLogin, (req, res) => {
+app.get("/log-workout", redirectToLogin, (req, res) => {
   let users;
   let lifts;
   db.serialize(() => {
@@ -116,7 +116,7 @@ app.get("/log-training", redirectToLogin, (req, res) => {
         return console.error(err.message);
       }
       lifts = rows;
-      res.render("training", { users: users, lifts: lifts })     
+      res.render("log-workout", { users: users, lifts: lifts })     
     });
 
   })
@@ -126,6 +126,7 @@ app.get("/log-training", redirectToLogin, (req, res) => {
 app.get("/users/:email", redirectToLogin, (req, res) => {
   let prs;
   let user;
+  let fistBumps;
   db.serialize(() => {
 
     //get user data
@@ -144,19 +145,25 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
         return console.error(err.message);
       } 
       console.log("Got PRs");
-
       prs = rows;
-
     });
 
-    //get user and workout data
-    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Workouts.date_time BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime') ORDER BY Workouts.date_time DESC;", { $email: req.params.email }, (err, rows) => {
+    //get list and count of fist bumps
+    db.all("SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id", (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      fistBumps = rows;
+    });
+
+    //get user and workout data and render page
+    db.all("SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Workouts.date_time BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime') GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;", { $email: req.params.email }, (err, rows) => {
       if (err) {
         return console.error(err.message);
       } 
       console.log("Got workout data");
 
-      res.render("users", { model: rows, prs: prs, user: user });
+      res.render("user-details", { model: rows, prs: prs, user: user, bumps: fistBumps });
     });
   });
 });

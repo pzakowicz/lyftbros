@@ -304,8 +304,6 @@ button:hover {
 
 .comment-section span {
   font-size: 12px;
-
-
 }
 
 .comment-section span:hover {
@@ -380,7 +378,7 @@ cursor: pointer;
 }
 
 
-/* ------------------------- Log training ------------------------- */
+/* ------------------------- Log workout ------------------------- */
 
 #log-training-container {
   min-width: 250px;
@@ -441,7 +439,7 @@ cursor: pointer;
  }
 
  #user-activity-container {
-   width: 30%;
+   width: 40%;
  }
  
  #user-prs-container {

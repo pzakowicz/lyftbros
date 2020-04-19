@@ -63,7 +63,6 @@ async function showModal(e) {
     fistBumpsTable.appendChild(newFistBump);
   });
   modal.style.display = "block";
-  
 }
 
 

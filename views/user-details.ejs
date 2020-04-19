@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="../../style.css" />
+    <link href="https:#stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="icon" href="../../resources/Lbs logo fat.PNG" type="image/x-icon" />
+    <title>User details</title>
+  </head>
+  <body>
+    <%- include("_header") -%>
+    <main id="user-main">
+      <div class="container-box tile" id="user-summary-container">
+        <h4>Bro's summary</h4>
+        <div class="flex-container list-item">
+          <span>Name: </span><span class="value"><%= user.first_name %> <%= user.surname %></span>
+        </div>
+        <div class="flex-container list-item">
+          <span>Gender: </span><span class="value"><%= user.gender %></span>
+        </div>
+
+        <div class="inner-container">
+          <h5>Last 4 weeks:</h5>
+          
+            <% let countedWorkouts = []; %>
+            <% for (let i = 0; i < model.length; i++) { %>   
+              <% if (model[i].email === user.email && !countedWorkouts.includes(model[i].id)) { %>
+                <% countedWorkouts.push(model[i].id) %>
+                <% } %> 
+                <% } %>
+            <div class="flex-container list-item">
+              <span>Workouts: </span><span class="value"><%= countedWorkouts.length %></span> 
+            </div> 
+            <% let totalVolume = 0; %>
+            <% let totalSets = 0; %>
+            <% let totalReps = 0; %>
+            <% for (let i = 0; i < model.length; i++) { %>   
+              <% if (model[i].email === user.email) { %>
+                <% totalVolume += (model[i].weight * model[i].reps); %>
+                <% totalSets ++; %>
+                <% totalReps += model[i].reps; %>
+                <% } %> 
+                <% } %>
+              <div class="flex-container list-item">
+                <span>Sets: </span><span class="value"><%= totalSets %></span>
+              </div>
+              <div class="flex-container list-item">
+                <span>Reps: </span><span class="value"><%= totalReps %></span>
+              </div>
+              <div class="flex-container list-item">
+                <span>Volume: </span><span class="value"><%= (totalVolume/1000).toFixed(1) %> t</span>
+              </div>
+
+        </div>
+      </div>
+
+      <div id="user-activity-container">
+                  <!-- add the beginning of first workout container -->
+          <div class="container-box tile">
+            <% let existingWorkoutsArray = []; %>
+            <% existingWorkoutsArray.push(model[0].id); %>
+            <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
+            <p class="subtitle"><%= model[0].date_time %></p>
+            <h3 class="workout-name"><%= model[0].workout_name %></h3>
+            <!-- add workout stats -->
+            <% let workoutVolume = 0; %>
+            <% let workoutSets = 0; %>
+            <% let workoutReps = 0; %>
+            <% let currentWorkout = model[0].id %>
+            <% for (let i = 0; i < model.length; i++) { %>    
+              <% if (model[i].id === currentWorkout) { %>
+                <% workoutVolume += (model[i].sets * model[i].avg_reps * model[i].avg_weight); %>
+                <% workoutSets += model[i].sets; %>
+                <% workoutReps += model[i].sets * model[i].avg_reps; %>
+              <% } %>  
+            <% } %>
+              <div class="flex-container workout-summary">
+                <h4 class="flex-summary-item">Sets: <%= workoutSets %></h4>
+                <h4 class="flex-summary-item">Reps: <%= workoutReps %></h4>
+                <h4 class="flex-summary-item">Volume: <%= (workoutVolume/1000).toFixed(1) %> t</h4>
+              </div>
+            <table class= "sets-table" id="sets-table-<%= model[0].id %>">
+              <tr>
+                <th>Lyft</th>
+                <th>Sets</th>
+                <th>Avg reps</th>
+                <th>Avg weight</th>
+                <th>Max weight</th>
+              </tr>
+
+            <!-- loop throught the workout list -->  
+            <% for (let i = 0; i < model.length; i++) { %>
+              <!-- add to existing container if set belongs to an added workout and it's not the last row -->
+              <% if (existingWorkoutsArray.includes(model[i].id) && i < model.length - 1) { %>
+                  <tr>
+                    <td width="100%"><%= model[i].lift_name %></td>
+                    <td width="10%"><%= model[i].sets %></td>
+                    <td width="10%"><%= model[i].avg_reps %></td>
+                    <td width="10%"><%= model[i].avg_weight %></td>
+                    <td width="10%"><%= model[i].max_weight %></td>      
+                    </tr>
+              <!-- close the container and start a new one -->      
+              <% } else if (!existingWorkoutsArray.includes(model[i].id)) { %>
+                <% existingWorkoutsArray.push(model[i].id); %>
+                  </table>
+                  <div class="flex-container comment-section">
+                    <span id="comment-summary-<%= model[i].id %>" onclick="showModal(this)">
+                      <% for (let j = 0; j < bumps.length; j++) { %>
+                        <% if (model[i].id === bumps[j].workout_id) { %>
+                          <span id="fist-bump-count-<%= model[i].id %>"><%= bumps[j].count %></span><span> fist bumps!</span>   
+                          <% break %>
+                        <% } else if (j === bumps.length -1 ) { %>   
+                          <span>Be the first one to bump your bro!</span>
+                        <% } %> 
+                      <% } %>
+                    </span>
+                    <div id="button-container">
+                      <button type="button" class="comment-button" id="<%= model[i].id %>" onclick="addFistBump(this)">
+                        <% for (let j = 0; j < bumps.length; j++) { %>
+                          <% if (model[i].id === bumps[j].workout_id && user.id === bumps[j].user_id) { %>
+                            <i class="fas fa-hand-rock" id="fist-<%= bumps[j].workout_id %>"></i>
+                            <% break %>
+                          <% } else if (j === bumps.length -1 ) { %>
+                            <i class="far fa-hand-rock" id="fist-<%= model[i].id %>"></i>
+                          <% } %>
+                        <% } %>
+                      </button>
+                      <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
+                    </div> <!-- closing the button container -->
+                  </div> <!-- closing the comment section -->
+                </div> <!-- close the previous workout container -->
+                <div class="container-box tile">  <!-- opening new workout container -->
+                  <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
+                  <p class="subtitle"><%= model[i].date_time %></p>
+                  <h3 class="workout-name"><%= model[i].workout_name %></h3>
+                  <% let workoutVolume = 0; %>
+            <% let workoutSets = 0; %>
+            <% let workoutReps = 0; %>
+            <% let currentWorkout = model[i].id %>
+            <% for (let i = 0; i < model.length; i++) { %>    
+              <% if (model[i].id === currentWorkout) { %>
+                <% workoutVolume += (model[i].sets * model[i].avg_reps * model[i].avg_weight); %>
+                <% workoutSets += model[i].sets; %>
+                <% workoutReps += model[i].sets * model[i].avg_reps; %>
+              <% } %>  
+            <% } %>
+            <div class="flex-container workout-summary">
+              <h4 class="flex-summary-item">Sets: <%= workoutSets %></h4>
+              <h4 class="flex-summary-item">Reps: <%= workoutReps %></h4>
+              <h4 class="flex-summary-item">Volume: <%= (workoutVolume/1000).toFixed(1) %> t</h4>
+            </div>
+                  <table class= "sets-table" id="sets-table-<%= model[i].id %>">
+                    <tr>
+                      <th>Lyft</th>
+                      <th>Sets</th>
+                      <th>Avg reps</th>
+                      <th>Avg weight</th>
+                      <th>Max weight</th>
+                    </tr>
+                    <tr>
+                      <td width="100%"><%= model[i].lift_name %></td>
+                      <td width="10%"><%= model[i].sets %></td>
+                      <td width="10%"><%= model[i].avg_reps %></td>
+                      <td width="10%"><%= model[i].avg_weight %></td>
+                      <td width="10%"><%= model[i].max_weight %></td>      
+                    </tr>
+              <% } %>
+            <% } %>
+            </table> <!-- closing the last table -->
+          </div> <!-- closing the last workout container -->
+      </div>  
+
+      <div class="container-box tile" id="user-prs-container">
+        <h4>Bro's PRs</h4>
+        <table>
+          <tr>
+            <th>Lyft</th>
+            <th>10 reps</th>
+            <th>5 reps</th>
+          </tr>
+          <tr>
+            <%for (let i = 0; i < prs.length; i++) { %>
+            </tr>
+              <td width="80%"><%= prs[i].name %></td>
+              <td width="20%"><%= prs[i].ten_reps %></td>
+              <td width="20%"><%= prs[i].five_reps %></td>
+            <tr>
+            <% } %>
+            
+          </tr>
+        </table>
+      </div>
+
+      <!-- hidden comment modal container -->
+      <div id="commentModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <table id="fist-bumps-table">
+          </table>
+        </div>
+      </div>
+    </main>
+    <script src="./user-details.js"></script>
+  </body>
+</html>

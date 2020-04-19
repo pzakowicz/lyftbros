@@ -22,7 +22,6 @@
     - user workout stats in last year, all time
     - level increase in strength
 
-
 - Log your training
     - change the logging method depending on measurement type
     - add how easy / hard it was
