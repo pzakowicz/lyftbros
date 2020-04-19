@@ -1,13 +1,18 @@
 ---- Functionality ---------------------------------
 
+- add webquries for all pages to RWF for mobile
     
 - Lyftfeed
-    - achievements (PR, top3 lift, level up)
     - make each workout more compact
         - show volume, top lift, achivements
+            - achievements (PR, top3 lift, level up)
     - allow to comment
     - fix last element 
 
+- Notifications
+    - when someone has given you a fist bump
+    - when someone commented on your activity
+    - when you have not been exercising for a while
 
 -Workout details
     - details in separate page
@@ -19,10 +24,6 @@
     - user workout stats in last year, all time
     - level increase in strength
 
-- Notifications
-    - when someone has given you a fist bump
-    - when someone commented on your activity
-    - when you have not been exercising for a while
 
 - Log your training
     - change the logging method depending on measurement type
@@ -69,7 +70,9 @@
     - rewrite helper functions to be async await (remove ids from training page, instead get the id first)
     - alternatively do a table joint to get all information at one time
     - create a wrapper listener function which is also async and await functions which need to end first
-- add webquries for all pages to RWF for mobile
+
+- make a progressive web app that can be installed on user phone (see to build folder)
+
 - clean up css (get rid of unused things, find a better way to select element rather than giving everything ids)
 - introduce react
 - introduce redux
