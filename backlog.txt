@@ -3,9 +3,7 @@
 - add webquries for all pages to RWF for mobile
     
 - Lyftfeed
-    - make each workout more compact
-        - show volume, top lift, achivements
-            - achievements (PR, top3 lift, level up)
+    -workout achievements (PR, top3 lift, level up)
     - allow to comment
     - fix last element 
 

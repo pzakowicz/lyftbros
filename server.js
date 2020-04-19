@@ -88,7 +88,7 @@ app.get("/feed", redirectToLogin, (req, res) => {
     });
 
     //get list of workouts and send response
-    db.all("SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as 'lift_name', Sets.weight, 	Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime') ORDER BY Workouts.date_time DESC;", (err, rows) => {
+    db.all("SELECT Workouts.id, Workouts.name as  workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime') GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;", (err, rows) => {
       if (err) {
         return console.error(err.message);
       }

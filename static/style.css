@@ -244,11 +244,11 @@ button:hover {
 }
 
 #feed-container {
-  width: 30%;
+  width: 40%;
 }
 
 #leaderboard-container {
-  width: 15%;
+  min-width: 15%;
   min-height: 300px;
 }
 
@@ -266,7 +266,7 @@ button:hover {
 }
 
 .list-item {
-  width: 80%;
+
   justify-content: space-between;
 }
 
