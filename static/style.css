@@ -281,6 +281,18 @@ button:hover {
 
 }
 
+.workout-name {
+  margin-bottom: 8px;
+}
+
+.workout-summary {
+  justify-content: flex-start;
+}
+
+.flex-summary-item {
+  margin-right: 30px;
+}
+
 .sets-table {
   width: 100%;
 }

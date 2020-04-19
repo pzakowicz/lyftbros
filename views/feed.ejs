@@ -71,6 +71,27 @@
             <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
             <p class="subtitle"><%= model[0].date_time %></p>
             <h3 class="workout-name"><%= model[0].workout_name %></h3>
+            <% let workoutVolume = 0; %>
+            <% let workoutSets = 0; %>
+            <% let workoutReps = 0; %>
+            <% let currentWorkout = model[0].id %>
+            <% for (let i = 0; i < model.length; i++) { %>    
+              <% if (model[i].id === currentWorkout) { %>
+                <% workoutVolume += (model[i].weight * model[i].reps); %>
+                <% workoutSets ++; %>
+                <% workoutReps += model[i].reps; %>
+              <%# } else { %>
+                <%# currentWorkout = model[0].id; %>
+                <%# workoutVolume += (model[i].weight * model[i].reps); %>
+                <%# workoutSets ++; %>
+                <%# workoutReps += model[i].reps; %>
+                <% } %>  
+                <% } %>
+                <div class="flex-container workout-summary">
+                <h4 class="flex-summary-item">Volume: <%= workoutVolume / 1000 %> t</h4>
+                <h4 class="flex-summary-item">Sets: <%= workoutSets %></h4>
+                <h4 class="flex-summary-item">Reps: <%= workoutReps %></h4>
+              </div>
             <table class= "sets-table" id="sets-table-<%= model[0].id %>">
               <tr>
                 <th>Lyft</th>
@@ -121,6 +142,25 @@
                   <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
                   <p class="subtitle"><%= model[i].date_time %></p>
                   <h3 class="workout-name"><%= model[i].workout_name %></h3>
+                  <% let workoutVolume = 0; %>
+            <% let workoutSets = 0; %>
+            <% let workoutReps = 0; %>
+            <% let currentWorkout = model[i].id %>
+            <% for (let i = 0; i < model.length; i++) { %>    
+              <% if (model[i].id === currentWorkout) { %>
+                <% workoutVolume += (model[i].weight * model[i].reps); %>
+                <% workoutSets ++; %>
+                <% workoutReps += model[i].reps; %>
+              <%# } else { %>
+                <%# currentWorkout = model[0].id; %>
+                <%# workoutVolume += (model[i].weight * model[i].reps); %>
+                <%# workoutSets ++; %>
+                <%# workoutReps += model[i].reps; %>
+                <% } %>  
+                <% } %>
+                <h4>Volume: <%= workoutVolume / 1000 %> t</h4>
+                <h4>Sets: <%= workoutSets %></h4>
+                <h4>Reps: <%= workoutReps %></h4>
                   <table class= "sets-table" id="sets-table-<%= model[i].id %>">
                     <tr>
                       <th>Lyft</th>
