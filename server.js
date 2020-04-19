@@ -125,7 +125,7 @@ app.get("/log-workout", redirectToLogin, (req, res) => {
 //GET user details page
 app.get("/users/:email", redirectToLogin, (req, res) => {
   let prs;
-  let user;
+  let bro;
   let fistBumps;
   db.serialize(() => {
 
@@ -136,7 +136,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
       } 
       console.log("Got User data");
       console.log(row);
-      user = row;
+      bro = row;
     });
 
     //get PR data
@@ -163,7 +163,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
       } 
       console.log("Got workout data");
 
-      res.render("user-details", { model: rows, prs: prs, user: user, bumps: fistBumps });
+      res.render("user-details", { model: rows, prs: prs, bro: bro, bumps: fistBumps, user: req.user });
     });
   });
 });
