@@ -69,7 +69,7 @@
             <% let existingWorkoutsArray = []; %>
             <% existingWorkoutsArray.push(model[0].id); %>
             <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
-            <p class="workout-date"><%= model[0].date_time %></p>
+            <p class="subtitle"><%= model[0].date_time %></p>
             <h3 class="workout-name"><%= model[0].workout_name %></h3>
             <table class= "sets-table" id="sets-table-<%= model[0].id %>">
               <tr>
@@ -119,7 +119,7 @@
                 </div> <!-- close the previous workout container -->
                 <div class="container-box tile">  <!-- opening new workout container -->
                   <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
-                  <p class="workout-date"><%= model[i].date_time %></p>
+                  <p class="subtitle"><%= model[i].date_time %></p>
                   <h3 class="workout-name"><%= model[i].workout_name %></h3>
                   <table class= "sets-table" id="sets-table-<%= model[i].id %>">
                     <tr>
@@ -140,8 +140,8 @@
 
       <!-- Leaderboard container -->
       <div class="container-box tile" id="leaderboard-container">
-        <h4>Leaderboards</h4>
-        <h6>(Last 4 weeks)</h6>
+        <h4 id="leaderboard-heading">Leaderboards</h4>
+        <p class="subtitle">(Last 4 weeks)</p>
         <div class="inner-container">
           <% if (totalLeaderboard[0]) { %>
             <h5>Most workouts:</h5>
@@ -165,7 +165,7 @@
         </div>
       </div>
 
-      <!-- hidden modal container -->
+      <!-- hidden comment modal container -->
       <div id="commentModal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>

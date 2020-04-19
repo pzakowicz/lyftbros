@@ -251,6 +251,11 @@ button:hover {
   width: 15%;
   min-height: 300px;
 }
+
+#leaderboard-heading {
+  margin-bottom: 0px;
+}
+
 #leaderboard-container span {
   font-size: 13px;
   margin: 2px 0px;
@@ -269,7 +274,7 @@ button:hover {
   margin: 2px 0px;
 }
 
-.workout-date {
+.subtitle {
   font-size: 11px;
   margin: 2px 0px;
   color: rgb(148, 148, 148);
