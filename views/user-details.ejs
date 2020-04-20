@@ -23,25 +23,25 @@
         <div class="inner-container">
           <h5>Last 4 weeks:</h5>
           
-            <% let countedWorkouts = []; %>
-            <% for (let i = 0; i < model.length; i++) { %>   
-              <% if (model[i].email === bro.email && !countedWorkouts.includes(model[i].id)) { %>
-                <% countedWorkouts.push(model[i].id) %>
-                <% } %> 
-                <% } %>
-            <div class="flex-container list-item">
-              <span>Workouts: </span><span class="value"><%= countedWorkouts.length %></span> 
-            </div> 
-            <% let totalVolume = 0; %>
-            <% let totalSets = 0; %>
-            <% let totalReps = 0; %>
-            <% for (let i = 0; i < model.length; i++) { %>   
-              <% if (model[i].email === bro.email) { %>
-                <% totalVolume += (model[i].weight * model[i].reps); %>
-                <% totalSets ++; %>
-                <% totalReps += model[i].reps; %>
-                <% } %> 
-                <% } %>
+          <% let countedWorkouts = []; %>
+          <% for (let i = 0; i < model.length; i++) { %>   
+            <% if (model[i].email === bro.email && !countedWorkouts.includes(model[i].id)) { %>
+              <% countedWorkouts.push(model[i].id) %>
+              <% } %> 
+              <% } %>
+          <div class="flex-container list-item">
+            <span>Workouts: </span><span class="value"><%= countedWorkouts.length %></span> 
+          </div> 
+          <% let totalVolume = 0; %>
+          <% let totalSets = 0; %>
+          <% let totalReps = 0; %>
+          <% for (let i = 0; i < model.length; i++) { %>   
+            <% if (model[i].email === bro.email) { %>
+              <% totalVolume += (model[i].avg_weight * model[i].avg_reps * model[i].sets); %>
+              <% totalSets += model[i].sets; %>
+              <% totalReps += model[i].avg_reps * model[i].sets; %>
+              <% } %> 
+              <% } %>
               <div class="flex-container list-item">
                 <span>Sets: </span><span class="value"><%= totalSets %></span>
               </div>

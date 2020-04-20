@@ -130,7 +130,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
   db.serialize(() => {
 
     //get user data
-    db.get("SELECT first_name, surname, gender FROM Users WHERE email = $email;", { $email: req.params.email }, (err, row) => {
+    db.get("SELECT first_name, surname, gender, email FROM Users WHERE email = $email;", { $email: req.params.email }, (err, row) => {
       if (err) {
         return console.error(err.message);
       } 
