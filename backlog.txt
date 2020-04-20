@@ -1,6 +1,6 @@
 ---- Functionality ---------------------------------
 
-- add webquries for all pages to RWF for mobile
+- add webquries for all pages to RWF for mobile -- logout!!! 
     
 - Lyftfeed
     - allow to comment

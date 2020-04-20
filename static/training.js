@@ -13,6 +13,7 @@ const workoutId = document.getElementById("workout-id");
 const addNewLyftButton = document.getElementById("add-new-lyft-button"); // button to get a form view
 const saveNewLyftButton = document.getElementById("save-lyft-button");
 const cancelNewLyftButton = document.getElementById("cancel-lyft-button");
+const workoutContainer = document.getElementById("new-workout-container");
 
 //change exerciseId on dropdown change
 exerciseDropdown.addEventListener("change", () => {
@@ -49,6 +50,7 @@ addSetButton.addEventListener("click", () => {
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>
     `;
     workoutTable.appendChild(newSet);
+    workoutContainer.style.display = "inline";
   }
 });
 
