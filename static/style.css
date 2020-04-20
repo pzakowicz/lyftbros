@@ -7,14 +7,10 @@ html, body {
 }
 
 h4, h5, h6 {
-  margin: 10px 0px;
+  margin: 2% 0%;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid rgb(233, 233, 233);
-}
+
 
 nav {
   display: flex;
@@ -23,6 +19,7 @@ nav {
 a {
   text-decoration: none;
   color: black;
+  cursor: pointer;
 }
 
 a:hover {
@@ -54,23 +51,26 @@ a:visited:hover {
 main {
   display: flex;
   align-items: flex-start;
+  align-content: flex-start;
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  min-height: 90%;
+  min-height: 89%;
   background-color: rgb(247, 247, 250);
+  margin-top: 60px;
 }
 
 .container-box {
-  margin: 10px;
+  margin: 8px 4px 0px 4px;
   box-shadow: 0 1px 5px rgba(0,0,0,0.15);
-  padding: 15px;
+  padding: 2%;
   background-color: white;
   border-radius: 4px;
 }
 
 .flex-container {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .inline-container {
@@ -113,17 +113,48 @@ i:hover {
 
 #login-header {
   justify-content: start;
+
+}
+
+#login-main {
+  margin-top: 0px;
 }
 
 #title {
   text-align: center;
   background-color: rgb(247, 247, 250);
-
 }
 
 #title-text {
   margin: 0;
   padding: 40px 0px;
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+
+#login-and-register-container {
+ justify-content: center;
+}
+
+#show-create-account-form {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+
+}
+
+.link {
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: lightgray;
+  cursor: pointer;
+}
+
+#create-form {
+  display: none;
 }
 
 #user-created {
@@ -153,6 +184,16 @@ button {
 
 
 /* ------------------------- Header ------------------------- */
+
+#partial-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(233, 233, 233);
+  position: fixed;
+  width: 100%;
+  background-color: white;
+  top: 0;
+}
 
 nav {
   align-items: center;
@@ -194,7 +235,7 @@ button:hover {
 .dropdown {
   align-items: center;
   justify-content: center;
-  margin-right: 60px;
+  margin-right: 3%;
 }
 
 .dropdown-content {
@@ -227,11 +268,29 @@ button:hover {
 
 }
 
+/* ------------------------- Header for mobile  ------------------------- */
+
+@media only screen and (max-width: 480px) {
+
+  #partial-header {
+  position: fixed;
+  height: 60px;
+  }
+
+  #logo-text {
+    display: none;
+  }
+
+  .nav-button {
+    margin: 0px 5px;
+  }
+
+}
+
 /* ------------------------- Feed ------------------------- */
 
 #stat-container {
   width: 15%;
-  min-height: 300px;
 }
 
 #stat-container p {
@@ -249,7 +308,7 @@ button:hover {
 
 #leaderboard-container {
   min-width: 15%;
-  min-height: 300px;
+
 }
 
 #leaderboard-heading {
@@ -334,7 +393,7 @@ cursor: pointer;
   font-size: 15px;
 }
 
-/* ------- Feed comment modal */
+/* ------- Feed comment modal -------------- */
 
 .modal {
   display: none; /* Hidden by default */
@@ -377,11 +436,36 @@ cursor: pointer;
   cursor: pointer;
 }
 
+/* ------------------------- Feed for mobile  ------------------------- */
+
+@media only screen and (max-width: 480px) {
+
+  #stat-container {
+    width: 43%;
+    order: 1;
+    min-height: 245px;
+
+  }
+
+  #leaderboard-container {
+    order: 2;
+    width: 43%;
+    min-height: 245px;
+  }
+
+  #feed-container {
+    order: 3;
+    width: 100%;
+  }
+
+}
+
 
 /* ------------------------- Log workout ------------------------- */
 
 #log-training-container {
   min-width: 250px;
+  min-height: 170px;
 }
 
 #log-training-form {
@@ -402,8 +486,19 @@ cursor: pointer;
   width: 70px;
 }
 
+#add-new-lyft-button {
+  display: inline;
+  margin: 10px;
+}
+
 #add-lyft-container {
   display: none;
+}
+
+#new-workout-container {
+  min-height: 170px;
+  width: 40%;
+
 }
 
 #workout-name {
@@ -418,12 +513,45 @@ cursor: pointer;
   display: none;
 }
 
+#workout-table {
+  width: 100%;
+
+}
+
 #workout-owner {
   margin-top: 15px;
 }
 
 .id {
   display: none;
+}
+
+/* ------------------------- Log workout for mobile  ------------------------- */
+
+@media only screen and (max-width: 480px) {
+
+  #log-training-container {
+    width: 100%;
+  }
+
+  #add-lyft-container {
+    width: 100%;
+  }
+
+  #save-lyft-button, #save-workout-button, #submit-set-button  {
+    margin-left: 0px;
+  }
+
+  #new-workout-container {
+    width: 100%;
+  }
+
+  #workout-table {
+    width: 100%;
+  }
+
+
+
 }
 
 
@@ -449,6 +577,27 @@ cursor: pointer;
  #user-prs-container table {
   width: 100%;
  }
+
+ /* ------------------------- User details for mobile  ------------------------- */
+
+@media only screen and (max-width: 480px) {
+
+  #user-summary-container {
+    width: 100%;
+    order: 1;
+  }
+
+  #user-prs-container {
+    order: 2;
+    width: 100%;
+  }
+
+  #user-activity-container {
+    order: 3;
+    width: 100%;
+  }
+
+}
 
  /* ------------------------- Logout ------------------------- */
 
@@ -480,4 +629,14 @@ cursor: pointer;
 
 .hidden {
   display: none;
+}
+
+ /* ------------------------- User details for mobile  ------------------------- */
+
+ @media only screen and (max-width: 480px) {
+
+  #account-details-container {
+    width: 100%;
+
+  }
 }

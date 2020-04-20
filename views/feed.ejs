@@ -10,10 +10,11 @@
   </head>
   <body>
     <%- include("_header") -%>
+    
     <main id="feed-main">
 
       <!-- container with user stats -->
-      <div class="container-box tile" id="stat-container">
+      <div class="container-box" id="stat-container">
         <% if (user) { %>
           <h4>Welcome <a href="/users/<%= user.email %>/"><%= user.first_name %>!</a></h4>
           <div class="inner-container">
@@ -69,7 +70,7 @@
       </div> <!-- closing the feed container -->
 
       <!-- Leaderboard container -->
-      <div class="container-box tile" id="leaderboard-container">
+      <div class="container-box" id="leaderboard-container">
         <h4 id="leaderboard-heading">Leaderboards</h4>
         <p class="subtitle">(Last 4 weeks)</p>
         <div class="inner-container">

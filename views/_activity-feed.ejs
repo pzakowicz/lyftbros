@@ -1,5 +1,5 @@
           <!-- add the beginning of first workout container -->
-          <div class="container-box tile">
+          <div class="container-box">
             <% let existingWorkoutsArray = []; %>
             <% existingWorkoutsArray.push(model[0].id); %>
             <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
@@ -72,7 +72,7 @@
                     </div> <!-- closing the button container -->
                   </div> <!-- closing the comment section -->
                 </div> <!-- close the previous workout container -->
-                <div class="container-box tile">  <!-- opening new workout container -->
+                <div class="container-box">  <!-- opening new workout container -->
                   <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
                   <p class="subtitle"><%= model[i].date_time %></p>
                   <h3 class="workout-name"><%= model[i].workout_name %></h3>

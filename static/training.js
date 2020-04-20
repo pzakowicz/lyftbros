@@ -12,6 +12,7 @@ const lyftId = document.getElementById("lyft-id");
 const workoutId = document.getElementById("workout-id");
 const addNewLyftButton = document.getElementById("add-new-lyft-button"); // button to get a form view
 const saveNewLyftButton = document.getElementById("save-lyft-button");
+const cancelNewLyftButton = document.getElementById("cancel-lyft-button");
 
 //change exerciseId on dropdown change
 exerciseDropdown.addEventListener("change", () => {
@@ -168,3 +169,9 @@ saveNewLyftButton.addEventListener("click", async () => {
   document.getElementById("log-training-container").style.display = "inline-block";
   document.getElementById("add-lyft-container").style.display = "none";
 });
+
+//cancel adding new exercise
+cancelNewLyftButton.addEventListener("click", () => {
+  document.getElementById("log-training-container").style.display = "inline-block";
+  document.getElementById("add-lyft-container").style.display = "none"
+})

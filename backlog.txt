@@ -3,23 +3,14 @@
 - add webquries for all pages to RWF for mobile
     
 - Lyftfeed
-    -workout achievements (PR, top3 lift, level up)
     - allow to comment
     - fix last element 
-
-- Notifications
-    - when someone has given you a fist bump
-    - when someone commented on your activity
-    - when you have not been exercising for a while
+    -workout achievements (PR, top3 lift, level up)
 
 -Workout details
     - details in separate page
         - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
         - give stars to lifts
-    - add leaderboard (most workouts, highest volume, biggest progress)
-
-- User details
-    - user workout stats in last year, all time
     - level increase in strength
 
 - Log your training
@@ -30,6 +21,15 @@
     - warning message against navigating away from page
     - give stars to lifts (strength standards)
     - remove the IDs from the page with async await
+
+- User details
+    - user workout stats in last year, all time
+
+- Notifications
+    - tell us your bodweight and age
+    - when someone has given you a fist bump
+    - when someone commented on your activity
+    - when you have not been exercising for a while
 
 - User account
     - change password
@@ -68,9 +68,10 @@
     - alternatively do a table joint to get all information at one time
     - create a wrapper listener function which is also async and await functions which need to end first
 
-- make a progressive web app that can be installed on user phone (see to build folder)
+- make a progressive web app that can be installed on user phone (see 'to build' folder)
 
 - clean up css (get rid of unused things, find a better way to select element rather than giving everything ids)
+- learn mongo db and see if it would fit
 - introduce react
 - introduce redux
 - implement mocha and write unit tests

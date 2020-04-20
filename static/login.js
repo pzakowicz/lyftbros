@@ -1,8 +1,12 @@
 //get elements
 const createUserButton = document.getElementById("create-user");
+const loginForm = document.getElementById("login-form");
+const createForm = document.getElementById("create-form");
 const loginButton = document.getElementById("login-button");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
+const showCreateAccountForm = document.getElementById("show-create-account-form");
+const userCreatedMessage = document.getElementById("user-created");
 
 //helper functions
 function findGender() {
@@ -15,9 +19,11 @@ function findGender() {
   }
 }
 
-function userCreatedMessage() {
+function showUserCreatedMessage() {
   document.getElementById("create-form").style.display = "none";
-  document.getElementById("user-created").style.display = "inline";
+  userCreatedMessage.style.display = "block";
+  userCreatedMessage.style.width = "100%";
+
 }
 
 function userNotFoundMessage() {
@@ -53,7 +59,8 @@ createUserButton.addEventListener("click", () => {
     .then(response => response.json())
     .then(data => {
       console.log(data.user);
-      userCreatedMessage();
+      showUserCreatedMessage();
+      loginForm.style.display = "";
     })
     .catch(error => {
       console.error("Error:", error);
@@ -90,3 +97,12 @@ loginButton.addEventListener("click", async () => {
 
   }
 });
+
+
+//show create account form 
+showCreateAccountForm.addEventListener("click", () => {
+  createForm.style.display = "inline";
+  loginForm.style.display = "none";
+  showCreateAccountForm.style.display = "none";
+
+})

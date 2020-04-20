@@ -32,10 +32,10 @@
           <input type="number" id="reps" required>
           <br />
           <button type="button" class="nav-button" id="submit-set-button">Save set</button>
-          <button type="button" class="nav-button secondary-button" id="add-new-lyft-button">Add new lyft</button>
+          <h5 class="link" id="add-new-lyft-button">Add new lyft</h5>
         </form>
       </div>
-      <div class="container-box tile" id="add-lyft-container">
+      <div class="container-box" id="add-lyft-container">
         <h4>Add a lyft</h4>
         <label for="name">Name</label>
         <br />
@@ -50,8 +50,9 @@
         </select>
         <br />
         <button type="button" class="nav-button" id="save-lyft-button">Add lyft</button>
+        <button type="button" class="nav-button" id="cancel-lyft-button">Cancel</button>
       </div>
-      <div class="container-box tile" id="workout-container">
+      <div class="container-box" id="new-workout-container">
         <h4 id="workout-name">Lyft session</h4><span class="id">Id: </span><span class="id" id="workout-id"></span>
         <input type="text" id="workout-name-input" required>
         <i class="fas fa-check" id="save-workout-name-button"></i>
@@ -59,10 +60,10 @@
         <div id="workout-table-container">
           <table id="workout-table">
             <tr>
-              <th width="40%">Lyft</th>
-              <th class="id">Lyft id</th>
-              <th width="20%">Weight (kg)</th>
-              <th width="20%">Reps</th>
+              <th width="60%">Lyft</th>
+              <th class="id" width="1%">Lyft id</th>
+              <th width="10%">Weight (kg)</th>
+              <th width="10%">Reps</th>
               <th width="10%"></th>
             </tr>
           </table>
