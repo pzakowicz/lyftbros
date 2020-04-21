@@ -17,6 +17,7 @@ const saveNewLyftButton = document.getElementById("save-lyft-button");
 const cancelNewLyftButton = document.getElementById("cancel-lyft-button");
 const workoutContainer = document.getElementById("new-workout-container");
 const categoryDropdown = document.getElementById("category");
+const userWeight = document.getElementById("user-weight");
 
 function getExercisesForCategory() {
   let category = categoryDropdown.value;
@@ -33,13 +34,22 @@ function getExercisesForCategory() {
       newExercise.innerHTML = exerciseArray[i].name;
       exerciseDropdown.appendChild(newExercise);
     }
+  })
+};
 
-  });
+function fillUserWeight() {
+  if (categoryDropdown.value === "Bodyweight") {
+    weightInput.value = userWeight.innerHTML;
+  } else {
+    weightInput.value = 0;
+  }
 }
+  
 
 //change exercise list on category change
 categoryDropdown.addEventListener("change", () => {
   getExercisesForCategory();
+  fillUserWeight();
 })
 
 
@@ -209,21 +219,6 @@ async function addNewLyft() {
   console.log(response.statusText);
   return response.statusCode
 }
-
-//get all lifts helper function
-async function getAllExercises() {
-  let response = await fetch("/api/exercises");
-  let json = await response.json();
-  console.log(json);
-  let exerciseArray = json.exercises;
-  exerciseDropdown.innerHTML = "";
-  exerciseArray.forEach(element => {
-    const newExercise = document.createElement("option");
-    newExercise.innerHTML = `${element.name}`; 
-    exerciseDropdown.appendChild(newExercise);
-  });
-  lyftId.innerHTML = exerciseArray[0].id;
-};
 
 //POST new exercise
 saveNewLyftButton.addEventListener("click", async () => {

@@ -15,8 +15,10 @@
     <main id="training-main">
       <% if (!user.weight) { %>
         <div class="container-box tip-container">
-          <p id="tip">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</p>
+          <p id="tip"><i class="fas fa-info-circle"></i>Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</p>
         </div>
+      <% } else { %>
+        <span class="hidden" id="user-weight"><%= user.weight %></span>
       <% } %>
       <div class="container-box" id="log-training-container">
         <h4>Log your lyfts</h4>
