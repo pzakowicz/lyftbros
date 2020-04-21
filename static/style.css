@@ -113,6 +113,7 @@ i:hover {
 
 #login-header {
   justify-content: start;
+  align-items: center;
 }
 
 #login-main {
@@ -128,15 +129,6 @@ i:hover {
 #title {
   text-align: center;
   background-color: rgb(247, 247, 250);
-}
-
-#title-text {
-  margin: 0;
-  padding: 40px 0px;
-  width: 100%;
-  display: block;
-  text-align: center;
-  display: none;
 }
 
 #login-and-register-container {
@@ -194,28 +186,27 @@ button {
 
 @media only screen and (max-width: 480px) {
 
-#login-main {
-  background-image: url("./resources/bro\ science\ life.jpg");
-  background-repeat: no-repeat;
-  background-position: -30px;
-  background-size: cover;
+  #login-header {
+    height: 65px;
+  }
 
-}
+  #login-main {
+    background-image: url("./resources/bro\ science\ life.jpg");
+    background-repeat: no-repeat;
+    background-position: -30px;
+    background-size: cover;
+  }
 
-#title-text {
-  display: none;
-}
+  #login-and-register-container { 
+    margin-top: 100px;
+  }
 
-#login-and-register-container { 
-  margin-top: 150px;
-}
-
-#show-create-account-form {
-  color: white;
-  margin-top: 200px;
-  height: 15px;
-  background-color:rgb(0,0,0,0.7);
-}
+  #show-create-account-form {
+    color: white;
+    margin-top: 100px;
+    height: 15px;
+    background-color:rgb(0,0,0,0.7);
+  }
 
 }
 

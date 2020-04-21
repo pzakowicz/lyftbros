@@ -1,18 +1,5 @@
 ---- Functionality ---------------------------------
 
-- add webquries for all pages to RWF for mobile -- logout!!! 
-    
-- Lyftfeed
-    - allow to comment
-    - fix last element 
-    -workout achievements (PR, top3 lift, level up)
-
--Workout details
-    - details in separate page
-        - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
-        - give stars to lifts
-    - level increase in strength
-
 - Log your training
     - change the logging method depending on measurement type
     - add how easy / hard it was
@@ -22,14 +9,26 @@
     - give stars to lifts (strength standards)
     - remove the IDs from the page with async await
 
-- User details
-    - user workout stats in last year, all time
+- Lyftfeed
+    - allow to comment
+    - fix last element
+    - workout achievements (PR, top3 lift, level up)
+
+-Workout details
+    - details in separate page
+        - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
+        - give stars to lifts
+    - level increase in strength
 
 - Notifications
     - tell us your bodweight and age
     - when someone has given you a fist bump
     - when someone commented on your activity
     - when you have not been exercising for a while
+
+- User details
+    - user workout stats in last year, all time
+
 
 - User account
     - change password
