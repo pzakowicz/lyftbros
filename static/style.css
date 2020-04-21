@@ -511,7 +511,7 @@ cursor: pointer;
 #log-training-form {
   width: 100%;
   display: inline-block;
-  vertical-align: baseline;
+
 }
 
 #log-training-form input {
@@ -520,11 +520,13 @@ cursor: pointer;
   font-weight: bold;
   text-align: center;
   margin: 5px 0px;
+  vertical-align: middle;
 
 }
 
 #log-training-form i {
-
+  vertical-align: middle;
+  margin: 0px;
 }
 
 
