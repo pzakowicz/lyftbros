@@ -570,8 +570,8 @@ cursor: pointer;
 
 #new-workout-container {
   min-height: 170px;
-  width: 40%;
-  margin: 1% 300%;
+  min-width: 40%;
+  margin: 1% 25%;
   display: none;
 
 }

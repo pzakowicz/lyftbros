@@ -111,16 +111,27 @@ addSetButton.addEventListener("click", () => {
   let id = document.getElementById("lyft-id").textContent;
   let weight = document.getElementById("weight").value;
   let reps = document.getElementById("reps").value;
+  //let addedExercises = [];
   if (lyft && id && weight > 0 && reps > 0) {
-    let newSet = document.createElement("tr");
+    //addedExercises.push(lyft);
+    let insertIndex = 0;
+    for (let i = 0; i < workoutTable.rows.length; i++) { 
+      if (workoutTable.rows[i].cells[0].innerHTML === lyft) {
+        insertIndex = i;
+        break;
+      } else {
+        insertIndex = workoutTable.rows.length;
+      }
+    }
+
+    let newSet = workoutTable.insertRow(insertIndex);
+    //let newSet = document.createElement("tr");
     newSet.innerHTML = `
     <td width="70%">${lyft}</td>
     <td class="id" width="0%">${id}</td>
     <td width="10%" contenteditable='true'>${weight}</td>
     <td width="10%" contenteditable='true'>${reps}</td>
-    <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>
-    `;
-    workoutTable.appendChild(newSet);
+    <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
     workoutContainer.style.display = "block";
   }
 });

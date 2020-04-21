@@ -1,27 +1,12 @@
 ---- Functionality ---------------------------------
 
-- Log your training
-    - separate sets of exercises
-    - add how easy / hard it was
-    - add comment
-    - warning message against navigating away from page
-    - remove the IDs from the page with async await
-
-    - give stars to lifts (strength standards)
-    - add different measurement types
-
 - Lyftfeed
     - allow to comment
-
-    - fix last element
-    - workout achievements (PR, top3 lift, level up)
 
 -Workout details
     - details in separate page
         - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
 
-        - give stars to lifts
-    - level increase in strength
 
 - Notifications
     - tell us your bodweight and age
@@ -29,15 +14,35 @@
     - when someone commented on your activity
     - when you have not been exercising for a while
 
-- User details
-    - user workout stats in last year, all time
-
-
 - User account
     - change password
     - delete account
     - create an outer join for PRs to show table when not all rep ranges have been logged
     - add a profile pic
+
+    --------------------MVP--------------------------
+
+- Lyftfeed
+    - fix last element
+    - workout achievements (PR, top3 lift, level up)
+
+- Workout details
+        - give stars to lifts
+    - level increase in strength
+
+
+
+- Log your training
+    - add how easy / hard it was
+    - add comment
+    - warning message against navigating away from page
+
+    - remove the IDs from the page with async await
+    - give stars to lifts (strength standards)
+    - add different measurement types
+
+- User details
+    - user workout stats in last year, all time
 
 - Available lyfts
     - add primary and secondary body part (tell people how long since they exercised a body part - when they are de-training)
