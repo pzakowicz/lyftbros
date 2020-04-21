@@ -39,13 +39,19 @@
           <span class="id">Id: </span><span class="id" id="lyft-id"><%= lifts[0].id %></span>
           <br />
           <label for="weight">Weight(kg):</label>
+          <i class="fas fa-minus-square fa-2x" onclick="removeWeight()"></i>
           <input type="number" id="weight" required>
+          <i class="fas fa-plus-square fa-2x" onclick="addWeight()"></i>
           <br />
           <label for="reps">Reps:</label>
+          <i class="fas fa-minus-square fa-2x" onclick="removeRep()"></i>
           <input type="number" id="reps" required>
+          <i class="fas fa-plus-square fa-2x" onclick="addRep()"></i>
           <br />
-          <button type="button" class="nav-button" id="submit-set-button">Save set</button>
-          <h5 class="link" id="add-new-lyft-button">Add new lyft</h5>
+          <div class="flex-container" id="log-training-button-container">
+            <button type="button" class="nav-button" id="submit-set-button">Save set</button>
+            <h5 class="link" id="add-new-lyft-button">Add new lyft</h5>
+          </div>
         </form>
       </div>
       <div class="container-box" id="add-lyft-container">
@@ -73,7 +79,7 @@
         <div id="workout-table-container">
           <table id="workout-table">
             <tr>
-              <th width="60%">Lyft</th>
+              <th width="70%">Lyft</th>
               <th class="id" width="1%">Lyft id</th>
               <th width="10%">Weight (kg)</th>
               <th width="10%">Reps</th>

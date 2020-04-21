@@ -2,6 +2,8 @@
 const addSetButton = document.getElementById("submit-set-button");
 const workoutTable = document.getElementById("workout-table");
 const exerciseDropdown = document.getElementById("lyft");
+const weightInput = document.getElementById("weight");
+const repsInput = document.getElementById("reps");
 const workoutName = document.getElementById("workout-name");
 const changeWorkoutNameButton = document.getElementById("change-workout-name-button");
 const saveWorkoutNameButton = document.getElementById("save-workout-name-button");
@@ -56,23 +58,56 @@ addNewLyftButton.addEventListener("click", ()=> {
   document.getElementById("add-lyft-container").style.display = "inline-block";
 })
 
+//remove weight
+function removeWeight() {
+  let weight = Number(weightInput.value);
+  if (weight >= 2.5) {
+    weight -= 2.5;
+  }
+  weightInput.value = weight;
+}
+
+//add weight 
+function addWeight() {
+  let weight = Number(weightInput.value);
+  weight += Number(2.5);
+  weightInput.value = weight;
+}
+
+
+//remove reps
+function removeRep() {
+  let reps = Number(repsInput.value);
+  if (reps >= 1) {
+  reps -= Number(1);
+  };
+  repsInput.value = reps;
+}
+
+//add reps
+function addRep() {
+  let reps = Number(repsInput.value);
+  reps += Number(1);
+  repsInput.value = reps;
+}
+
 // add set to workout
 addSetButton.addEventListener("click", () => {
   let lyft = document.getElementById("lyft").value;
   let id = document.getElementById("lyft-id").textContent;
   let weight = document.getElementById("weight").value;
   let reps = document.getElementById("reps").value;
-  if (lyft && id && weight && reps) {
+  if (lyft && id && weight > 0 && reps > 0) {
     let newSet = document.createElement("tr");
     newSet.innerHTML = `
-    <td width="40%">${lyft}</td>
+    <td width="70%">${lyft}</td>
     <td class="id" width="0%">${id}</td>
-    <td width="20%" contenteditable='true'>${weight}</td>
-    <td width="20%" contenteditable='true'>${reps}</td>
+    <td width="10%" contenteditable='true'>${weight}</td>
+    <td width="10%" contenteditable='true'>${reps}</td>
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>
     `;
     workoutTable.appendChild(newSet);
-    workoutContainer.style.display = "inline";
+    workoutContainer.style.display = "block";
   }
 });
 

@@ -504,26 +504,45 @@ cursor: pointer;
 }
 
 #log-training-container {
-  min-width: 250px;
+  min-width: 40%;
   min-height: 170px;
 }
 
 #log-training-form {
-  min-width: 250px;
+  width: 100%;
   display: inline-block;
+  vertical-align: baseline;
 }
 
 #log-training-form input {
-  width: 150px;
+  width: 80px;
+  font-size: larger;
+  font-weight: bold;
+  text-align: center;
+  margin: 5px 0px;
+
 }
 
-#log-training-form select {
-  width: 155px;
+#log-training-form i {
+
 }
+
+
+#log-training-form select {
+  width: 200px;
+}
+
 
 #log-training-form label {
   display: inline-block;
-  width: 70px;
+  width: 90px;
+
+  margin: 10px 0px;
+}
+
+#log-training-button-container {
+
+  justify-content: space-between;
 }
 
 #add-new-lyft-button {
@@ -538,6 +557,7 @@ cursor: pointer;
 #new-workout-container {
   min-height: 170px;
   width: 40%;
+  margin: 1% 20%;
   display: none;
 
 }
@@ -579,12 +599,27 @@ cursor: pointer;
     width: 100%;
   }
 
+  #log-training-form label {
+    font-size: medium;
+  }
+
+  #log-training-form select {
+    font-size: large;
+  
+  }
+
   #save-lyft-button, #save-workout-button, #submit-set-button  {
     margin-left: 0px;
+
+  }
+
+  #save-lyft-button {
+    margin-top: 10px;
   }
 
   #new-workout-container {
     width: 100%;
+    margin: 1%;
   }
 
   #workout-table {
