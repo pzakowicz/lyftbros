@@ -6,7 +6,7 @@ const db = new sqlite3.Database('./data/database.sqlite');
 db.run("CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY, first_name TEXT NOT NULL, surname TEXT NOT NULL, gender TEXT NOT NULL, email TEXT NOT NULL UNIQUE, password TEXT NOT NULL, date_of_birth DATE, weight INTEGER)");
 
 //Create Lifts Table
-db.run("CREATE TABLE IF NOT EXISTS Lifts (id INTEGER PRIMARY KEY, name TEXT NOT NULL UNIQUE, measurement TEXT NOT NULL)");
+db.run("CREATE TABLE IF NOT EXISTS Lifts (id INTEGER PRIMARY KEY, category TEXT NOT NULL, name TEXT NOT NULL UNIQUE)");
 
 //Create Workouts Table 
 db.run("CREATE TABLE IF NOT EXISTS Workouts(id INTEGER PRIMARY KEY, name TEXT NOT NULL, date_time DATE DEFAULT (datetime('now','localtime')), user_id INTEGER NOT NULL, FOREIGN KEY(user_id) REFERENCES Users(id))");

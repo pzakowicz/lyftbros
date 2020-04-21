@@ -31,6 +31,16 @@ exerciseRouter.get("/:name", (req, res, next) => {
     }
   );
   });
+
+  //GET exercise name by category
+exerciseRouter.get("/category/:category", (req, res, next) => {
+  console.log("Requested exercises for category: ", req.params);
+  db.all("SELECT * FROM Lifts WHERE category = $category", { $category: req.params.category }, (error, rows) => {
+      console.log("Returned exercises for category: ", rows);
+      res.status(200).json({ exercises: rows });
+    }
+  );
+  });
   
   //POST new exercise
   exerciseRouter.post("/", (req, res, next) => {

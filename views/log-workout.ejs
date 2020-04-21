@@ -21,11 +21,20 @@
       <div class="container-box" id="log-training-container">
         <h4>Log your lyfts</h4>
         <form id="log-training-form">
+          <label for="category">Category:</label>
+          <select id="category" name="category" required>
+            <option>Barbell</option> 
+            <option>Dumbell</option> 
+            <option>Bodyweight</option> 
+            </select>
+            <br/>
           <label for="lyft">Lyft:</label>
           <select id="lyft" name="lyft" required>
             <%for (let i = 0; i < lifts.length; i++) { %>
+              <% if (lifts[i].category === "Barbell") { %>
               <option><%= lifts[i].name %></option> 
               <% } %>
+            <% } %>
           </select>
           <span class="id">Id: </span><span class="id" id="lyft-id"><%= lifts[0].id %></span>
           <br />

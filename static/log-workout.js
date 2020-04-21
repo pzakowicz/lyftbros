@@ -14,6 +14,28 @@ const addNewLyftButton = document.getElementById("add-new-lyft-button"); // butt
 const saveNewLyftButton = document.getElementById("save-lyft-button");
 const cancelNewLyftButton = document.getElementById("cancel-lyft-button");
 const workoutContainer = document.getElementById("new-workout-container");
+const categoryDropdown = document.getElementById("category");
+
+//change exercise list on category change
+categoryDropdown.addEventListener("change", () => {
+  let category = categoryDropdown.value;
+  fetch(`/api/exercises/category/${category}`)
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    console.log("Received exercises: " + data.exercises);
+    let exerciseArray = data.exercises;
+    exerciseDropdown.innerHTML = "";
+    for (let i = 1; i < exerciseArray.length; i++) { 
+      let newExercise = document.createElement("option");
+      newExercise.innerHTML = exerciseArray[i].name;
+      exerciseDropdown.appendChild(newExercise);
+    }
+
+  });
+})
+
 
 //change exerciseId on dropdown change
 exerciseDropdown.addEventListener("change", () => {

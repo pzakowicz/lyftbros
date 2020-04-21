@@ -1,7 +1,6 @@
 ---- Functionality ---------------------------------
 
 - Log your training
-    - add a tip about adding your weight
     - separate sets of exercises
     - add how easy / hard it was
     - add comment
@@ -20,7 +19,7 @@
 -Workout details
     - details in separate page
         - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
-        
+
         - give stars to lifts
     - level increase in strength
 
