@@ -1,11 +1,12 @@
 ---- Functionality ---------------------------------
 
-- Lyftfeed
-    - allow to comment
-
 -Workout details
     - details in separate page
         - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
+        
+- Lyftfeed
+    - allow to comment
+
 
 
 - Notifications

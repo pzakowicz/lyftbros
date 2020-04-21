@@ -160,6 +160,20 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
   });
 });
 
+//GET workout details page
+app.get("/workouts/:id", redirectToLogin, (req, res) => {
+
+    db.all("SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Lifts.category, Lifts.name, Sets.weight, Sets.reps FROM Sets JOIN Workouts ON Workouts.id = Sets.workout_id JOIN Lifts ON Sets.exercise_id = Lifts.id JOIN Users ON Workouts.user_id = Users.id WHERE Workouts.id = $id", { $id: req.params.id }, (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      res.render("workout-details", { user: req.user, workout: rows });  
+    });
+    
+  })
+
+
+
 //GET account page
 app.get("/account", redirectToLogin, (req, res) => {
   return res.render("account", { user: req.user });  
