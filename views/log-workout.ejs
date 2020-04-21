@@ -13,8 +13,12 @@
     <%- include("_header") -%>
 
     <main id="training-main">
-      
-      <div class="container-box tile" id="log-training-container">
+      <% if (!user.weight) { %>
+        <div class="container-box tip-container">
+          <p id="tip">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</p>
+        </div>
+      <% } %>
+      <div class="container-box" id="log-training-container">
         <h4>Log your lyfts</h4>
         <form id="log-training-form">
           <label for="lyft">Lyft:</label>
@@ -73,7 +77,7 @@
       </div>
       
     </main>
-    <script src="./training.js"></script>
+    <script src="./log-workout.js"></script>
 
   </body>
 </html>

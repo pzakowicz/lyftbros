@@ -471,14 +471,14 @@ cursor: pointer;
   #stat-container {
     width: 43%;
     order: 1;
-    min-height: 245px;
+    min-height: 250px;
 
   }
 
   #leaderboard-container {
     order: 2;
     width: 43%;
-    min-height: 245px;
+    min-height: 250px;
   }
 
   #feed-container {
@@ -490,6 +490,18 @@ cursor: pointer;
 
 
 /* ------------------------- Log workout ------------------------- */
+
+.tip-container {
+  display: block;
+  width: 100%;
+
+}
+
+.tip-container p {
+  font-size: small;
+  text-align: center;
+  margin: 0px;
+}
 
 #log-training-container {
   min-width: 250px;

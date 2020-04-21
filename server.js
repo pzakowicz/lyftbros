@@ -98,25 +98,17 @@ app.get("/feed", redirectToLogin, (req, res) => {
   });
 });
 
-//GET log-training page
+//GET log-workout page
 app.get("/log-workout", redirectToLogin, (req, res) => {
-  let users;
   let lifts;
   db.serialize(() => {
-
-    db.all("SELECT * FROM Users", (err, rows) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      users = rows;
-    });
 
     db.all("SELECT * FROM Lifts", (err, rows) => {
       if (err) {
         return console.error(err.message);
       }
       lifts = rows;
-      res.render("log-workout", { users: users, lifts: lifts })     
+      res.render("log-workout", { user: req.user, lifts: lifts })     
     });
 
   })
