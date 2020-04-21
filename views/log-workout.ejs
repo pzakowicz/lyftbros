@@ -56,17 +56,15 @@
       </div>
       <div class="container-box" id="add-lyft-container">
         <h4>Add a lyft</h4>
-        <label for="name">Name</label>
-        <br />
-        <input type="text" id="name" value="" required />
-        <br />
-        <label for="name">Measurement</label>
-        <br />
-        <select id="measurement" name="measurement">
-          <option value="Weight & reps">Weight & reps</option>
-          <option value="Dumbell">Reps</option>
-
+        <label for="category">Category:</label>
+        <select id="category" name="category">
+          <option value="Barbell">Barbell</option>
+          <option value="Dumbell">Dumbell</option>
+          <option value="Bodyweight">Bodyweight</option>
         </select>
+        <br />
+        <label for="name">Name:</label>
+        <input type="text" id="name" value="" required />
         <br />
         <button type="button" class="nav-button" id="save-lyft-button">Add lyft</button>
         <button type="button" class="nav-button" id="cancel-lyft-button">Cancel</button>

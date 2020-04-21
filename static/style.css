@@ -538,12 +538,10 @@ cursor: pointer;
 #log-training-form label {
   display: inline-block;
   width: 90px;
-
   margin: 10px 0px;
 }
 
 #log-training-button-container {
-
   justify-content: space-between;
 }
 
@@ -554,12 +552,26 @@ cursor: pointer;
 
 #add-lyft-container {
   display: none;
+  width: 30%;
+}
+
+#add-lyft-container label {
+  display: inline-block;
+  width: 100px;
+}
+
+#add-lyft-container select {
+  width: 200px;
+}
+
+#add-lyft-container input {
+  width: 195px;
 }
 
 #new-workout-container {
   min-height: 170px;
   width: 40%;
-  margin: 1% 20%;
+  margin: 1% 300%;
   display: none;
 
 }

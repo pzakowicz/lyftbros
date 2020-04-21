@@ -44,23 +44,23 @@ exerciseRouter.get("/category/:category", (req, res, next) => {
   
   //POST new exercise
   exerciseRouter.post("/", (req, res, next) => {
+  const category = req.body.category;
   const name = req.body.name;
-  const measurement = req.body.measurement;
-  if (!name || !measurement) {
+  if (!name || !category) {
     return res.sendStatus(400);
   } else {
     console.log(req.body);
     db.run(
-      "INSERT INTO Lifts (name, measurement) VALUES ($name, $measurement)",
+      "INSERT INTO Lifts (category, name) VALUES ($category, $name)",
       {
-        $name: name,
-        $measurement: measurement,
+        $category: category,
+        $name: name
       },
       function(error) {
         if (error) {
           next(error);
         } else {
-        res.status(201).send("Lyft added successfully");
+        res.status(201).render("/log-workout");
         }
       }
     );

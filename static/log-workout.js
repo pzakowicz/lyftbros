@@ -18,8 +18,7 @@ const cancelNewLyftButton = document.getElementById("cancel-lyft-button");
 const workoutContainer = document.getElementById("new-workout-container");
 const categoryDropdown = document.getElementById("category");
 
-//change exercise list on category change
-categoryDropdown.addEventListener("change", () => {
+function getExercisesForCategory() {
   let category = categoryDropdown.value;
   fetch(`/api/exercises/category/${category}`)
   .then(response => {
@@ -36,6 +35,11 @@ categoryDropdown.addEventListener("change", () => {
     }
 
   });
+}
+
+//change exercise list on category change
+categoryDropdown.addEventListener("change", () => {
+  getExercisesForCategory();
 })
 
 
@@ -187,11 +191,11 @@ saveWorkoutButton.addEventListener("click", async () => {
 
 //save new exercise helper function
 async function addNewLyft() {
+  const category = document.getElementById("category").value;
   const name = document.getElementById("name").value;
-  const measurement = document.getElementById("measurement").value;
   const data = {
-    name: name,
-    measurement: measurement
+    category: category,
+    name: name
   };
   console.log(data);
   let response = await fetch(`/api/exercises/`,
@@ -203,6 +207,7 @@ async function addNewLyft() {
    body: JSON.stringify(data)
  })
   console.log(response.statusText);
+  return response.statusCode
 }
 
 //get all lifts helper function
@@ -223,8 +228,7 @@ async function getAllExercises() {
 //POST new exercise
 saveNewLyftButton.addEventListener("click", async () => {
   await addNewLyft();
-  getAllExercises();
-  alert("Lyft added successfully");
+  getExercisesForCategory();
   document.getElementById("log-training-container").style.display = "inline-block";
   document.getElementById("add-lyft-container").style.display = "none";
 });
