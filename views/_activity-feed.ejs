@@ -34,7 +34,7 @@
             <!-- loop throught the workout list -->  
             <% for (let i = 0; i < model.length; i++) { %>
               <!-- add to existing container if set belongs to an added workout and it's not the last row -->
-              <% if (existingWorkoutsArray.includes(model[i].id) && i < model.length - 1) { %>
+              <% if (existingWorkoutsArray.includes(model[i].id)) { %>
                   <tr>
                     <td width="100%"><%= model[i].lift_name %></td>
                     <td width="10%"><%= model[i].sets %></td>

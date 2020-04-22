@@ -136,7 +136,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
       if (err) {
         return console.error(err.message);
       } 
-      console.log("Got PRs");
+      console.log("Got PRs", rows);
       prs = rows;
     });
 
@@ -145,6 +145,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
       if (err) {
         return console.error(err.message);
       }
+      console.log("got fist bumps:", rows);
       fistBumps = rows;
     });
 
@@ -153,7 +154,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
       if (err) {
         return console.error(err.message);
       } 
-      console.log("Got workout data");
+      console.log("Got workout data", rows);
 
       res.render("user-details", { model: rows, prs: prs, bro: bro, bumps: fistBumps, user: req.user });
     });

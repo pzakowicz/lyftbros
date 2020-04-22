@@ -1,11 +1,7 @@
 ---- Functionality ---------------------------------
 
-
-
-User details 
-- sets not loading
-
 - Lyftfeed
+    - showing bumps for workout below - fix last item
     - allow to comment
 
 - Notifications
