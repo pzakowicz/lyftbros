@@ -1,5 +1,7 @@
 ---- Functionality ---------------------------------
 
+- move over to mySQL
+
 - Figure out hosting!!!
 
 - Lyftfeed
