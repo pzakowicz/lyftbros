@@ -1,8 +1,10 @@
 ---- Functionality ---------------------------------
 
 - move over to mySQL
-
-- Figure out hosting!!!
+    - create new tables
+    - see lifts
+    - hook up to node 
+- deploy to heroku
 
 - Lyftfeed
     - allow to comment
