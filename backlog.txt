@@ -1,7 +1,8 @@
 ---- Functionality ---------------------------------
 
+- Figure out hosting!!!
+
 - Lyftfeed
-    - showing bumps for workout below - fix last item
     - allow to comment
 
 - Notifications
@@ -13,15 +14,12 @@
 - User account
     - change password
     - delete account
-    - create an outer join for PRs to show table when not all rep ranges have been logged
     - add a profile pic
 
-- Figure out hosting!!!
 
     --------------------MVP--------------------------
 
 - Lyftfeed
-    - fix last element
     - workout achievements (PR, top3 lift, level up)
 
 - Workout details
@@ -41,6 +39,7 @@
     - add different measurement types
 
 - User details
+    - create an outer join for PRs to show table when not all rep ranges have been logged
     - user workout stats in last year, all time
 
 - Available lyfts
