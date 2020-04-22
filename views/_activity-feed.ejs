@@ -4,7 +4,7 @@
             <% existingWorkoutsArray.push(model[0].id); %>
             <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
             <p class="subtitle"><%= model[0].date_time %></p>
-            <h3 class="workout-name"><%= model[0].workout_name %></h3>
+            <h3 class="workout-name"><a href="/workouts/<%= model[0].id %>"><%= model[0].workout_name %></a></h3>
             <!-- add workout stats -->
             <% let workoutVolume = 0; %>
             <% let workoutSets = 0; %>
@@ -75,7 +75,7 @@
                 <div class="container-box">  <!-- opening new workout container -->
                   <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
                   <p class="subtitle"><%= model[i].date_time %></p>
-                  <h3 class="workout-name"><%= model[i].workout_name %></h3>
+                  <h3 class="workout-name"><a href="/workouts/<%= model[i].id %>"><%= model[i].workout_name %></a></h3>
                   <% let workoutVolume = 0; %>
             <% let workoutSets = 0; %>
             <% let workoutReps = 0; %>

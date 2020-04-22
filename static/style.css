@@ -728,7 +728,7 @@ cursor: pointer;
   display: none;
 }
 
- /* ------------------------- User details for mobile  ------------------------- */
+ /* ------------------------- Account for mobile  ------------------------- */
 
  @media only screen and (max-width: 480px) {
 
@@ -736,4 +736,10 @@ cursor: pointer;
     width: 100%;
 
   }
+}
+
+/* ------------------------- Workout details   ------------------------- */
+
+#workout-container {
+  width: 60%;
 }

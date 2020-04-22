@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="../../style.css" />
-    <link href="https:#stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="https://kit.fontawesome.com/e6936a79ca.js" crossorigin="anonymous"></script>
     <link rel="icon" href="../../resources/Lbs logo fat.PNG" type="image/x-icon" />
     <title>Workout details</title>
   </head>
@@ -12,12 +12,75 @@
     <%- include("_header") -%>
 
     <main id="workout-main">
+      <div class="container-box" id="workout-container">
+        <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
+        <p class="subtitle"><%= model[0].date_time %></p>
+        <h3 class="workout-name"><%= model[0].workout_name %></h3>
+        <% let workoutVolume = 0; %>
+        <% let workoutSets = 0; %>
+        <% let workoutReps = 0; %>
+        <% let currentWorkout = model[0].id %>
+        <% for (let i = 0; i < model.length; i++) { %>    
+            <% workoutVolume += model[i].reps * model[i].weight; %>
+            <% workoutSets ++; %>
+            <% workoutReps += model[i].reps; %>
+        <% } %>
+        <div class="flex-container workout-summary">
+          <h4 class="flex-summary-item">Sets: <%= workoutSets %></h4>
+          <h4 class="flex-summary-item">Reps: <%= workoutReps %></h4>
+          <h4 class="flex-summary-item">Volume: <%= (workoutVolume/1000).toFixed(1) %> t</h4>
+        </div>
+        <div id="workout-table-container">
+          <table id="workout-table">
+            <tr>
+              <th width="70%">Lyft</th>
+              <th width="10%">Weight (kg)</th>
+              <th width="10%">Reps</th>
+            </tr>
+            <% for (let i = 0; i < model.length; i++) { %>
+                  <tr>
+                    <td width="70%"><%= model[i].lift_name %></td>
+                    <td width="10%"><%= model[i].weight %></td>
+                    <td width="10%"><%= model[i].reps %></td>
+                  </tr>
+            <% } %>
+          </table>
+        </div>
+        <div class="flex-container comment-section">
+          <span id="comment-summary-<%= model[0].id %>" onclick="showModal(this)">
+            <% if (bumps[0]) { %>
+              <span id="fist-bump-count"><%= bumps[0].count %></span><span> fist bumps!</span>   
+            <% } else { %>   
+              <span>Be the first one to bump your bro!</span>
+            <% } %> 
+          </span>
+          <div id="button-container">
+            <button type="button" class="comment-button" onclick="addFistBump(this)">
+              <% if (bumps[0]) { %>
+                <% for (let j = 0; j < bumps.length; j++) { %>
+                  <% if (user.id === bumps[j].user_id) { %>
+                    <i class="fas fa-hand-rock" id="fist-bump-given"></i>
+                    <% break %>
+                  <% } else if (j === bumps.length -1) { %>
+                    <i class="far fa-hand-rock" id="fist-bump-not-given"></i>
+                  <% } %>
+                <% } %>
+              <% } else { %>
+                <i class="far fa-hand-rock" id="fist-bump-not-given"></i>
+              <% } %>
+                      </button>
+                      <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
+                    </div> <!-- closing the button container -->
+                  </div> <!-- closing the comment section -->
+          </div> <!-- close the previous workout container -->
 
-      <div class="container-box tile" id="workout-details-container">
-        <p><%= workout[0].workout_name %></p>
-      </div>
+          <div id="commentModal" class="modal">
+            <%- include("_comment-modal") -%> 
+          </div>
+                
 
-    
+
     </main>
+    <script src="../static/workout-details.js"></script>
   </body>
 </html>

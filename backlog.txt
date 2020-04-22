@@ -1,13 +1,12 @@
 ---- Functionality ---------------------------------
 
--Workout details
-    - details in separate page
-        - show workout stats - volume, strenght standard score and percentile, pr%, bw%, duration, calories burned, resps + sets
-        
+
+
+User details 
+- sets not loading
+
 - Lyftfeed
     - allow to comment
-
-
 
 - Notifications
     - tell us your bodweight and age
@@ -21,6 +20,8 @@
     - create an outer join for PRs to show table when not all rep ranges have been logged
     - add a profile pic
 
+- Figure out hosting!!!
+
     --------------------MVP--------------------------
 
 - Lyftfeed
@@ -30,6 +31,7 @@
 - Workout details
         - give stars to lifts
     - level increase in strength
+        - show additional workout stats - strenght standard score and percentile, pr%, bw%, duration, calories burned
 
 
 

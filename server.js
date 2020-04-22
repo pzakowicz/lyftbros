@@ -162,14 +162,27 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
 
 //GET workout details page
 app.get("/workouts/:id", redirectToLogin, (req, res) => {
+  let fistBumps;
+  db.serialize(() => {
 
-    db.all("SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Lifts.category, Lifts.name, Sets.weight, Sets.reps FROM Sets JOIN Workouts ON Workouts.id = Sets.workout_id JOIN Lifts ON Sets.exercise_id = Lifts.id JOIN Users ON Workouts.user_id = Users.id WHERE Workouts.id = $id", { $id: req.params.id }, (err, rows) => {
+    db.all("SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id WHERE Sub1.workout_id = $id", {$id: req.params.id}, (err, rows) => {
       if (err) {
         return console.error(err.message);
       }
-      res.render("workout-details", { user: req.user, workout: rows });  
+      fistBumps = rows;
+      console.log("Fist bumps: ", fistBumps);
+    });
+
+    db.all("SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.category, Lifts.name as lift_name, Sets.weight, Sets.reps FROM Sets JOIN Workouts ON Workouts.id = Sets.workout_id JOIN Lifts ON Sets.exercise_id = Lifts.id JOIN Users ON Workouts.user_id = Users.id WHERE Workouts.id = $id", { $id: req.params.id }, (err, rows) => {
+      if (err) {
+        return console.error(err.message);
+      }
+      console.log("Workout details: ", rows);
+      res.render("workout-details", { user: req.user, model: rows, bumps: fistBumps });  
     });
     
+  });
+
   })
 
 
