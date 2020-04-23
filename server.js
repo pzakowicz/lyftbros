@@ -14,15 +14,12 @@ const auth = require("./auth");
 const mysql = require("mysql2");
 const config = require("./data/db-config");
 
-
-
 // create application
 const app = express();
 const db = new sqlite3.Database("./data/database.sqlite");
 const PORT = process.env.PORT || 4000;
 
-//create db connection
-let connection = mysql.createConnection(config);
+
 
 //setting template engine and middleware
 app.set("view engine", "ejs");
@@ -105,17 +102,15 @@ app.get("/feed", redirectToLogin, (req, res) => {
 
 //GET log-workout page
 app.get("/log-workout", redirectToLogin, (req, res) => {
-  let lifts;
 
-
+  let connection = mysql.createConnection(config);
   connection.query(`SELECT * FROM lifts`, (error, results, fields) => {
     if (error) {
       return console.error(error.message);
     }
-    lifts = results;
-    res.render("log-workout", { user: req.user, lifts: lifts })     
+    res.render("log-workout", { user: req.user, lifts: results })     
   });
-
+  connection.end();
 
 });
 

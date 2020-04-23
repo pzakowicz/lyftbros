@@ -1,51 +1,60 @@
 //imports
 const express = require("express");
-const sqlite3 = require("sqlite3");
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 12;
 const passport = require("passport");
+const mysql = require("mysql2");
+const config = require("../data/db-config");
 
 //create router
 const userRouter = express.Router();
-const db = new sqlite3.Database("data/database.sqlite");
 
 // request handlers
 //GET all users
 userRouter.get("/", (req, res, next) => {
-  db.all("SELECT * FROM Users", (err, rows) => {
-    if (err) {
-      return console.error(err.message);
+
+  let connection = mysql.createConnection(config);
+  connection.query(`SELECT * FROM users`, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
     }
-    console.log(rows);
-    res.status(200).json({ user: rows });
+    res.status(200).json({ users: results });
   });
+  connection.end();
+
 });
 
 
 // GET userId by email
 userRouter.get("/email/:email", (req, res, next) => {
 console.log("Requested userId for user email: ", req.params);
-db.get(
-  "SELECT * FROM Users WHERE email = $email",
-  { $email: req.params.email },
-  (error, row) => {
-    console.log("Returned user with id: ", row);
-    res.status(200).json({ user: row });
-  }
-);
+
+let connection = mysql.createConnection(config);
+  connection.query(`SELECT * FROM Users WHERE email = ?`, [req.params.email], (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    console.log("Returned user with id: ", results);
+    res.status(200).json({ user: results });
+  });
+  connection.end();
+
 });
 
 // GET user by id
 userRouter.get("/id/:id", (req, res, next) => {
 console.log("Requested user for id: ", req.params);
-db.get(
-  "SELECT * FROM Users WHERE id = $id",
-  { $id: req.params.id },
-  (error, row) => {
-    console.log("Returned user with id: ", row);
-    res.status(200).json({ user: row });
-  }
-);
+
+let connection = mysql.createConnection(config);
+  connection.query(`SELECT * FROM Users WHERE id = ?`, [req.params.id], (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    console.log("Returned user with id: ", results);
+    res.status(200).json({ user: results });
+  });
+  connection.end();
+
 });
 
 //POST a new user
@@ -60,31 +69,17 @@ if (!name || !surname || !gender || !email || !password) {
 } else {
   console.log(req.body);
 
-
   bcrypt.hash(password, SALT_ROUNDS, function (err, hash) {
 
-    db.run(
-      "INSERT INTO Users (first_name, surname, gender, email, password) VALUES ($name, $surname, $gender, $email, $password)",
-      {
-        $name: name,
-        $surname: surname,
-        $gender: gender,
-        $email: email,
-        $password: hash
-      },
-      function(error) {
-        if (error) {
-          next(error);
-        } else {
-          db.get(
-            `SELECT * FROM Users WHERE id = ${this.lastID}`,
-            (error, row) => {
-              res.status(201).json({ user: row });
-            }
-          );
-        }
+    let connection = mysql.createConnection(config);
+    connection.query(`INSERT INTO Users (first_name, surname, gender, email, password) VALUES (?, ?, ?, ?, ?)`, [name, surname, gender, email, hash], (error, results, fields) => {
+      if (error) {
+        return console.error(error.message);
       }
-    );
+      res.status(201).json({ user: results.insertId });
+    });
+    connection.end();
+  
   })
 }
 });
@@ -103,30 +98,15 @@ userRouter.put("/", (req, res, next) => {
     return res.sendStatus(400);
   } else {
     console.log(req.body);  
-    db.run(
-      "UPDATE Users SET first_name = $name, surname = $surname, email = $email, gender = $gender, date_of_birth = $dob, weight = $weight WHERE id = $id",
-      {
-        $id: id,
-        $name: name,
-        $surname: surname,
-        $email: email,
-        $gender: gender,
-        $dob: dob,
-        $weight: weight
-      },
-      function(error) {
-        if (error) {
-          next(error);
-        } else {
-          db.get(
-            `SELECT * FROM Users WHERE id = ${req.user.id}`,
-            (error, row) => {
-              res.status(201).json({ user: row });
-            }
-          );
-        }
+
+    let connection = mysql.createConnection(config);
+    connection.query(`UPDATE Users SET first_name = ?, surname = ?, email = ?, gender = ?, date_of_birth = ?, weight = ? WHERE id = ?`, [name, surname, email, gender, dob, weight, id], (error, results, fields) => {
+      if (error) {
+        return console.error(error.message);
       }
-    );
+      res.status(201).json({ user: results.affectedRows });
+    });
+    connection.end();
 
   }
   });

@@ -1,71 +1,79 @@
 //imports
 const express = require("express");
-const sqlite3 = require("sqlite3");
+
+const mysql = require("mysql2");
+const config = require("../data/db-config");
 
 //create router
 const exerciseRouter = express.Router();
-const db = new sqlite3.Database("data/database.sqlite");
 
 // request handlers
 //GET all exercises
 exerciseRouter.get("/", (req, res, next) => {
-  db.all("SELECT * FROM Lifts", (err, rows) => {
-    if (err) {
-      return console.error(err.message);
-    }
-    res.status(200).json({ exercises: rows });
-    console.log(rows);
-  });
-});
 
+  let connection = mysql.createConnection(config);
+  connection.query(`SELECT * FROM Lifts`, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    res.status(200).json({ exercises: results });
+    console.log(results);
+  });
+  connection.end();
+
+});
 
 //GET exerciseId by name
 exerciseRouter.get("/:name", (req, res, next) => {
   console.log("Requested exerciseId for name: ", req.params);
-  db.get(
-    "SELECT id FROM Lifts WHERE name = $name",
-    { $name: req.params.name },
-    (error, row) => {
-      console.log("Returned exercise with id: ", row);
-      res.status(200).json({ exercise: row });
+
+  let connection = mysql.createConnection(config);
+  connection.query(`SELECT id FROM lifts WHERE name = ?`, [req.params.name], (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
     }
-  );
+    console.log("Returned exercise with id: ", results);
+    res.status(200).json({ exercise: results });
+  });
+  connection.end();
+
   });
 
-  //GET exercise name by category
+//GET exercise name by category
 exerciseRouter.get("/category/:category", (req, res, next) => {
   console.log("Requested exercises for category: ", req.params);
-  db.all("SELECT * FROM Lifts WHERE category = $category", { $category: req.params.category }, (error, rows) => {
-      console.log("Returned exercises for category: ", rows);
-      res.status(200).json({ exercises: rows });
+
+  let connection = mysql.createConnection(config);
+  connection.query(`SELECT * FROM lifts WHERE category = ?`, [req.params.category], (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
     }
-  );
+    console.log("Returned exercises for category: ", results);
+    res.status(200).json({ exercises: results });
+  });
+  connection.end();
   });
   
-  //POST new exercise
-  exerciseRouter.post("/", (req, res, next) => {
+//POST new exercise
+exerciseRouter.post("/", (req, res, next) => {
   const category = req.body.category;
   const name = req.body.name;
   if (!name || !category) {
     return res.sendStatus(400);
   } else {
     console.log(req.body);
-    db.run(
-      "INSERT INTO Lifts (category, name) VALUES ($category, $name)",
-      {
-        $category: category,
-        $name: name
-      },
-      function(error) {
-        if (error) {
-          next(error);
-        } else {
-        res.status(201).render("/log-workout");
-        }
-      }
-    );
-  }
-  });
 
-  //exports
+  let connection = mysql.createConnection(config);
+  connection.query(`INSERT INTO lifts (category, name) VALUES (?, ?)`, [category, name], (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    res.status(201).render("log-workout");
+  });
+  connection.end();
+
+  }
+});
+
+//exports
 module.exports = exerciseRouter;
