@@ -21,7 +21,19 @@
             <h5>Your last workout:</h5>
             <% for (let i = 0; i < model.length; i++) { %>   
               <% if (model[i].email === user.email) { %>
-                <p><%= model[i].workout_name %> @ <%= model[i].date_time %></p>
+                <p><a href="/workouts/<%= model[i].id %>"><%= model[i].workout_name %></a> -  
+                  <% let today = new Date() %>
+                  <% let todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); %>
+                  <% let yesterdayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()-1; %>
+                  <% let workoutDate = model[i].date_time.getFullYear()+'-'+(model[i].date_time.getMonth()+1)+'-'+model[i].date_time.getDate(); %>
+                  <% if (workoutDate === todayDate) { %>
+                    Today
+                  <% } else if (workoutDate === yesterdayDate) { %> 
+                    Yesterday
+                  <% } else { %>
+                    <%= workoutDate %>
+                  <% } %>
+                  @ <%= model[i].date_time.getHours() %>:<%= (model[i].date_time.getMinutes()<10?'0':'') + model[i].date_time.getMinutes()  %></p>
                 <% break %>
                 <% } %> 
                 <% } %> 
@@ -64,6 +76,7 @@
 
       <!-- container with the feed-->
       <div class="container" id="feed-container">
+        <h4 class="container-box">Bro feed</h4> 
 
         <%- include("_activity-feed") -%>
 

@@ -93,7 +93,7 @@ app.get("/feed", redirectToLogin, (req, res) => {
       if (error) {
         return console.error(error.message);
       }
-      console.log("Got workouts", results);
+      
       res.render("feed", { model: results, user: req.user[0], bumps: fistBumps, totalLeaderboard: totalLeaderboard, volumeLeaderboard: volumeLeaderboard });      
     });
     
@@ -109,7 +109,7 @@ app.get("/log-workout", redirectToLogin, (req, res) => {
     if (error) {
       return console.error(error.message);
     }
-    console.log("Lifts: ", results);
+    
     res.render("log-workout", { user: req.user[0], lifts: results })     
   });
   connection.end();
@@ -129,8 +129,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
       if (error) {
         return console.error(error.message);
       }
-      console.log("Got User data");
-      console.log(results);
+      
       bro = results;
     });
 
@@ -149,7 +148,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
       if (error) {
         return console.error(error.message);
       }
-      console.log("got fist bumps:", results);
+      
       fistBumps = results;
     });
 
@@ -158,7 +157,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
       if (error) {
         return console.error(error.message);
       }
-      console.log("Got workout data", results);
+      
       res.render("user-details", { model: results, prs: prs, bro: bro[0], bumps: fistBumps, user: req.user[0] });
     });
 
@@ -177,7 +176,7 @@ app.get("/workouts/:id", redirectToLogin, (req, res) => {
       return console.error(error.message);
     }
     fistBumps = results;
-    console.log("Get fist bumps.");
+    
   });
 
   //get workout data and render page

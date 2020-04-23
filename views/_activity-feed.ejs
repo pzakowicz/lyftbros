@@ -7,7 +7,19 @@
                 <% existingWorkoutsArray.push(model[i].id); %>
                 <div class="container-box">  <!-- opening new workout container -->
                   <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
-                  <p class="subtitle"><%= model[i].date_time %></p>
+                  <p class="subtitle">
+                    <% let today = new Date() %>
+                    <% let todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); %>
+                    <% let yesterdayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()-1; %>
+                    <% let workoutDate = model[i].date_time.getFullYear()+'-'+(model[i].date_time.getMonth()+1)+'-'+model[i].date_time.getDate(); %>
+                    <% if (workoutDate === todayDate) { %>
+                      Today
+                    <% } else if (workoutDate === yesterdayDate) { %> 
+                      Yesterday
+                    <% } else { %>
+                      <%= workoutDate %>
+                    <% } %>
+                    @ <%= model[i].date_time.getHours() %>:<%= (model[i].date_time.getMinutes()<10?'0':'') + model[i].date_time.getMinutes()  %> </p>
                   <h3 class="workout-name"><a href="/workouts/<%= model[i].id %>"><%= model[i].workout_name %></a></h3>
                   <% let workoutVolume = 0; %>
                   <% let workoutSets = 0; %>
@@ -36,8 +48,8 @@
                     <tr>
                       <td width="100%"><%= model[i].lift_name %></td>
                       <td width="10%"><%= model[i].sets %></td>
-                      <td width="10%"><%= model[i].avg_reps %></td>
-                      <td width="10%"><%= model[i].avg_weight %></td>
+                      <td width="10%"><%= (model[i].avg_reps/1).toFixed(0) %></td>
+                      <td width="10%"><%= (model[i].avg_weight/1).toFixed(0) %></td>
                       <td width="10%"><%= model[i].max_weight %></td>      
                     </tr>
                   </table>
