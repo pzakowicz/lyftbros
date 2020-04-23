@@ -1,16 +1,16 @@
 ---- Functionality ---------------------------------
 
 - move over to mySQL
-
-
     - test and update queries in server and API
     - find a new way to serialize queries
     - create an outer join for PRs to show table when not all rep ranges have been logged
-    - hook up mySQL to node 
+
 - deploy to heroku
 
 - Lyftfeed
     - allow to comment
+
+    --------------------MVP--------------------------
 
 - Notifications
     - tell us your bodweight and age
@@ -23,8 +23,6 @@
     - delete account
     - add a profile pic
 
-
-    --------------------MVP--------------------------
 
 - Lyftfeed
     - workout achievements (PR, top3 lift, level up)
@@ -74,6 +72,8 @@
 
 
 ---- Technology ------------------------------------
+
+- make mysql resistant to sql injection
 
 - find a way to get values by id synchronously - async await !!!
     - rewrite helper functions to be async await (remove ids from training page, instead get the id first)

@@ -19,8 +19,6 @@ const app = express();
 const db = new sqlite3.Database("./data/database.sqlite");
 const PORT = process.env.PORT || 4000;
 
-
-
 //setting template engine and middleware
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
