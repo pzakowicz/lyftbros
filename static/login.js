@@ -58,7 +58,7 @@ createUserButton.addEventListener("click", () => {
   })
     .then(response => response.json())
     .then(data => {
-      console.log(data.user);
+      console.log(data);
       showUserCreatedMessage();
       loginForm.style.display = "";
     })

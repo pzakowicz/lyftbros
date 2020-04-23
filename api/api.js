@@ -31,31 +31,36 @@ connection.end();
 
 //POST new workout
 apiRouter.post("/workouts/", (req, res, next) => {
-const name = req.body.name;
-const userId = req.user.id;
-if (!name || !userId) {
-  console.log("Insufficient data to post a new workout.");
-  return res.sendStatus(400);
-} else {
-  console.log("Requested to post the workout: ", req.body);
+  const name = req.body.name;
+  const userId = req.user[0].id;
+  if (!name || !userId) {
+    console.log("Insufficient data to post a new workout.");
+    return res.sendStatus(400);
+  } else {
+    console.log("Requested to post the workout: ", req.body.name);
 
-  let connection = mysql.createConnection(config);
-  connection.query(`INSERT INTO Workouts (name, user_id) VALUES (?, ?)`, [name, userId], (error, results, fields) => {
-    if (error) {
-      return console.error(error.message);
-    }
-    res.status(201).json({ workout: results.isertedId });
-    console.log("Added new workout: ", results.insertedId);
-  });
-  connection.end();
-
-}
+    let connection = mysql.createConnection(config);
+    
+    connection.query(`INSERT INTO Workouts (name, user_id) VALUES (?, ?)`, [name, userId], (error, results, fields) => {
+      if (error) {
+        return console.error(error.message);
+      }
+      connection.query(`SELECT * FROM Workouts WHERE id = ${results.insertId}`, function(error, results, fields) {
+        if (error) {
+          return console.error(error.message);
+        }
+      res.status(201).json({ workout: results });
+      console.log("Added new workout: ", results);
+      });
+    connection.end();
+    })
+  }
 });
 
 //POST a fist-bump
 apiRouter.post("/workouts/fist-bumps/add/", (req, res, next) => {
   const workoutId = req.body.workoutId;
-  const userId = req.user.id;
+  const userId = req.user[0].id;
   if (!workoutId || !userId) {
     console.log("Insufficient data to post a fist-bump.");
     return res.sendStatus(400);
@@ -64,16 +69,18 @@ apiRouter.post("/workouts/fist-bumps/add/", (req, res, next) => {
 
     let connection = mysql.createConnection(config);
     connection.query(`SELECT * FROM Fist_bumps WHERE workout_id = ? AND user_id = ?`, [workoutId, userId], function(error, results, fields) {
-      if (results) {
+      if (results[0]) {
         console.log("Fist-bump already given by this user.")
         return res.sendStatus(400);
       } else {
+        let connection = mysql.createConnection(config);
         connection.query(`INSERT INTO Fist_bumps (workout_id, user_id) VALUES (?, ?)`, [workoutId, userId], function(error, results, fields) {
           if (error) {
             return console.error(error.message);
           }
           console.log("Added new fist-bump.");
           return res.sendStatus(201);
+          connection.end();
         });
       }
     });
@@ -117,7 +124,7 @@ if (!req.body.sets) {
       return console.error(error.message);
     }
     res.status(201).send("Sets added correctly");
-    console.log(`Sets inserted ${results.insertId}`);
+    console.log(`Sets inserted correctly`);
   });
   connection.end();
 

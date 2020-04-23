@@ -40,7 +40,7 @@ app.use(errorhandler());
 
 //helper functions
 function redirectToLogin(req, res, next) {
-  if (req.user) return next();
+  if (req.user[0]) return next();
   return res.redirect('/');
 }
 
@@ -68,11 +68,12 @@ app.get("/feed", redirectToLogin, (req, res) => {
       if (error) {
         return console.error(error.message);
       }
+
       fistBumps = results;   
     });
 
     //get workout total leader
-    connection.query(`SELECT Users.first_name, Users.surname, Users.email, Lifts.name, COUNT(DISTINCT Workouts.id) as workouts FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime') GROUP BY first_name, surname ORDER BY workouts DESC`, (error, results, fields) => {
+    connection.query(`SELECT Users.first_name, Users.surname, Users.email, Lifts.name, COUNT(DISTINCT Workouts.id) as workouts FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN (NOW() - INTERVAL 4 WEEK) AND NOW() GROUP BY first_name, surname ORDER BY workouts DESC`, (error, results, fields) => {
       if (error) {
         return console.error(error.message);
       }
@@ -80,7 +81,7 @@ app.get("/feed", redirectToLogin, (req, res) => {
     });
 
     //get workout volume leader
-    connection.query(`SELECT Users.first_name, Users.surname, Users.email, Lifts.name, SUM(Sets.reps * Sets.weight) as volume FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime') GROUP BY first_name, surname ORDER BY volume DESC`, (error, results, fields) => {
+    connection.query(`SELECT Users.first_name, Users.surname, Users.email, Lifts.name, SUM(Sets.reps * Sets.weight) as volume FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN (NOW() - INTERVAL 4 WEEK) AND NOW() GROUP BY first_name, surname ORDER BY volume DESC`, (error, results, fields) => {
       if (error) {
         return console.error(error.message);
       }
@@ -88,11 +89,12 @@ app.get("/feed", redirectToLogin, (req, res) => {
     });
 
     //get list of workouts and send response
-    connection.query(`SELECT Workouts.id, Workouts.name as  workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime') GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;`, (error, results, fields) => {
+    connection.query(`SELECT Workouts.id, Workouts.name as  workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN (NOW() - INTERVAL 4 WEEK) AND NOW() GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;`, (error, results, fields) => {
       if (error) {
         return console.error(error.message);
       }
-      res.render("feed", { model: results, user: req.user, bumps: fistBumps, totalLeaderboard: totalLeaderboard, volumeLeaderboard: volumeLeaderboard });      
+      console.log("Got workouts", results);
+      res.render("feed", { model: results, user: req.user[0], bumps: fistBumps, totalLeaderboard: totalLeaderboard, volumeLeaderboard: volumeLeaderboard });      
     });
     
     connection.end();
@@ -107,7 +109,8 @@ app.get("/log-workout", redirectToLogin, (req, res) => {
     if (error) {
       return console.error(error.message);
     }
-    res.render("log-workout", { user: req.user, lifts: results })     
+    console.log("Lifts: ", results);
+    res.render("log-workout", { user: req.user[0], lifts: results })     
   });
   connection.end();
 
@@ -133,7 +136,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
 
 
     //get PR data
-    connection.query(`SELECT Sub1.name, Sub1.five_reps, Sub2.ten_reps FROM (SELECT Lifts.name, MAX(Sets.weight) as five_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Sets.reps = 5 GROUP BY Lifts.name) AS Sub1 LEFT JOIN (SELECT Lifts.name, MAX(Sets.weight) as ten_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = ? AND Sets.reps = 10 GROUP BY Lifts.name) AS Sub2 ON Sub1.name = Sub2.name GROUP BY Sub1.name;`, [ req.params.email ], (error, results, fields) => {
+    connection.query(`SELECT Sub1.name, Sub1.five_reps, Sub2.ten_reps FROM (SELECT Lifts.name, MAX(Sets.weight) as five_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = ? AND Sets.reps = 5 GROUP BY Lifts.name) AS Sub1 LEFT JOIN (SELECT Lifts.name, MAX(Sets.weight) as ten_reps, Sets.reps FROM Sets LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Workouts on Sets.workout_id = Workouts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = ? AND Sets.reps = 10 GROUP BY Lifts.name) AS Sub2 ON Sub1.name = Sub2.name GROUP BY Sub1.name;`, [ req.params.email, req.params.email ], (error, results, fields) => {
       if (error) {
         return console.error(error.message);
       }
@@ -151,12 +154,12 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
     });
 
     //get user and workout data and render page
-    connection.query(`SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = $email AND Workouts.date_time BETWEEN datetime('now', '-1 month') AND datetime('now', 'localtime') GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;`, [req.params.email], (error, results, fields) => {
+    connection.query(`SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = ? AND Workouts.date_time BETWEEN (NOW() - INTERVAL 4 WEEK) AND NOW() GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;`, [req.params.email], (error, results, fields) => {
       if (error) {
         return console.error(error.message);
       }
       console.log("Got workout data", results);
-      res.render("user-details", { model: results, prs: prs, bro: bro, bumps: fistBumps, user: req.user });
+      res.render("user-details", { model: results, prs: prs, bro: bro[0], bumps: fistBumps, user: req.user[0] });
     });
 
     connection.end();
@@ -174,7 +177,7 @@ app.get("/workouts/:id", redirectToLogin, (req, res) => {
       return console.error(error.message);
     }
     fistBumps = results;
-    console.log("Fist bumps: ", fistBumps);
+    console.log("Get fist bumps.");
   });
 
   //get workout data and render page
@@ -182,8 +185,8 @@ app.get("/workouts/:id", redirectToLogin, (req, res) => {
     if (error) {
       return console.error(error.message);
     }
-    console.log("Workout details: ", results);
-    res.render("workout-details", { user: req.user, model: results, bumps: fistBumps });  
+    console.log("Get workout details: ", results);
+    res.render("workout-details", { user: req.user[0], model: results, bumps: fistBumps });  
   });
 
   connection.end();
@@ -194,7 +197,7 @@ app.get("/workouts/:id", redirectToLogin, (req, res) => {
 
 //GET account page
 app.get("/account", redirectToLogin, (req, res) => {
-  return res.render("account", { user: req.user });  
+  return res.render("account", { user: req.user[0] });  
 });
 
 //GET logout page

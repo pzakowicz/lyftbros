@@ -1,6 +1,4 @@
 //import
-const sqlite3 = require("sqlite3").verbose();
-const db = new sqlite3.Database("./data/database.sqlite");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
@@ -15,11 +13,11 @@ passport.use(new LocalStrategy( async (username, password, done) => {
     connection.query(`SELECT * FROM Users WHERE email = ?`, [username], (error, results, fields) => {
       if (error) {
         return console.error(error.message);
-      } else if (!result) {
+      } else if (!results) {
         console.log("User not found");
         return done(null, false, {message: 'Invalid username'});
       }
-      bcrypt.compare(password, results.password, function (err, result) {
+      bcrypt.compare(password, results[0].password, function (err, result) {
         if (result === true) {
           console.log("login successful");
           return done(null, results);
@@ -38,11 +36,10 @@ passport.use(new LocalStrategy( async (username, password, done) => {
 
 passport.serializeUser(function(user, done) {
   console.log("User serialised");
-  return done(null, user.id);
+  return done(null, user[0].id);
 });
 
 passport.deserializeUser(function(id, done) {
-
   let connection = mysql.createConnection(config);
   connection.query(`SELECT * FROM Users WHERE id = ?`, [id], function(error, results, fields) {
     if (error) {

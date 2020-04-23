@@ -79,14 +79,14 @@ if (!name || !surname || !gender || !email || !password) {
       res.status(201).json({ user: results.insertId });
     });
     connection.end();
-  
+
   })
 }
 });
 
 //PUT - update user details
 userRouter.put("/", (req, res, next) => {
-  const id = req.user.id;
+  const id = req.user[0].id;
   const name = req.body.name;
   const surname = req.body.surname;
   const email = req.body.email;

@@ -62,7 +62,7 @@ exerciseDropdown.addEventListener("change", () => {
   })
   .then(data => {
     console.log("User id is: " + data.exercise.id);
-    lyftId.innerHTML = data.exercise.id;
+    lyftId.innerHTML = data.exercise[0].id;
   });
 })
 
@@ -179,7 +179,8 @@ async function saveWorkout() {
   })
   let json = await response.json();
   console.log("Created workout: ", json);
-  workoutId.innerHTML = json.workout.id;
+  console.log("Workout id:", json.workout[0].id);
+  workoutId.innerHTML = json.workout[0].id;
 };
 
 //save sets helper function
@@ -206,7 +207,7 @@ async function saveSets() {
 //POST workout
 saveWorkoutButton.addEventListener("click", async () => {
   await saveWorkout();
-  saveSets();
+  await saveSets();
   window.location.href = "/feed";
 });
 
