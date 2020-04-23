@@ -1,9 +1,12 @@
 ---- Functionality ---------------------------------
 
 - move over to mySQL
-    - create new tables
-    - see lifts
-    - hook up to node 
+
+
+    - test and update queries in server and API
+    - find a new way to serialize queries
+    - create an outer join for PRs to show table when not all rep ranges have been logged
+    - hook up mySQL to node 
 - deploy to heroku
 
 - Lyftfeed
@@ -43,7 +46,7 @@
     - add different measurement types
 
 - User details
-    - create an outer join for PRs to show table when not all rep ranges have been logged
+
     - user workout stats in last year, all time
 
 - Available lyfts

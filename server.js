@@ -11,6 +11,8 @@ const apiRouter = require("./api/api");
 const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 const auth = require("./auth");
+const mysql = require("mysql2");
+const config = require("./data/db-config");
 
 
 
@@ -18,6 +20,9 @@ const auth = require("./auth");
 const app = express();
 const db = new sqlite3.Database("./data/database.sqlite");
 const PORT = process.env.PORT || 4000;
+
+//create db connection
+let connection = mysql.createConnection(config);
 
 //setting template engine and middleware
 app.set("view engine", "ejs");
@@ -30,7 +35,7 @@ app.use(session({
   resave: true,
   saveUninitialized: false,
   store: new SQLiteStore,
-  cookie : { secure : false, maxAge : (24 * 60 * 60 * 1000) }
+  cookie : { secure : false }
 }));
 app.use(auth.initialize);
 app.use(auth.session);
@@ -101,18 +106,25 @@ app.get("/feed", redirectToLogin, (req, res) => {
 //GET log-workout page
 app.get("/log-workout", redirectToLogin, (req, res) => {
   let lifts;
-  db.serialize(() => {
 
-    db.all("SELECT * FROM Lifts", (err, rows) => {
-      if (err) {
-        return console.error(err.message);
-      }
-      lifts = rows;
-      res.render("log-workout", { user: req.user, lifts: lifts })     
-    });
 
-  })
+  connection.query(`SELECT * FROM lifts`, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    lifts = results;
+    res.render("log-workout", { user: req.user, lifts: lifts })     
+  });
+
+
 });
+
+
+
+
+
+
+
 
 //GET user details page
 app.get("/users/:email", redirectToLogin, (req, res) => {
