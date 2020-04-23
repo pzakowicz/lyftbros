@@ -10,6 +10,8 @@
 - Lyftfeed
     - allow to comment
 
+- heroku mysql for session management? move to mysql? 
+
     --------------------MVP--------------------------
 
 - Notifications

@@ -2,12 +2,10 @@
 const express = require("express");
 const userRouter = require("./users");
 const exerciseRouter = require("./exercises");
-const sqlite3 = require("sqlite3");
 const mysql = require("mysql2");
 const config = require("../data/db-config");
 
 // create router
-const db = new sqlite3.Database("./data/database.sqlite");
 const apiRouter = express.Router();
 
 //mount other routers
