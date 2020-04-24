@@ -1,12 +1,12 @@
 ---- Functionality ---------------------------------
 
-
-
-
-- deploy to heroku
+- make favicon round
 
 - Lyftfeed
     - allow to comment
+
+- Delete workout
+- Choose whether to publish a workout
 
 - Notifications
     - tell us your bodweight and age

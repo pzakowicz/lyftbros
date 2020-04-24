@@ -1,0 +1,17 @@
+INSERT INTO Lifts (category, name) VALUES ('Barbell', 'Barbell bench press');
+INSERT INTO Lifts (category, name) VALUES ('Barbell', 'Barbell overhead press');
+INSERT INTO Lifts (category, name) VALUES ('Barbell', 'Barbell row');
+INSERT INTO Lifts (category, name) VALUES ('Barbell', 'Barbell deadlift');
+INSERT INTO Lifts (category, name) VALUES ('Barbell', 'Barbell back squat');
+INSERT INTO Lifts (category, name) VALUES ('Dumbell', 'Dumbell bench press');
+INSERT INTO Lifts (category, name) VALUES ('Dumbell', 'Dumbell chest fly');
+INSERT INTO Lifts (category, name) VALUES ('Dumbell', 'Dumbell shoulder press');
+INSERT INTO Lifts (category, name) VALUES ('Dumbell', 'Dumbell lateral raise');
+INSERT INTO Lifts (category, name) VALUES ('Dumbell', 'Dumbell triceps extension');
+INSERT INTO Lifts (category, name) VALUES ('Dumbell', 'Dumbell biceps curl');
+INSERT INTO Lifts (category, name) VALUES ('Dumbell', 'Dumbell row');
+INSERT INTO Lifts (category, name) VALUES ('Bodyweight', 'Pull up');
+INSERT INTO Lifts (category, name) VALUES ('Bodyweight', 'Dip');
+INSERT INTO Lifts (category, name) VALUES ('Bodyweight', 'Push up');
+INSERT INTO Lifts (category, name) VALUES ('Bodyweight', 'Squat');
+INSERT INTO Lifts (category, name) VALUES ('Bodyweight', 'Sit up');
