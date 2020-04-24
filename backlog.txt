@@ -8,15 +8,16 @@
 - Lyftfeed
     - allow to comment
 
-- heroku mysql for session management? move to mysql? 
-
-    --------------------MVP--------------------------
-
 - Notifications
     - tell us your bodweight and age
     - when someone has given you a fist bump
     - when someone commented on your activity
     - when you have not been exercising for a while
+    
+- heroku mysql for session management? move to mysql? 
+
+    --------------------MVP--------------------------
+
 
 - User account
     - change password
