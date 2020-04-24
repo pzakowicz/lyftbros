@@ -9,7 +9,7 @@
     <title>User details</title>
   </head>
   <body>
-    <%- include("_header") -%>
+    <%- include("partials/_header") -%>
     <main id="user-main">
       <div class="container-box tile" id="user-summary-container">
         <h4>Bro's summary</h4>
@@ -57,7 +57,7 @@
 
       <div id="user-activity-container">
 
-        <%- include("_activity-feed") -%>
+        <%- include("partials/_activity-feed") -%>
 
       </div>  
 
@@ -84,11 +84,7 @@
 
       <!-- hidden comment modal container -->
       <div id="commentModal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <table id="fist-bumps-table">
-          </table>
-        </div>
+        <%- include("partials/_comment-modal") -%>
       </div>
     </main>
   </body>

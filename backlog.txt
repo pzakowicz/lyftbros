@@ -2,7 +2,6 @@
 
 - move over to mySQL
     - test and update queries in server and API
-        - fix document reference in ejs in feed - take user to workout details or get rid of await for add sets
         - date and fist bump on workout details
     - create an outer join for PRs to show table when not all rep ranges have been logged
 
