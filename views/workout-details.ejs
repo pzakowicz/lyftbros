@@ -16,9 +16,9 @@
         <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
         <p class="subtitle">                    
           <% let today = new Date() %>
-          <% let todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); %>
-          <% let yesterdayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-1); %>
-          <% let workoutDate = model[0].date_time.getFullYear()+'-'+(model[0].date_time.getMonth()+1)+'-'+model[0].date_time.getDate(); %>
+          <% let todayDate = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
+          <% let yesterdayDate = (today.getDate()-1)+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
+          <% let workoutDate = model[0].date_time.getDate()+'-'+(model[0].date_time.getMonth()+1)+'-'+model[0].date_time.getFullYear(); %>
           <% if (workoutDate === todayDate) { %>
             Today
           <% } else if (workoutDate === yesterdayDate) { %> 

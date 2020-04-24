@@ -23,9 +23,9 @@
               <% if (model[i].email === user.email) { %>
                 <p><a href="/workouts/<%= model[i].id %>"><%= model[i].workout_name %></a> -  
                   <% let today = new Date() %>
-                  <% let todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); %>
-                  <% let yesterdayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()-1; %>
-                  <% let workoutDate = model[i].date_time.getFullYear()+'-'+(model[i].date_time.getMonth()+1)+'-'+model[i].date_time.getDate(); %>
+                  <% let todayDate = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
+                  <% let yesterdayDate = today.getDate()-1+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
+                  <% let workoutDate = model[i].date_time.getDate()+'-'+(model[i].date_time.getMonth()+1)+'-'+model[i].date_time.getFullYear(); %>
                   <% if (workoutDate === todayDate) { %>
                     Today
                   <% } else if (workoutDate === yesterdayDate) { %> 
