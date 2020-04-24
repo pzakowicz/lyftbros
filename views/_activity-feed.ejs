@@ -10,7 +10,7 @@
                   <p class="subtitle">
                     <% let today = new Date() %>
                     <% let todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); %>
-                    <% let yesterdayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()-1; %>
+                    <% let yesterdayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-1); %>
                     <% let workoutDate = model[i].date_time.getFullYear()+'-'+(model[i].date_time.getMonth()+1)+'-'+model[i].date_time.getDate(); %>
                     <% if (workoutDate === todayDate) { %>
                       Today
@@ -25,11 +25,11 @@
                   <% let workoutSets = 0; %>
                   <% let workoutReps = 0; %>
                   <% let currentWorkout = model[i].id %>
-                  <% for (let i = 0; i < model.length; i++) { %>    
-                    <% if (model[i].id === currentWorkout) { %>
-                      <% workoutVolume += (model[i].sets * model[i].avg_reps * model[i].avg_weight); %>
-                      <% workoutSets += model[i].sets; %>
-                      <% workoutReps += model[i].sets * model[i].avg_reps; %>
+                  <% for (let j = 0; j < model.length; j++) { %>    
+                    <% if (model[j].id === currentWorkout) { %>
+                      <% workoutVolume += (model[j].sets * model[j].avg_reps * model[j].avg_weight); %>
+                      <% workoutSets += model[j].sets; %>
+                      <% workoutReps += model[j].sets * model[j].avg_reps; %>
                     <% } %>  
                   <% } %>
                   <div class="flex-container workout-summary">
@@ -45,13 +45,18 @@
                       <th>Avg weight</th>
                       <th>Max weight</th>
                     </tr>
-                    <tr>
-                      <td width="100%"><%= model[i].lift_name %></td>
-                      <td width="10%"><%= model[i].sets %></td>
-                      <td width="10%"><%= (model[i].avg_reps/1).toFixed(0) %></td>
-                      <td width="10%"><%= (model[i].avg_weight/1).toFixed(0) %></td>
-                      <td width="10%"><%= model[i].max_weight %></td>      
-                    </tr>
+                    <% for (let j = 0; j < model.length; j++) { %>    
+                      <% if (model[j].id === currentWorkout) { %>
+                        <tr>
+                          <td width="100%"><%= model[j].lift_name %></td>
+                          <td width="10%"><%= model[j].sets %></td>
+                          <td width="10%"><%= (model[j].avg_reps/1).toFixed(0) %></td>
+                          <td width="10%"><%= (model[j].avg_weight/1).toFixed(0) %></td>
+                          <td width="10%"><%= model[j].max_weight %></td>      
+                        </tr>
+                      <% } %>  
+                    <% } %>
+                    
                   </table>
                   <div class="flex-container comment-section">
                     <span id="comment-summary-<%= model[i].id %>" onclick="showModal(this)">
@@ -79,11 +84,7 @@
                     </div> <!-- closing the button container -->
                   </div> <!-- closing the comment section --> 
                 </div> 
-              <% } else if (existingWorkoutsArray.includes(model[i].id)) { %>
-                <% let newSet = document.createElement("tr"); %>
-                <% newSet.innerHTML = `<td width="100%">${model[i].lift_name}</td><td width="10%">${model[i].sets}</td><td width="10%">${model[i].avg_reps}</td><td width="10%">${model[i].avg_weight}</td><td width="10%">${model[i].max_weight}</td>`; %>
-                <% let table = document.getElementById(`sets-table-${model[i].id}`); %>
-                <% table.appendChild(newSet); %>       
+              
               <% } %>
             <% } %>
 
