@@ -6,13 +6,14 @@ async function addFistBump(e) {
     workoutId: workoutId
   };
   let response = await fetch(`/api/workouts/fist-bumps/add/`,
-   {
+  {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
     },
     body: JSON.stringify(data)
   })
+  console.log("requested to add fist bump:", data);
   // check if fist bump has been added
   if (response.status === 201) {
     console.log("Fist bump added");
@@ -38,4 +39,3 @@ async function addFistBump(e) {
     icon.className = "fas fa-hand-rock";
   }
 };
-

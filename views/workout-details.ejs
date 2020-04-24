@@ -14,7 +14,20 @@
     <main id="workout-main">
       <div class="container-box" id="workout-container">
         <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
-        <p class="subtitle"><%= model[0].date_time %></p>
+        <p class="subtitle">                    
+          <% let today = new Date() %>
+          <% let todayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(); %>
+          <% let yesterdayDate = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+(today.getDate()-1); %>
+          <% let workoutDate = model[0].date_time.getFullYear()+'-'+(model[0].date_time.getMonth()+1)+'-'+model[0].date_time.getDate(); %>
+          <% if (workoutDate === todayDate) { %>
+            Today
+          <% } else if (workoutDate === yesterdayDate) { %> 
+            Yesterday
+          <% } else { %>
+            <%= workoutDate %>
+          <% } %>
+          @ <%= model[0].date_time.getHours() %>:<%= (model[0].date_time.getMinutes()<10?'0':'') + model[0].date_time.getMinutes()  %>
+        </p>
         <h3 class="workout-name"><%= model[0].workout_name %></h3>
         <% let workoutVolume = 0; %>
         <% let workoutSets = 0; %>
@@ -49,20 +62,20 @@
         <div class="flex-container comment-section">
           <span id="comment-summary-<%= model[0].id %>" onclick="showModal(this)">
             <% if (bumps[0]) { %>
-              <span id="fist-bump-count"><%= bumps[0].count %></span><span> fist bumps!</span>   
+              <span id="fist-bump-count-<%= model[0].id %>"><%= bumps[0].count %></span><span> fist bumps!</span>   
             <% } else { %>   
               <span>Be the first one to bump your bro!</span>
             <% } %> 
           </span>
           <div id="button-container">
-            <button type="button" class="comment-button" onclick="addFistBump(this)">
+            <button type="button" class="comment-button" onclick="addFistBump(this)" id="<%= model[0].id %>">
               <% if (bumps[0]) { %>
                 <% for (let j = 0; j < bumps.length; j++) { %>
                   <% if (user.id === bumps[j].user_id) { %>
-                    <i class="fas fa-hand-rock" id="fist-bump-given"></i>
+                    <i class="fas fa-hand-rock" id="fist-<%= model[0].id %>"></i>
                     <% break %>
                   <% } else if (j === bumps.length -1) { %>
-                    <i class="far fa-hand-rock" id="fist-bump-not-given"></i>
+                    <i class="far fa-hand-rock" id="fist-<%= model[0].id %>"></i>
                   <% } %>
                 <% } %>
               <% } else { %>
@@ -77,10 +90,9 @@
           <div id="commentModal" class="modal">
             <%- include("partials/_comment-modal") -%> 
           </div>
-                
-
-
+        
     </main>
-    <script src="../static/workout-details.js"></script>
+    <script src="../workout-details.js"></script>
+
   </body>
 </html>

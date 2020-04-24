@@ -184,7 +184,6 @@ app.get("/workouts/:id", redirectToLogin, (req, res) => {
     if (error) {
       return console.error(error.message);
     }
-    console.log("Get workout details: ", results);
     res.render("workout-details", { user: req.user[0], model: results, bumps: fistBumps });  
   });
 
