@@ -1,4 +1,5 @@
 // imports
+require('dotenv').config()
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -11,9 +12,12 @@ const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 const auth = require("./auth");
 const mysql = require("mysql2");
-const config = require("./data/db-config-cloud");
+const Config = require("./data/db-config-cloud");
+
 
 // create application
+const config = new Config();
+console.log(config);
 const app = express();
 const PORT = process.env.PORT || 4000;
 
