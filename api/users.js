@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 12;
 const passport = require("passport");
 const mysql = require("mysql2");
-const config = require("../data/db-config-cloud");
+const config = require("../config");
 
 //create router
 const userRouter = express.Router();
