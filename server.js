@@ -218,7 +218,7 @@ app.get("/logout", (req, res) => {
     
 //starting app
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Listening on port: ${PORT}`);
+  console.log(`Listening on port: ${PORT} in ${process.env.NODE_ENV} environment.`);
 });
 
 //export
