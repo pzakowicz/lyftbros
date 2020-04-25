@@ -12,11 +12,10 @@ const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 const auth = require("./auth");
 const mysql = require("mysql2");
-const Config = require("./config");
+const config = require("./config");
 
 
 // create application
-const config = new Config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 

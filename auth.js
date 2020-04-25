@@ -3,8 +3,8 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const mysql = require("mysql2");
-const Config = require("./config");
-const config = new Config();
+const config = require("./config");
+
 
 passport.use(new LocalStrategy( async (username, password, done) => { 
   try {
