@@ -13,13 +13,7 @@
     <%- include("partials/_header") -%>
 
     <main id="training-main">
-      <% if (!user.weight) { %>
-        <div class="container-box tip-container">
-          <p id="tip"><i class="fas fa-info-circle"></i>Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</p>
-        </div>
-      <% } else { %>
-        <span class="hidden" id="user-weight"><%= user.weight %></span>
-      <% } %>
+
       <div class="container-box" id="log-training-container">
         <h4>Log your lyfts</h4>
         <form id="log-training-form">
@@ -42,12 +36,17 @@
           <br />
           <label for="weight">Weight(kg):</label>
           <i class="fas fa-minus-square fa-2x" onclick="removeWeight()"></i>
-          <input type="number" id="weight" value="0" required>
+          <input type="number" id="weight" value="0" onclick="this.select()" required>
           <i class="fas fa-plus-square fa-2x" onclick="addWeight()"></i>
+          <% if (!user.weight) { %>
+            <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i>
+            <% } else { %>
+              <span class="hidden" id="user-weight"><%= user.weight %></span>
+            <% } %>
           <br />
           <label for="reps">Reps:</label>
           <i class="fas fa-minus-square fa-2x" onclick="removeRep()"></i>
-          <input type="number" id="reps" value="0" required>
+          <input type="number" id="reps" value="0" onclick="this.select()" required>
           <i class="fas fa-plus-square fa-2x" onclick="addRep()"></i>
           <br />
           <div class="flex-container" id="log-training-button-container">
@@ -76,12 +75,13 @@
         <input type="text" id="workout-name-input" required>
         <i class="fas fa-check" id="save-workout-name-button"></i>
         <i class="fas fa-pen" id="change-workout-name-button"></i>
+        <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Tip: Tap a lyft name set the log values. Tap on the weight / reps to edit values.</span></i>
         <div id="workout-table-container">
           <table id="workout-table">
             <tr>
               <th width="70%">Lyft</th>
-              <th class="id" width="1%">Lyft id</th>
-              <th width="10%">Weight (kg)</th>
+              <th class="id" width="0%">Lyft id</th>
+              <th width="10%">Weight</th>
               <th width="10%">Reps</th>
               <th width="10%"></th>
             </tr>

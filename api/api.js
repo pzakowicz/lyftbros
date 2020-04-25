@@ -3,7 +3,7 @@ const express = require("express");
 const userRouter = require("./users");
 const exerciseRouter = require("./exercises");
 const mysql = require("mysql2");
-const config = require("../data/db-config");
+const config = require("../data/db-config-cloud");
 
 // create router
 const apiRouter = express.Router();

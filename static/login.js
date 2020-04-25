@@ -2,6 +2,7 @@
 const createUserButton = document.getElementById("create-user");
 const loginForm = document.getElementById("login-form");
 const createForm = document.getElementById("create-form");
+const cancelCreateAccount = document.getElementById("cancel-create-account");
 const loginButton = document.getElementById("login-button");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
@@ -101,8 +102,15 @@ loginButton.addEventListener("click", async () => {
 
 //show create account form 
 showCreateAccountForm.addEventListener("click", () => {
-  createForm.style.display = "inline";
+  createForm.style.display = "block";
   loginForm.style.display = "none";
   showCreateAccountForm.style.display = "none";
 
+})
+
+//cancel account creation
+cancelCreateAccount.addEventListener("click", () => {
+  createForm.style.display = "none";
+  loginForm.style.display = "block";
+  showCreateAccountForm.style.display = "block";
 })

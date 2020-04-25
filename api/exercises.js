@@ -1,7 +1,7 @@
 //imports
 const express = require("express");
 const mysql = require("mysql2");
-const config = require("../data/db-config");
+const config = require("../data/db-config-cloud");
 
 //create router
 const exerciseRouter = express.Router();

@@ -17,7 +17,7 @@
     </header>
     
     <main id="login-main">
-      <div class="flex-container" id="login-and-register-container">
+      <div class="inner-container" id="login-and-register-container">
 
         <form class="container-box" id="login-form">
           <h4>Login</h4>
@@ -39,8 +39,8 @@
           <h5 class="link" id="show-create-account-form">New to Lyftbros? Create an account.</h5>
 
 
-        
-        <form class="container-box" id="create-form">
+
+        <form class="container-box hidden" id="create-form">
           <h4>Create account</h4>
           <label for="name">Name</label>
           <br />
@@ -64,8 +64,10 @@
           <input type="password" id="password-create" value="" required />
           <br />
           <button type="button" class="nav-button" id="create-user">Create account</button>
+          <span class="link" id="cancel-create-account">Cancel</span>
           <p class="error-message" id="email-taken">Email already taken!</p>
         </form>
+
 
         <div class="container-box" id="user-created">
           <h4>User successfully created!</h4>

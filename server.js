@@ -11,7 +11,7 @@ const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 const auth = require("./auth");
 const mysql = require("mysql2");
-const config = require("./data/db-config");
+const config = require("./data/db-config-cloud");
 
 // create application
 const app = express();
@@ -38,10 +38,18 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "./static")));
 app.use(errorhandler());
 
-//helper functions
+//HELPER FUNCTIONS ----------------------------------
+
+//if user not logged in, redirect to login
 function redirectToLogin(req, res, next) {
   if (req.user[0]) return next();
   return res.redirect('/');
+}
+
+//if user logged in, redirect to feed
+function redirectToFeed(req, res, next) {
+  if (!req.user[0]) return next();
+  return res.redirect('feed');
 }
 
 //ROUTES ----------------------------------
@@ -50,7 +58,7 @@ function redirectToLogin(req, res, next) {
 app.use("/api/", apiRouter);
 
 //GET login page
-app.get("/", (req, res) => {
+app.get("/", redirectToFeed, (req, res) => {
   res.render("login");  
 });
 
