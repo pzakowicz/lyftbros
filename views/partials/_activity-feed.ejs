@@ -51,8 +51,8 @@
                           <td width="100%"><%= model[j].lift_name %></td>
                           <td width="10%"><%= model[j].sets %></td>
                           <td width="10%"><%= (model[j].avg_reps/1).toFixed(0) %></td>
-                          <td width="10%"><%= (model[j].avg_weight/1).toFixed(0) %></td>
-                          <td width="10%"><%= model[j].max_weight %></td>      
+                          <td width="10%"><%= (model[j].avg_weight/1).toFixed(0) %> <span class="unit">kg</span></td>
+                          <td width="10%"><%= model[j].max_weight %> <span class="unit">kg</span></td>      
                         </tr>
                       <% } %>  
                     <% } %>

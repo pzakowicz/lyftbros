@@ -47,13 +47,13 @@
           <table id="workout-table">
             <tr>
               <th width="70%">Lyft</th>
-              <th width="10%">Weight (kg)</th>
+              <th width="10%">Weight</th>
               <th width="10%">Reps</th>
             </tr>
             <% for (let i = 0; i < model.length; i++) { %>
                   <tr>
                     <td width="70%"><%= model[i].lift_name %></td>
-                    <td width="10%"><%= model[i].weight %></td>
+                    <td width="10%"><%= model[i].weight %> <span class="unit">kg</span></td>
                     <td width="10%"><%= model[i].reps %></td>
                   </tr>
             <% } %>

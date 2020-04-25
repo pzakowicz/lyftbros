@@ -129,7 +129,7 @@ addSetButton.addEventListener("click", () => {
     newSet.innerHTML = `
     <td width="70%">${lyft}</td>
     <td class="id" width="0%">${id}</td>
-    <td width="10%" contenteditable='true'>${weight}</td>
+    <td width="10%" contenteditable='true'>${weight} <span class="unit">kg</span></td>
     <td width="10%" contenteditable='true'>${reps}</td>
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
     workoutContainer.style.display = "block";
