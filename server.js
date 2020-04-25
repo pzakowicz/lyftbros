@@ -42,13 +42,13 @@ app.use(errorhandler());
 
 //if user not logged in, redirect to login
 function redirectToLogin(req, res, next) {
-  if (req.user[0]) return next();
+  if (req.user) return next();
   return res.redirect('/');
 }
 
 //if user logged in, redirect to feed
 function redirectToFeed(req, res, next) {
-  if (!req.user[0]) return next();
+  if (!req.user) return next();
   return res.redirect('feed');
 }
 
