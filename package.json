@@ -26,11 +26,13 @@
     "node": "13.x"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "mocha": "^7.1.1"
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node -r dotenv/config server.js"
   },
   "repository": {
     "type": "git",

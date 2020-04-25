@@ -782,3 +782,13 @@ cursor: pointer;
 #workout-container {
   width: 60%;
 }
+
+/* ------------------------- Workout details for mobile  ------------------------- */
+
+@media only screen and (max-width: 480px) {
+
+  #workout-container {
+    width: 100%;
+
+  }
+}
