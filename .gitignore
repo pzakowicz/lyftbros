@@ -5,3 +5,4 @@ sessions
 npm-debug.log
 .DS_Store
 /*.env
+backlog.txt
