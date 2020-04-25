@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
-  secret: "some secret 1234",
+  secret: process.env.SECRET,
   resave: true,
   saveUninitialized: false,
   store: new SQLiteStore,

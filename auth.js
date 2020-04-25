@@ -13,7 +13,7 @@ passport.use(new LocalStrategy( async (username, password, done) => {
     connection.query(`SELECT * FROM Users WHERE email = ?`, [username], (error, results, fields) => {
       if (error) {
         return console.error(error.message);
-      } else if (!results) {
+      } else if (!results[0]) {
         console.log("User not found");
         return done(null, false, {message: 'Invalid username'});
       }
