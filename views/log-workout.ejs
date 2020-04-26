@@ -57,18 +57,19 @@
       </div>
       <div class="container-box" id="add-lyft-container">
         <h4>Add a lyft</h4>
-        <label for="category">Category:</label>
-        <select id="category" name="category">
+        <label for="add-category">Category:</label>
+        <select id="add-category" name="add-category">
           <option value="Barbell">Barbell</option>
           <option value="Dumbell">Dumbell</option>
           <option value="Bodyweight">Bodyweight</option>
         </select>
         <br />
-        <label for="name">Name:</label>
-        <input type="text" id="name" value="" required />
+        <label for="add-name">Name:</label>
+        <input type="text" id="add-name" value="" required />
         <br />
         <button type="button" class="nav-button" id="save-lyft-button">Add lyft</button>
         <button type="button" class="nav-button" id="cancel-lyft-button">Cancel</button>
+        <p class="error-message" id="lyft-exists">Lyft already exists!</p>
       </div>
       <div class="container-box" id="new-workout-container">
         <h4 id="workout-name">Lyft session</h4><span class="id">Id: </span><span class="id" id="workout-id"></span>

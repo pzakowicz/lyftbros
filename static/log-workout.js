@@ -213,8 +213,8 @@ saveWorkoutButton.addEventListener("click", async () => {
 
 //save new exercise helper function
 async function addNewLyft() {
-  const category = document.getElementById("category").value;
-  const name = document.getElementById("name").value;
+  const category = document.getElementById("add-category").value;
+  const name = document.getElementById("add-name").value;
   const data = {
     category: category,
     name: name
@@ -229,15 +229,29 @@ async function addNewLyft() {
    body: JSON.stringify(data)
  })
   console.log(response.statusText);
-  return response.statusCode
+  return response;
 }
 
 //POST new exercise
 saveNewLyftButton.addEventListener("click", async () => {
-  await addNewLyft();
-  getExercisesForCategory();
-  document.getElementById("log-training-container").style.display = "inline-block";
-  document.getElementById("add-lyft-container").style.display = "none";
+  document.getElementById("lyft-exists").style.display = "none";
+  saveNewLyftButton.innerHTML = "Adding...";
+  saveNewLyftButton.disabled = true;
+  let result = await addNewLyft();
+  console.log(result);
+  if (result.status === 201) {
+    getExercisesForCategory();
+    document.getElementById("log-training-container").style.display = "inline-block";
+    document.getElementById("add-lyft-container").style.display = "none";
+    saveNewLyftButton.innerHTML = "Add lyft";
+    saveNewLyftButton.disabled = false;
+    alert("Lyft added!");
+  } else if (result.status === 400) {
+    document.getElementById("lyft-exists").style.display = "block";
+    saveNewLyftButton.innerHTML = "Add lyft";
+    saveNewLyftButton.disabled = false;
+  }
+  
 });
 
 //cancel adding new exercise

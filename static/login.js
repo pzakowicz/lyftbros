@@ -50,6 +50,8 @@ createUserButton.addEventListener("click", () => {
     password: password
   };
   console.log(data);
+  createUserButton.innerHTML = "Creating...";
+  createUserButton.disabled = true;
   fetch(`/api/users/`, {
     method: "POST",
     headers: {
@@ -62,6 +64,8 @@ createUserButton.addEventListener("click", () => {
       console.log(data);
       showUserCreatedMessage();
       loginForm.style.display = "";
+      createUserButton.innerHTML = "Create";
+      createUserButton.disabled = false;
     })
     .catch(error => {
       console.error("Error:", error);
@@ -77,6 +81,8 @@ loginButton.addEventListener("click", async () => {
     password: password
   };
   if (data.username && data.password) {
+    loginButton.innerHTML = "Logging in...";
+    loginButton.disabled = true;
     let response = await fetch(`/api/users/login/`,
     {
        method: "POST",
@@ -84,16 +90,20 @@ loginButton.addEventListener("click", async () => {
        headers: {
          "Content-Type": "application/json"
      },
-     body: JSON.stringify(data),
-     
+    body: JSON.stringify(data),
    })
+
    console.log(response);
     if (response.status === 200) {
       console.log("login successful");
       window.location.href = response.url;
+      loginButton.innerHTML = "Login";
+      loginButton.disabled = false;
     } else if (response.status === 401){
       console.log("Incorrect password or user");
       userNotFoundMessage();
+      loginButton.innerHTML = "Login";
+      loginButton.disabled = false;
     }
 
   }

@@ -65,9 +65,10 @@ exerciseRouter.post("/", (req, res, next) => {
   let connection = mysql.createConnection(config);
   connection.query(`INSERT INTO lifts (category, name) VALUES (?, ?)`, [category, name], (error, results, fields) => {
     if (error) {
-      return console.error(error.message);
+      console.error(error.message);
+      return res.sendStatus(400);
     }
-    res.status(201).render("log-workout");
+    res.sendStatus(201);
   });
   connection.end();
 
