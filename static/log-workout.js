@@ -9,6 +9,7 @@ const changeWorkoutNameButton = document.getElementById("change-workout-name-but
 const saveWorkoutNameButton = document.getElementById("save-workout-name-button");
 const changeWorkoutNameInput = document.getElementById("workout-name-input");
 const saveWorkoutButton = document.getElementById("save-workout-button");
+const clearWorkoutButton = document.getElementById("clear-workout-button");
 const userId = document.getElementById("user-id");
 const lyftId = document.getElementById("lyft-id");
 const workoutId = document.getElementById("workout-id");
@@ -21,23 +22,6 @@ const userWeight = document.getElementById("user-weight");
 const category = document.getElementById("add-category").value;
 const name = document.getElementById("add-name").value;
 
-function getExercisesForCategory() {
-  let category = categoryDropdown.value;
-  fetch(`/api/exercises/category/${category}`)
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    console.log("Received exercises: " + data.exercises);
-    let exerciseArray = data.exercises;
-    exerciseDropdown.innerHTML = "";
-    for (let i = 1; i < exerciseArray.length; i++) { 
-      let newExercise = document.createElement("option");
-      newExercise.innerHTML = exerciseArray[i].name;
-      exerciseDropdown.appendChild(newExercise);
-    }
-  })
-};
 
 function fillUserWeight() {
   if (categoryDropdown.value === "Bodyweight") {
@@ -50,7 +34,7 @@ function fillUserWeight() {
 
 //change exercise list on category change
 categoryDropdown.addEventListener("change", () => {
-  getExercisesForCategory2();
+  getExercisesForCategory();
   fillUserWeight();
 })
 
@@ -90,7 +74,6 @@ function addWeight() {
   weightInput.value = weight;
 }
 
-
 //remove reps
 function removeRep() {
   let reps = Number(repsInput.value);
@@ -108,14 +91,14 @@ function addRep() {
 }
 
 // add set to workout
-addSetButton.addEventListener("click", () => {
+addSetButton.addEventListener("click", async () => {
   let lyft = document.getElementById("lyft").value;
   let id = document.getElementById("lyft-id").textContent;
   let weight = document.getElementById("weight").value;
   let reps = document.getElementById("reps").value;
-  //let addedExercises = [];
+
   if (lyft && id && weight > 0 && reps > 0) {
-    //addedExercises.push(lyft);
+
     let insertIndex = 0;
     for (let i = 0; i < workoutTable.rows.length; i++) { 
       if (workoutTable.rows[i].cells[0].innerHTML === lyft) {
@@ -127,7 +110,6 @@ addSetButton.addEventListener("click", () => {
     }
 
     let newSet = workoutTable.insertRow(insertIndex);
-    //let newSet = document.createElement("tr");
     newSet.innerHTML = `
     <td width="70%">${lyft}</td>
     <td class="id" width="0%">${id}</td>
@@ -136,6 +118,28 @@ addSetButton.addEventListener("click", () => {
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
     workoutContainer.style.display = "block";
   }
+  //add set to localforage
+  let val = [];
+  let category = categoryDropdown.value;
+  let exerciseId = 0;
+  lifts.iterate(function (value, key) {
+    if (key === category) {
+      value.forEach(element => {
+        if (element[1] === lyft) {
+          exerciseId = String(element[0]);
+        }
+      });
+    }   
+  })
+
+  let key = String(await workout.length());
+  val.push(exerciseId, lyft, weight, reps);
+  workout.setItem(key, val);
+  workout.iterate(function (value, key) {
+    console.log(key, value);
+  })
+
+
 });
 
 //change workout name
@@ -217,6 +221,20 @@ saveWorkoutButton.addEventListener("click", async () => {
   window.location.href = "/feed";
 });
 
+//clear workout
+clearWorkoutButton.addEventListener("click", () => {
+  //remove sets from table
+  for (let i = 1; i < workoutTable.rows.length;) { 
+    workoutTable.deleteRow(i);
+  }
+
+  //remove sets from localforage
+  workout.iterate( function (value, key) {
+    workout.removeItem(key);
+  })
+
+})
+
 //save new exercise helper function
 async function addNewLyft() {
   const category = document.getElementById("add-category").value;
@@ -275,6 +293,8 @@ cancelNewLyftButton.addEventListener("click", () => {
 
 // setting up indexedDB with localforage
 window.addEventListener("load", function () {
+  lifts = localforage.createInstance({ 'name': 'lifts'});
+  workout = localforage.createInstance({ 'name': 'workout'});
 
 
 // get all exercises and store into indexedDB
@@ -292,10 +312,10 @@ window.addEventListener("load", function () {
         let val = [];
         for (let j = 0; j < exerciseArray.length; j++) { 
           if (exerciseArray[j].category === key) {
-            val.push(exerciseArray[j].name);
+            val.push([exerciseArray[j].id, exerciseArray[j].name]);
           }
         }
-        localforage.setItem(key, val);
+        lifts.setItem(key, val);
       }
     }
   })
@@ -303,25 +323,50 @@ window.addEventListener("load", function () {
 
 })
 
-function getExercisesForCategory2() {
+function getExercisesForCategory() {
   let category = categoryDropdown.value;
   exerciseDropdown.innerHTML = "";
-  localforage.iterate(function (value, key, iterNum) {
+  lifts.iterate(function (value, key) {
     if (key === category) {
       value.forEach(element => {
         let newExercise = document.createElement("option");
-        newExercise.innerHTML = element;
+        newExercise.innerHTML = element[1];
         exerciseDropdown.appendChild(newExercise);
-
       });
-      
-    }
-      
-
+    } 
   })
-  //.then(function () {
-    //console.log('Exercises updated');
-  //})
-
-
 };
+
+/*
+async function saveSets2() {
+  const data = {};
+  data.sets = [];
+  //go throught the workout table
+  for (let i = 1; i < workoutTable.rows.length; i++) { 
+    for (let j = 0; i < lifts.length; i++) { 
+
+      for (let k = 0; k < lifts[j].length; i++) { 
+        if (lifts[j][k] === workoutTable.rows[i].cells[0].innerHTML) {
+          let exerciseId = lifts[j][k];
+        }
+      }
+
+    }
+
+
+
+    data.sets.push([Number(workoutTable.rows[i].cells[1].innerHTML), Number(workoutTable.rows[i].cells[2].innerHTML), Number(workoutTable.rows[i].cells[3].innerHTML), Number(workoutId.textContent)]);
+  };
+  console.log("Sets to be saved: ", data);
+  let response = await fetch(`/api/sets/`,
+  {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json"
+   },
+   body: JSON.stringify(data)
+ })
+  let json = await response;
+  console.log("Sets", json.statusText);
+};
+*/
