@@ -99,6 +99,7 @@ addSetButton.addEventListener("click", async () => {
 
   if (lyft && id && weight > 0 && reps > 0) {
 
+    /*
     let insertIndex = 0;
     for (let i = 0; i < workoutTable.rows.length; i++) { 
       if (workoutTable.rows[i].cells[0].innerHTML === lyft) {
@@ -117,7 +118,7 @@ addSetButton.addEventListener("click", async () => {
     <td width="10%" contenteditable='true'>${reps}</td>
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
     workoutContainer.style.display = "block";
-  }
+  } */
   //add set to localforage
   let val = [];
   let category = categoryDropdown.value;
@@ -134,13 +135,35 @@ addSetButton.addEventListener("click", async () => {
 
   let key = String(await workout.length());
   val.push(exerciseId, lyft, weight, reps);
-  workout.setItem(key, val);
-  workout.iterate(function (value, key) {
-    console.log(key, value);
-  })
+  await workout.setItem(key, val);
+
+  let newSet = document.createElement("tr");
+  newSet.innerHTML = `
+  <td width="70%">${lyft}</td>
+  <td width="10%">${weight} <span class="unit">kg</span></td>
+  <td width="10%">${reps}</td>
+  <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
+  workoutTable.appendChild(newSet);
 
 
+ }
 });
+
+//populate table based on local storage
+function populateTable() {
+  //add all sets in the local storage
+  workout.iterate(function (value, key) {
+    let newSet = document.createElement("tr");
+    newSet.innerHTML = `
+    <td width="70%">${value[1]}</td>
+    <td width="10%">${value[2]} <span class="unit">kg</span></td>
+    <td width="10%">${value[3]}</td>
+    <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
+    workoutTable.appendChild(newSet);
+  })
+}
+
+//add 
 
 //change workout name
 changeWorkoutNameButton.addEventListener("click", () => {
@@ -319,6 +342,8 @@ window.addEventListener("load", function () {
       }
     }
   })
+
+  populateTable();
 
 
 })
