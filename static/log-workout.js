@@ -206,8 +206,12 @@ async function saveSets() {
 
 //POST workout
 saveWorkoutButton.addEventListener("click", async () => {
+  saveWorkoutButton.innerHTML = "Saving...";
+  saveWorkoutButton.disabled = true;
   await saveWorkout();
   await saveSets();
+  saveWorkoutButton.innerHTML = "Save";
+  saveWorkoutButton.disabled = false;
   window.location.href = "/feed";
 });
 

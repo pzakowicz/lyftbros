@@ -79,6 +79,7 @@ async function updateAccount() {
     weight: weight
   };
   console.log(data);
+  
   let response = await fetch(`/api/users/`,
    {
       method: "PUT",
@@ -95,6 +96,8 @@ async function updateAccount() {
 //save account changes
 saveAccountButton.addEventListener("click", async () => {
   if (userNameInput.value && userSurnameInput.value && userEmailInput.value && userGenderInput.value && userDateOfBirthInput.value && userWeightInput.value ) {
+    saveAccountButton.innerHTML = "Saving...";
+    saveAccountButton.disabled = true;
     await updateAccount();
     userName.innerHTML = userNameInput.value;
     userSurname.innerHTML = userSurnameInput.value;
@@ -117,6 +120,8 @@ saveAccountButton.addEventListener("click", async () => {
     editAccountButton.style.display = "";
     saveAccountButton.style.display = "";
     cancelChangesButton.style.display = "";
+    saveAccountButton.innerHTML = "Save";
+    saveAccountButton.disabled = false;
   } else {
     alert("All fields must be filled out.")
   }
