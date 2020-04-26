@@ -119,7 +119,6 @@ app.get("/log-workout", redirectToLogin, (req, res) => {
     if (error) {
       return console.error(error.message);
     }
-    
     res.render("log-workout", { user: req.user[0], lifts: results })     
   });
   connection.end();

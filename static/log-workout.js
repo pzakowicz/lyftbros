@@ -50,7 +50,7 @@ function fillUserWeight() {
 
 //change exercise list on category change
 categoryDropdown.addEventListener("change", () => {
-  getExercisesForCategory();
+  getExercisesForCategory2();
   fillUserWeight();
 })
 
@@ -236,9 +236,6 @@ async function addNewLyft() {
   })
   console.log(response.statusText);
   return response;
-
-
-
 }
 
 //POST new exercise
@@ -275,3 +272,56 @@ cancelNewLyftButton.addEventListener("click", () => {
   document.getElementById("log-training-container").style.display = "inline-block";
   document.getElementById("add-lyft-container").style.display = "none"
 })
+
+// setting up indexedDB with localforage
+window.addEventListener("load", function () {
+
+
+// get all exercises and store into indexedDB
+  fetch(`/api/exercises/`)
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    let exerciseArray = data.exercises;
+    let existingCategory = [];
+    for (let i = 0; i < exerciseArray.length; i++) { 
+      if (!existingCategory.includes(exerciseArray[i].category)) {
+        existingCategory.push(exerciseArray[i].category);
+        let key = exerciseArray[i].category;
+        let val = [];
+        for (let j = 0; j < exerciseArray.length; j++) { 
+          if (exerciseArray[j].category === key) {
+            val.push(exerciseArray[j].name);
+          }
+        }
+        localforage.setItem(key, val);
+      }
+    }
+  })
+
+
+})
+
+function getExercisesForCategory2() {
+  let category = categoryDropdown.value;
+  exerciseDropdown.innerHTML = "";
+  localforage.iterate(function (value, key, iterNum) {
+    if (key === category) {
+      value.forEach(element => {
+        let newExercise = document.createElement("option");
+        newExercise.innerHTML = element;
+        exerciseDropdown.appendChild(newExercise);
+
+      });
+      
+    }
+      
+
+  })
+  //.then(function () {
+    //console.log('Exercises updated');
+  //})
+
+
+};
