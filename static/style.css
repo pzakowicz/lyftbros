@@ -658,6 +658,22 @@ cursor: pointer;
     font-size: 20px;
   }
 
+  #add-lyft-container label {
+    font-size: medium;
+  }
+
+  #add-lyft-container select {
+    font-size: large;
+    width: 230px;
+  }
+
+  #add-lyft-container input {
+    font-size: large;
+    width: 225px;
+  }
+
+
+
   #log-training-form label {
     font-size: medium;
   }

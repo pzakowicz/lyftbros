@@ -18,6 +18,8 @@ const cancelNewLyftButton = document.getElementById("cancel-lyft-button");
 const workoutContainer = document.getElementById("new-workout-container");
 const categoryDropdown = document.getElementById("category");
 const userWeight = document.getElementById("user-weight");
+const category = document.getElementById("add-category").value;
+const name = document.getElementById("add-name").value;
 
 function getExercisesForCategory() {
   let category = categoryDropdown.value;
@@ -226,35 +228,45 @@ async function addNewLyft() {
   console.log(data);
   let response = await fetch(`/api/exercises/`,
   {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json"
-   },
-   body: JSON.stringify(data)
- })
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
   console.log(response.statusText);
   return response;
+
+
+
 }
 
 //POST new exercise
 saveNewLyftButton.addEventListener("click", async () => {
+  const category = document.getElementById("add-category").value;
+  const name = document.getElementById("add-name").value;
   document.getElementById("lyft-exists").style.display = "none";
-  saveNewLyftButton.innerHTML = "Adding...";
-  saveNewLyftButton.disabled = true;
-  let result = await addNewLyft();
-  console.log(result);
-  if (result.status === 201) {
-    getExercisesForCategory();
-    document.getElementById("log-training-container").style.display = "inline-block";
-    document.getElementById("add-lyft-container").style.display = "none";
-    saveNewLyftButton.innerHTML = "Add lyft";
-    saveNewLyftButton.disabled = false;
-    alert("Lyft added!");
-  } else if (result.status === 400) {
-    document.getElementById("lyft-exists").style.display = "block";
-    saveNewLyftButton.innerHTML = "Add lyft";
-    saveNewLyftButton.disabled = false;
+  if (category && name) {
+    saveNewLyftButton.innerHTML = "Adding...";
+    saveNewLyftButton.disabled = true;
+    let result = await addNewLyft();
+    console.log(result);
+    if (result.status === 201) {
+      getExercisesForCategory();
+      document.getElementById("log-training-container").style.display = "inline-block";
+      document.getElementById("add-lyft-container").style.display = "none";
+      saveNewLyftButton.innerHTML = "Add lyft";
+      saveNewLyftButton.disabled = false;
+      alert("Lyft added!");
+    } else if (result.status === 400) {
+      document.getElementById("lyft-exists").style.display = "block";
+      saveNewLyftButton.innerHTML = "Add lyft";
+      saveNewLyftButton.disabled = false;
+    }
+  } else {
+    alert("Name cannot be blank.")
   }
+
   
 });
 
