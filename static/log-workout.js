@@ -289,6 +289,10 @@ async function addNewLyft() {
     name: name
   };
   console.log(data);
+  //add new exercise to local storage
+
+
+  //add new exercise to database
   let response = await fetch(`/api/exercises/`,
   {
       method: "POST",
@@ -312,12 +316,13 @@ saveNewLyftButton.addEventListener("click", async () => {
     let result = await addNewLyft();
     console.log(result);
     if (result.status === 201) {
-      getExercisesForCategory();
       document.getElementById("log-training-container").style.display = "inline-block";
       document.getElementById("add-lyft-container").style.display = "none";
       saveNewLyftButton.innerHTML = "Add lyft";
       saveNewLyftButton.disabled = false;
       alert("Lyft added!");
+      await getAllExercisesForLocalStorage();
+      await getExercisesForCategory();
     } else if (result.status === 400) {
       document.getElementById("lyft-exists").style.display = "block";
       saveNewLyftButton.innerHTML = "Add lyft";
@@ -340,10 +345,15 @@ cancelNewLyftButton.addEventListener("click", () => {
 window.addEventListener("load", function () {
   lifts = localforage.createInstance({ 'name': 'lifts'});
   workout = localforage.createInstance({ 'name': 'workout'});
+  getAllExercisesForLocalStorage()
+  populateTable();
 
 
-// get all exercises and store into indexedDB
-  fetch(`/api/exercises/`)
+})
+
+//save all exercises from db to local storage
+async function getAllExercisesForLocalStorage() {
+  await fetch(`/api/exercises/`)
   .then(response => {
     return response.json();
   })
@@ -364,17 +374,14 @@ window.addEventListener("load", function () {
       }
     }
   })
+}
 
-  populateTable();
-
-
-})
 
 //udpdate exercise dropdown from local storage
-function getExercisesForCategory() {
+async function getExercisesForCategory() {
   let category = categoryDropdown.value;
   exerciseDropdown.innerHTML = "";
-  lifts.iterate(function (value, key) {
+  lifts.iterate( function (value, key) {
     if (key === category) {
       value.forEach(element => {
         let newExercise = document.createElement("option");
