@@ -175,7 +175,7 @@ function populateTable() {
     workoutTable.appendChild(newSet);
   })
   //update the workout name if there is one
-  localName.getItem("workoutName").then( function(result) {
+  localWorkout.getItem("workoutName").then( function(result) {
     if (result) {
       workoutName.innerHTML = result;
     }
@@ -203,7 +203,7 @@ saveWorkoutNameButton.addEventListener("click", () => {
     saveWorkoutNameButton.style.display = "none";
 
     //save name to local storage
-    localName.setItem("workoutName", workoutName.innerHTML);
+    localWorkout.setItem("workoutName", workoutName.innerHTML);
   }
 })
 
@@ -240,16 +240,25 @@ async function saveWorkout() {
   let json = await response.json();
   console.log("Created workout: ", json);
   console.log("Workout id:", json.workout[0].id);
-  workoutId.innerHTML = json.workout[0].id;
+  //workoutId.innerHTML = json.workout[0].id;
+  await localWorkout.setItem("id", json.workout[0].id)
 };
 
 //save sets helper function
 async function saveSets() {
   const data = {};
   data.sets = [];
-  for (let i = 1; i < workoutTable.rows.length; i++) { 
-    data.sets.push([Number(workoutTable.rows[i].cells[1].innerHTML), Number(workoutTable.rows[i].cells[2].innerHTML), Number(workoutTable.rows[i].cells[3].innerHTML), Number(workoutId.textContent)]);
-  };
+
+
+  //for (let i = 1; i < workoutTable.rows.length; i++) { 
+    //data.sets.push([Number(workoutTable.rows[i].cells[1].innerHTML), Number(workoutTable.rows[i].cells[2].innerHTML), Number(workoutTable.rows[i].cells[3].innerHTML), Number(workoutId.textContent)]);
+  //};
+  let id = await localWorkout.getItem("id");
+  await workout.iterate( function (value, key) {
+    data.sets.push([value[0], value[2], value[3], id]);
+
+  })
+
   console.log("Sets to be saved: ", data);
   let response = await fetch(`/api/sets/`,
   {
@@ -263,6 +272,14 @@ async function saveSets() {
   console.log("Sets", json.statusText);
 };
 
+//remove sets and name from local storage helper function
+function removeSetsAndNameFromLocalStorage() {
+  workout.iterate( function (value, key) {
+    workout.removeItem(key);
+  })
+  localWorkout.removeItem("workoutName");
+}
+
 
 //POST workout
 saveWorkoutButton.addEventListener("click", async () => {
@@ -270,6 +287,7 @@ saveWorkoutButton.addEventListener("click", async () => {
   saveWorkoutButton.disabled = true;
   await saveWorkout();
   await saveSets();
+  removeSetsAndNameFromLocalStorage();
   saveWorkoutButton.innerHTML = "Save";
   saveWorkoutButton.disabled = false;
   window.location.href = "/feed";
@@ -281,18 +299,11 @@ clearWorkoutButton.addEventListener("click", () => {
   for (let i = 1; i < workoutTable.rows.length;) { 
     workoutTable.deleteRow(i);
   }
-
-  //remove sets from localforage
-  workout.iterate( function (value, key) {
-    workout.removeItem(key);
-  })
   
   //change workout name to default
   workoutName.innerHTML = "Lyft session";
 
-  //remove workout name from local storage
-  localName.removeItem("workoutName");
-
+  removeSetsAndNameFromLocalStorage()
 })
 
 //save new exercise helper function
@@ -360,7 +371,7 @@ cancelNewLyftButton.addEventListener("click", () => {
 window.addEventListener("load", function () {
   lifts = localforage.createInstance({ 'name': 'lifts'});
   workout = localforage.createInstance({ 'name': 'workout'});
-  localName = localforage.createInstance({ 'name': 'local'});
+  localWorkout = localforage.createInstance({ 'name': 'local'});
   getAllExercisesForLocalStorage()
   populateTable();
 
