@@ -99,7 +99,7 @@
         <div class="inner-container">
 
           <% if (volumeLeaderboard[0]) { %>
-            <h5>Highest volume:</h5>
+            <h5>Total volume:</h5>
             <% for (let i = 0; i < volumeLeaderboard.length; i++) { %>
               <div class="flex-container list-item">
                 <a href="/users/<%= volumeLeaderboard[i].email %>"><span class="user-list-item"><%= i+1 %>. <%= volumeLeaderboard[i].first_name %> <%= volumeLeaderboard[i].surname %></span></a><span class="value"><%= (volumeLeaderboard[i].volume/1000).toFixed(1) %> t</span>
