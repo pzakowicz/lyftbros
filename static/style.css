@@ -1,9 +1,13 @@
 /* ------------------------- General ------------------------- */
 
-html, body {
+html {
+  height: 100%;
+}
+
+body {
   font-family: sans-serif;
   margin: 0;
-  height: 100%;
+  height: 90%;
 }
 
 h4, h5, h6 {
@@ -55,7 +59,7 @@ main {
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  min-height: 89%;
+  min-height: 100%;
   background-color: rgb(247, 247, 250);
   margin-top: 60px;
 }
@@ -66,7 +70,6 @@ main {
   padding: 8px;
   background-color: white;
   border-radius: 4px;
-  z-index: 1;
 }
 
 .flex-container {
