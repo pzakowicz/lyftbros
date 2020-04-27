@@ -133,17 +133,29 @@ addSetButton.addEventListener("click", async () => {
     }   
   })
 
-  let key = String(await workout.length());
+  let keys = await workout.keys();
+  let key = "0";
+  if (keys[0]) {
+    key = String(Number(keys[keys.length-1])+1);
+  }
+  
   val.push(exerciseId, lyft, weight, reps);
   await workout.setItem(key, val);
 
+  workout.iterate(function (value, key) {
+    console.log(key, value);
+  })
+
   let newSet = document.createElement("tr");
   newSet.innerHTML = `
+  <td class="hidden" width="0%">${key}</td>
   <td width="70%">${lyft}</td>
   <td width="10%">${weight} <span class="unit">kg</span></td>
   <td width="10%">${reps}</td>
   <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
   workoutTable.appendChild(newSet);
+
+
 
 
  }
@@ -155,6 +167,7 @@ function populateTable() {
   workout.iterate(function (value, key) {
     let newSet = document.createElement("tr");
     newSet.innerHTML = `
+    <td class="hidden" width="0%">${key}</td>
     <td width="70%">${value[1]}</td>
     <td width="10%">${value[2]} <span class="unit">kg</span></td>
     <td width="10%">${value[3]}</td>
@@ -186,9 +199,18 @@ saveWorkoutNameButton.addEventListener("click", () => {
 })
 
 //delete set
-function deleteRow(r) {
+async function deleteRow(r) {
+  //delete row from table
   var i = r.parentNode.parentNode.rowIndex;
   document.getElementById("workout-table").deleteRow(i);
+
+  //delete set from local storage
+  let key = r.parentNode.parentNode.children[0].innerHTML;
+  await workout.removeItem(key);
+
+  workout.iterate(function (value, key) {
+    console.log(key, value);
+  })
 };
 
 //save workout helper function
@@ -348,6 +370,7 @@ window.addEventListener("load", function () {
 
 })
 
+//udpdate exercise dropdown from local storage
 function getExercisesForCategory() {
   let category = categoryDropdown.value;
   exerciseDropdown.innerHTML = "";
@@ -362,36 +385,3 @@ function getExercisesForCategory() {
   })
 };
 
-/*
-async function saveSets2() {
-  const data = {};
-  data.sets = [];
-  //go throught the workout table
-  for (let i = 1; i < workoutTable.rows.length; i++) { 
-    for (let j = 0; i < lifts.length; i++) { 
-
-      for (let k = 0; k < lifts[j].length; i++) { 
-        if (lifts[j][k] === workoutTable.rows[i].cells[0].innerHTML) {
-          let exerciseId = lifts[j][k];
-        }
-      }
-
-    }
-
-
-
-    data.sets.push([Number(workoutTable.rows[i].cells[1].innerHTML), Number(workoutTable.rows[i].cells[2].innerHTML), Number(workoutTable.rows[i].cells[3].innerHTML), Number(workoutId.textContent)]);
-  };
-  console.log("Sets to be saved: ", data);
-  let response = await fetch(`/api/sets/`,
-  {
-     method: "POST",
-     headers: {
-       "Content-Type": "application/json"
-   },
-   body: JSON.stringify(data)
- })
-  let json = await response;
-  console.log("Sets", json.statusText);
-};
-*/
