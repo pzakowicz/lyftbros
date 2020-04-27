@@ -283,14 +283,19 @@ function removeSetsAndNameFromLocalStorage() {
 
 //POST workout
 saveWorkoutButton.addEventListener("click", async () => {
-  saveWorkoutButton.innerHTML = "Saving...";
-  saveWorkoutButton.disabled = true;
-  await saveWorkout();
-  await saveSets();
-  removeSetsAndNameFromLocalStorage();
-  saveWorkoutButton.innerHTML = "Save";
-  saveWorkoutButton.disabled = false;
-  window.location.href = "/feed";
+  if ( await workout.getItem("0")) {
+    saveWorkoutButton.innerHTML = "Saving...";
+    saveWorkoutButton.disabled = true;
+    await saveWorkout();
+    await saveSets();
+    removeSetsAndNameFromLocalStorage();
+    saveWorkoutButton.innerHTML = "Save";
+    saveWorkoutButton.disabled = false;
+    window.location.href = "/feed";
+  } else {
+    alert("Add at least one set to save a workout.")
+  }
+
 });
 
 //clear workout
