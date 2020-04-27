@@ -38,20 +38,6 @@ categoryDropdown.addEventListener("change", () => {
   fillUserWeight();
 })
 
-
-//change exerciseId on dropdown change
-exerciseDropdown.addEventListener("change", () => {
-  let name = exerciseDropdown.value;
-  fetch(`/api/exercises/${name}`)
-  .then(response => {
-    return response.json();
-  })
-  .then(data => {
-    console.log("User id is: " + data.exercise.id);
-    lyftId.innerHTML = data.exercise[0].id;
-  });
-})
-
 //show new lyft tile
 addNewLyftButton.addEventListener("click", ()=> {
   document.getElementById("log-training-container").style.display = "none";
@@ -93,11 +79,11 @@ function addRep() {
 // add set to workout
 addSetButton.addEventListener("click", async () => {
   let lyft = document.getElementById("lyft").value;
-  let id = document.getElementById("lyft-id").textContent;
+  //let id = document.getElementById("lyft-id").textContent;
   let weight = document.getElementById("weight").value;
   let reps = document.getElementById("reps").value;
 
-  if (lyft && id && weight > 0 && reps > 0) {
+  if (lyft && weight > 0 && reps > 0) {
 
     /*
     let insertIndex = 0;
