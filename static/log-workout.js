@@ -44,7 +44,7 @@ addNewLyftButton.addEventListener("click", ()=> {
   document.getElementById("add-lyft-container").style.display = "inline-block";
 })
 
-//remove weight
+//decrement weight
 function removeWeight() {
   let weight = Number(weightInput.value);
   if (weight >= 2.5) {
@@ -53,14 +53,14 @@ function removeWeight() {
   weightInput.value = weight;
 }
 
-//add weight 
+//increment weight 
 function addWeight() {
   let weight = Number(weightInput.value);
   weight += Number(2.5);
   weightInput.value = weight;
 }
 
-//remove reps
+//decrement reps
 function removeRep() {
   let reps = Number(repsInput.value);
   if (reps >= 1) {
@@ -69,7 +69,7 @@ function removeRep() {
   repsInput.value = reps;
 }
 
-//add reps
+//increment reps
 function addRep() {
   let reps = Number(repsInput.value);
   reps += Number(1);
@@ -85,26 +85,6 @@ addSetButton.addEventListener("click", async () => {
 
   if (lyft && weight > 0 && reps > 0) {
 
-    /*
-    let insertIndex = 0;
-    for (let i = 0; i < workoutTable.rows.length; i++) { 
-      if (workoutTable.rows[i].cells[0].innerHTML === lyft) {
-        insertIndex = i;
-        break;
-      } else {
-        insertIndex = workoutTable.rows.length;
-      }
-    }
-
-    let newSet = workoutTable.insertRow(insertIndex);
-    newSet.innerHTML = `
-    <td width="70%">${lyft}</td>
-    <td class="id" width="0%">${id}</td>
-    <td width="10%" contenteditable='true'>${weight} <span class="unit">kg</span></td>
-    <td width="10%" contenteditable='true'>${reps}</td>
-    <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
-    workoutContainer.style.display = "block";
-  } */
   //add set to localforage
   let val = [];
   let category = categoryDropdown.value;
@@ -132,22 +112,31 @@ addSetButton.addEventListener("click", async () => {
     console.log(key, value);
   })
 
-  let newSet = document.createElement("tr");
+  //find if there is a lift of this name already added and at which row
+  let insertIndex = 0;
+  for (let i = 0; i < workoutTable.rows.length; i++) { 
+    if (workoutTable.rows[i].cells[1].innerHTML === lyft) {
+      insertIndex = i;
+      break;
+    } else {
+      insertIndex = workoutTable.rows.length;
+    }
+  }
+
+  //insert set next to an existing set of the same exercise
+  let newSet = workoutTable.insertRow(insertIndex);
   newSet.innerHTML = `
   <td class="hidden" width="0%">${key}</td>
   <td width="70%">${lyft}</td>
   <td width="10%">${weight} <span class="unit">kg</span></td>
   <td width="10%">${reps}</td>
   <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
-  workoutTable.appendChild(newSet);
-
-
-
+  workoutContainer.style.display = "block";
 
  }
 });
 
-//populate table based on local storage
+//populate table from local storage
 function populateTable() {
   //add all sets in the local storage
   workout.iterate(function (value, key) {
@@ -167,8 +156,6 @@ function populateTable() {
     }
   })
 }
-
-//add 
 
 //change workout name
 changeWorkoutNameButton.addEventListener("click", () => {
@@ -193,7 +180,7 @@ saveWorkoutNameButton.addEventListener("click", () => {
   }
 })
 
-//delete set
+//delete set from workout
 async function deleteRow(r) {
   //delete row from table
   var i = r.parentNode.parentNode.rowIndex;
@@ -235,10 +222,6 @@ async function saveSets() {
   const data = {};
   data.sets = [];
 
-
-  //for (let i = 1; i < workoutTable.rows.length; i++) { 
-    //data.sets.push([Number(workoutTable.rows[i].cells[1].innerHTML), Number(workoutTable.rows[i].cells[2].innerHTML), Number(workoutTable.rows[i].cells[3].innerHTML), Number(workoutId.textContent)]);
-  //};
   let id = await localWorkout.getItem("id");
   await workout.iterate( function (value, key) {
     data.sets.push([value[0], value[2], value[3], id]);
@@ -265,7 +248,6 @@ function removeSetsAndNameFromLocalStorage() {
   })
   localWorkout.removeItem("workoutName");
 }
-
 
 //POST workout
 saveWorkoutButton.addEventListener("click", async () => {
@@ -393,7 +375,6 @@ async function getAllExercisesForLocalStorage() {
     }
   })
 }
-
 
 //udpdate exercise dropdown from local storage
 async function getExercisesForCategory() {
