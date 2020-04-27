@@ -174,6 +174,12 @@ function populateTable() {
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
     workoutTable.appendChild(newSet);
   })
+  //update the workout name if there is one
+  localName.getItem("workoutName").then( function(result) {
+    if (result) {
+      workoutName.innerHTML = result;
+    }
+  })
 }
 
 //add 
@@ -195,6 +201,9 @@ saveWorkoutNameButton.addEventListener("click", () => {
     changeWorkoutNameButton.style.display = "";
     workoutName.style.display = "";
     saveWorkoutNameButton.style.display = "none";
+
+    //save name to local storage
+    localName.setItem("workoutName", workoutName.innerHTML);
   }
 })
 
@@ -277,6 +286,12 @@ clearWorkoutButton.addEventListener("click", () => {
   workout.iterate( function (value, key) {
     workout.removeItem(key);
   })
+  
+  //change workout name to default
+  workoutName.innerHTML = "Lyft session";
+
+  //remove workout name from local storage
+  localName.removeItem("workoutName");
 
 })
 
@@ -345,6 +360,7 @@ cancelNewLyftButton.addEventListener("click", () => {
 window.addEventListener("load", function () {
   lifts = localforage.createInstance({ 'name': 'lifts'});
   workout = localforage.createInstance({ 'name': 'workout'});
+  localName = localforage.createInstance({ 'name': 'local'});
   getAllExercisesForLocalStorage()
   populateTable();
 
