@@ -9,15 +9,19 @@ const express = require("express");
 const path = require("path");
 const apiRouter = require("./api/api");
 const session = require("express-session");
-const SQLiteStore = require("connect-sqlite3")(session);
+const MySQLStore = require("express-mysql-session")(session);
 const auth = require("./auth");
 const mysql = require("mysql2");
 const config = require("./config");
 
 
+
 // create application
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+// setup session store
+const sessionStore = new MySQLStore(config);
 
 //setting template engine and middleware
 app.set("view engine", "ejs");
@@ -29,7 +33,7 @@ app.use(session({
   secret: process.env.SECRET,
   resave: true,
   saveUninitialized: false,
-  store: new SQLiteStore,
+  store: sessionStore,
   cookie : { secure : false }
 }));
 app.use(auth.initialize);
