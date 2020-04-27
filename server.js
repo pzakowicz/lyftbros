@@ -34,7 +34,10 @@ app.use(session({
   resave: true,
   saveUninitialized: false,
   store: sessionStore,
-  cookie : { secure : false }
+  cookie : { 
+    secure : false,
+    maxAge: 1000*60*60*24*365*10
+  }
 }));
 app.use(auth.initialize);
 app.use(auth.session);
