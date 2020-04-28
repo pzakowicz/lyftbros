@@ -9,6 +9,7 @@
                   <h5 class="user-name"><a href="/users/<%= model[i].email %>"><%= model[i].first_name %> <%= model[i].surname%></a></h5>
                   <p class="subtitle">
                     <% let today = new Date() %>
+                    <% let workoutTime = model[i].date_time.toLocaleTimeString(); %>
                     <% let todayDate = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
                     <% let yesterdayDate = (today.getDate()-1)+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
                     <% let workoutDate = model[i].date_time.getDate()+'-'+(model[i].date_time.getMonth()+1)+'-'+model[i].date_time.getFullYear(); %>
@@ -19,7 +20,7 @@
                     <% } else { %>
                       <%= workoutDate %>
                     <% } %>
-                    @ <%= model[i].date_time.getHours() %>:<%= (model[i].date_time.getMinutes()<10?'0':'') + model[i].date_time.getMinutes()  %> </p>
+                    @ <%= workoutTime.slice(0,5) %> </p>
                   <h3 class="workout-name"><a href="/workouts/<%= model[i].id %>"><%= model[i].workout_name %></a></h3>
                   <% let workoutVolume = 0; %>
                   <% let workoutSets = 0; %>
