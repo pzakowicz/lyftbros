@@ -89,8 +89,8 @@ addSetButton.addEventListener("click", async () => {
   let val = [];
   let category = categoryDropdown.value;
   let exerciseId = 0;
-  lifts.iterate(function (value, key) {
-    if (key === category) {
+  lifts.iterate(function (value, key1) {
+    if (key1 === category) {
       value.forEach(element => {
         if (element[1] === lyft) {
           exerciseId = String(element[0]);
@@ -99,11 +99,14 @@ addSetButton.addEventListener("click", async () => {
     }   
   })
 
+  let key = "i";
   let keys = await workout.keys();
-  let key = "0";
+
+
   if (keys[0]) {
-    key = String(Number(keys[keys.length-1])+1);
+    key =keys[keys.length-1]+"i";
   }
+
   
   val.push(exerciseId, lyft, weight, reps);
   await workout.setItem(key, val);
