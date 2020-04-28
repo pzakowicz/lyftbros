@@ -252,14 +252,17 @@ function removeSetsAndNameFromLocalStorage() {
 //POST workout
 saveWorkoutButton.addEventListener("click", async () => {
   if ( await workout.getItem("0")) {
-    saveWorkoutButton.innerHTML = "Saving...";
-    saveWorkoutButton.disabled = true;
-    await saveWorkout();
-    await saveSets();
-    removeSetsAndNameFromLocalStorage();
-    saveWorkoutButton.innerHTML = "Save";
-    saveWorkoutButton.disabled = false;
-    window.location.href = "/feed";
+    if (confirm("Ready to publish workout?")) {
+      saveWorkoutButton.innerHTML = "Saving...";
+      saveWorkoutButton.disabled = true;
+      await saveWorkout();
+      await saveSets();
+      removeSetsAndNameFromLocalStorage();
+      saveWorkoutButton.innerHTML = "Save";
+      saveWorkoutButton.disabled = false;
+      window.location.href = "/feed";
+    };
+    
   } else {
     alert("Add at least one set to save a workout.")
   }
@@ -269,14 +272,16 @@ saveWorkoutButton.addEventListener("click", async () => {
 //clear workout
 clearWorkoutButton.addEventListener("click", () => {
   //remove sets from table
-  for (let i = 1; i < workoutTable.rows.length;) { 
-    workoutTable.deleteRow(i);
-  }
-  
-  //change workout name to default
-  workoutName.innerHTML = "Lyft session";
+  if (confirm("Delete this workout?")) {
+    for (let i = 1; i < workoutTable.rows.length;) { 
+      workoutTable.deleteRow(i);
+    }
+    
+    //change workout name to default
+    workoutName.innerHTML = "Lyft session";
 
-  removeSetsAndNameFromLocalStorage()
+    removeSetsAndNameFromLocalStorage()
+  }
 })
 
 //save new exercise helper function
