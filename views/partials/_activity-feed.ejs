@@ -35,7 +35,7 @@
                   <% } %>
                   <div class="flex-container workout-summary">
                     <h4 class="flex-summary-item">Sets: <%= workoutSets %></h4>
-                    <h4 class="flex-summary-item">Reps: <%= workoutReps %></h4>
+                    <h4 class="flex-summary-item">Reps: <%= (workoutReps).toFixed(0) %></h4>
                     <h4 class="flex-summary-item">Volume: <%= (workoutVolume/1000).toFixed(1) %> t</h4>
                   </div>
                   <table class= "sets-table" id="sets-table-<%= model[i].id %>">

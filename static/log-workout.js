@@ -101,7 +101,7 @@ addSetButton.addEventListener("click", async () => {
 
   let key = "i";
   let keys = await workout.keys();
-
+  console.log(keys[0]);
 
   if (keys[0]) {
     key =keys[keys.length-1]+"i";
@@ -254,7 +254,7 @@ function removeSetsAndNameFromLocalStorage() {
 
 //POST workout
 saveWorkoutButton.addEventListener("click", async () => {
-  if ( await workout.getItem("0")) {
+  if ( await workout.key(0)) {
     if (confirm("Ready to publish workout?")) {
       saveWorkoutButton.innerHTML = "Saving...";
       saveWorkoutButton.disabled = true;
