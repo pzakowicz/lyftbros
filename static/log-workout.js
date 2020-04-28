@@ -218,6 +218,7 @@ async function saveWorkout() {
   console.log("Workout id:", json.workout[0].id);
   //workoutId.innerHTML = json.workout[0].id;
   await localWorkout.setItem("id", json.workout[0].id)
+  return response;
 };
 
 //save sets helper function
@@ -242,12 +243,13 @@ async function saveSets() {
  })
   let json = await response;
   console.log("Sets", json.statusText);
+  return response;
 };
 
 //remove sets and name from local storage helper function
-function removeSetsAndNameFromLocalStorage() {
-  workout.iterate( function (value, key) {
-    workout.removeItem(key);
+async function removeSetsAndNameFromLocalStorage() {
+   await workout.clear(function () {
+    console.log("Sets cleared.")
   })
   localWorkout.removeItem("workoutName");
 }
@@ -258,12 +260,22 @@ saveWorkoutButton.addEventListener("click", async () => {
     if (confirm("Ready to publish workout?")) {
       saveWorkoutButton.innerHTML = "Saving...";
       saveWorkoutButton.disabled = true;
-      await saveWorkout();
-      await saveSets();
-      removeSetsAndNameFromLocalStorage();
-      saveWorkoutButton.innerHTML = "Save";
-      saveWorkoutButton.disabled = false;
-      window.location.href = "/feed";
+      let saveWorkoutResult = await saveWorkout();
+      if (saveWorkoutResult.status === 201) {
+        let saveSetsResult = await saveSets();
+        if (saveSetsResult.status === 201) {
+          await removeSetsAndNameFromLocalStorage();
+          saveWorkoutButton.innerHTML = "Save";
+          saveWorkoutButton.disabled = false;
+          window.location.href = "/feed";
+        } else {
+          alert("Failed to save sets, try again.");
+        }
+        
+      } else {
+        alert("Failed to save workout, try again.");
+      }
+      
     };
     
   } else {
