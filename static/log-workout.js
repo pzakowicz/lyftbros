@@ -118,7 +118,7 @@ addSetButton.addEventListener("click", async () => {
   //find if there is a lift of this name already added and at which row
   let insertIndex = 0;
   for (let i = 0; i < workoutTable.rows.length; i++) { 
-    if (workoutTable.rows[i].cells[1].innerHTML === lyft) {
+    if (workoutTable.rows[i].cells[2].innerHTML === lyft) {
       insertIndex = i;
       break;
     } else {
@@ -130,8 +130,9 @@ addSetButton.addEventListener("click", async () => {
   let newSet = workoutTable.insertRow(insertIndex);
   newSet.innerHTML = `
   <td class="hidden" width="0%">${key}</td>
+  <td class="hidden" width="0%">${exerciseId}</td>
   <td width="70%">${lyft}</td>
-  <td width="10%">${weight} <span class="unit">kg</span></td>
+  <td width="10%"><span>${weight}</span><span class="unit"> kg</span></td>
   <td width="10%">${reps}</td>
   <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
   workoutContainer.style.display = "block";
@@ -146,8 +147,9 @@ function populateTable() {
     let newSet = document.createElement("tr");
     newSet.innerHTML = `
     <td class="hidden" width="0%">${key}</td>
+    <td class="hidden" width="0%">${value[0]}</td>
     <td width="70%">${value[1]}</td>
-    <td width="10%">${value[2]} <span class="unit">kg</span></td>
+    <td width="10%"><span>${value[2]}</span><span class="unit"> kg</span></td>
     <td width="10%">${value[3]}</td>
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
     workoutTable.appendChild(newSet);
@@ -227,10 +229,15 @@ async function saveSets() {
   data.sets = [];
 
   let id = await localWorkout.getItem("id");
-  await workout.iterate( function (value, key) {
-    data.sets.push([value[0], value[2], value[3], id]);
 
-  })
+  data.sets = [];
+  for (let i = 1; i < workoutTable.rows.length; i++) { 
+    data.sets.push([Number(workoutTable.rows[i].cells[1].innerHTML), Number(workoutTable.rows[i].cells[3].children[0].innerHTML), Number(workoutTable.rows[i].cells[4].innerHTML), id]);
+  };
+
+  //await workout.iterate( function (value, key) {
+    //data.sets.push([value[0], value[2], value[3], id]);
+  //})
 
   console.log("Sets to be saved: ", data);
   let response = await fetch(`/api/sets/`,
