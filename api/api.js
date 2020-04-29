@@ -14,20 +14,20 @@ apiRouter.use("/exercises", exerciseRouter);
 
 //REQUEST HANDLERS -------------------------------
 
-//GET all workouts for the feed
-apiRouter.get("/feed", (req, res, next) => {
-
-let connection = mysql.createConnection(config);
-connection.query(`SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as 'lift_name', Sets.weight, 	Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id ORDER BY Workouts.date_time DESC;`, (error, results, fields) => {
-  if (error) {
-    return console.error(error.message);
-  }
-  res.status(200).json({ workout: results });
-});
-connection.end();
-
-});
-
+//GET all workouts for a given user
+apiRouter.get("/workouts/user/", (req, res, next) => {
+  
+  let connection = mysql.createConnection(config);
+  connection.query(`SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.email, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = ? ORDER BY Workouts.date_time DESC LIMIT 150;`, [req.user[0].email], (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    res.status(200).json({ workout: results });
+  });
+  connection.end();
+  
+  });
+  
 
 //POST new workout
 apiRouter.post("/workouts/", (req, res, next) => {

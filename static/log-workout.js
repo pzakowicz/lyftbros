@@ -38,6 +38,44 @@ categoryDropdown.addEventListener("change", () => {
   fillUserWeight();
 })
 
+
+//create tables with historical lifts
+function createLiftHistory() {
+
+  //clear previous contents
+  document.getElementById("History").innerHTML = "";
+
+  //see if lift is in historical workouts
+  userWorkouts.iterate(function (value, key) {
+    for (let i = 0; i < value.length; i++) { 
+      if (value[i][0] === exerciseDropdown.value) {
+      let newWorkout = document.createElement("table");
+      newWorkout.setAttribute("id", key);
+      newWorkout.innerHTML = `
+      <tr> 
+        <th><a href="/workouts/${key}">${value[0][0]}</a></th>
+        <th>${value[0][1].slice(0,10)}</th>
+        <th></th>
+      </tr>`;
+      document.getElementById("History").appendChild(newWorkout);
+      break
+      }
+    }
+
+    for (let i = 0; i < value.length; i++) { 
+      if (value[i][0] === exerciseDropdown.value) {
+        let set = document.createElement("tr");
+        set.innerHTML = `
+        <td>${value[i][0]}</td>
+        <td>${value[i][1]} kg</td>
+        <td>${value[i][2]} reps</td>`;
+        document.getElementById(key).appendChild(set);
+      }
+    }
+    
+});
+}
+
 //show new lyft tile
 addNewLyftButton.addEventListener("click", ()=> {
   document.getElementById("log-training-container").style.display = "none";
@@ -119,7 +157,7 @@ addSetButton.addEventListener("click", async () => {
   //find if there is a lift of this name already added and at which row
   let insertIndex = 0;
   for (let i = 0; i < workoutTable.rows.length; i++) { 
-    if (workoutTable.rows[i].cells[2].innerHTML === lyft) {
+    if (workoutTable.rows[i].cells[3].innerHTML === lyft) {
       insertIndex = i;
       break;
     } else {
@@ -152,7 +190,7 @@ function populateTable() {
 
     let insertIndex = 0;
     for (let i = 0; i < workoutTable.rows.length; i++) { 
-      if (workoutTable.rows[i].cells[2].innerHTML === value[2]) {
+      if (workoutTable.rows[i].cells[3].innerHTML === value[2]) {
         insertIndex = i;
         break;
       } else {
@@ -397,17 +435,19 @@ cancelNewLyftButton.addEventListener("click", () => {
 })
 
 // setting up indexedDB with localforage
-window.addEventListener("load", function () {
+window.addEventListener("load", async function () {
   lifts = localforage.createInstance({ 'name': 'lifts'});
   workout = localforage.createInstance({ 'name': 'workout'});
   localWorkout = localforage.createInstance({ 'name': 'local'});
+  userWorkouts = localforage.createInstance({'name': 'userWorlouts'});
   getAllExercisesForLocalStorage()
   populateTable();
+  await getUserWorkouts();
 
 
 })
 
-//save all exercises from db to local storage
+//save all exercises from mysql to indexedDB
 async function getAllExercisesForLocalStorage() {
   await fetch(`/api/exercises/`)
   .then(response => {
@@ -448,6 +488,36 @@ async function getExercisesForCategory() {
   })
 };
 
+//get all of user historical workouts
+async function getUserWorkouts() {
+  await userWorkouts.clear();
+  fetch(`/api/workouts/user`)
+  .then(response => {
+    return response.json();
+  })
+  .then(data => {
+    let workoutArray = data.workout;
+
+    let existingWorkout = [];
+    for (let i = 0; i < workoutArray.length; i++) { 
+      if (!existingWorkout.includes(workoutArray[i].id)) {
+        existingWorkout.push(workoutArray[i].id);
+        let key = String(workoutArray[i].id);
+        let val = [];
+        val.push([workoutArray[i].workout_name, workoutArray[i].date_time]);
+        for (let j = 0; j < workoutArray.length; j++) { 
+          if (String(workoutArray[j].id) === key) {
+            val.push([workoutArray[j].lift_name, workoutArray[j].weight, workoutArray[j].reps]);
+          }
+        }
+        console.log(key, val);
+        userWorkouts.setItem(key, val);
+      }
+    }
+
+  })
+}
+
 //show tab button
 function openTab(tabName) {
   var i;
@@ -455,5 +525,6 @@ function openTab(tabName) {
   for (i = 0; i < x.length; i++) {
     x[i].style.display = "none";
   }
+  createLiftHistory();
   document.getElementById(tabName).style.display = "flex";
 }
