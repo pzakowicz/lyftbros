@@ -15,86 +15,108 @@
 
     <main id="training-main">
 
-      <div class="container-box" id="log-training-container">
-        <h4>Log your lyfts</h4>
-        <form id="log-training-form">
-          <label for="category">Category:</label>
-          <select id="category" name="category" required>
-            <option>Barbell</option> 
-            <option>Dumbell</option> 
-            <option>Bodyweight</option> 
-            </select>
-            <br/>
-          <label for="lyft">Lyft:</label>
-          <select id="lyft" name="lyft" required>
-            <%for (let i = 0; i < lifts.length; i++) { %>
-              <% if (lifts[i].category === "Barbell") { %>
-              <option><%= lifts[i].name %></option> 
-              <% } %>
-            <% } %>
-          </select>
+      <div class="w3-bar w3-black" id="tabs-container">
+        <button class="w3-bar-item tab-button" onclick="openTab('Log')">Log</button>
+        <button class="w3-bar-item tab-button" onclick="openTab('History')">History</button>
+      </div>
 
-          <br />
-          <label for="weight">Weight(kg):</label>
-          <i class="fas fa-minus-square fa-2x" onclick="removeWeight()"></i>
-          <input type="number" id="weight" value="0" onclick="this.select()" required>
-          <i class="fas fa-plus-square fa-2x" onclick="addWeight()"></i>
-          <% if (!user.weight) { %>
-            <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i>
-            <% } else { %>
-              <span class="hidden" id="user-weight"><%= user.weight %></span>
-            <% } %>
-          <br />
-          <label for="reps">Reps:</label>
-          <i class="fas fa-minus-square fa-2x" onclick="removeRep()"></i>
-          <input type="number" id="reps" value="0" onclick="this.select()" required>
-          <i class="fas fa-plus-square fa-2x" onclick="addRep()"></i>
-          <br />
-          <div class="flex-container" id="log-training-button-container">
-            <button type="button" class="nav-button" id="submit-set-button">Save set</button>
-            <h5 class="link" id="add-new-lyft-button">Add new lyft</h5>
-          </div>
-        </form>
-      </div>
-      <div class="container-box" id="add-lyft-container">
-        <h4>Add a lyft</h4>
-        <label for="add-category">Category:</label>
-        <select id="add-category" name="add-category">
-          <option value="Barbell">Barbell</option>
-          <option value="Dumbell">Dumbell</option>
-          <option value="Bodyweight">Bodyweight</option>
-        </select>
-        <br />
-        <label for="add-name">Name:</label>
-        <input type="text" id="add-name" value="" required />
-        <br />
-        <button type="button" class="nav-button" id="save-lyft-button">Add lyft</button>
-        <button type="button" class="nav-button" id="cancel-lyft-button">Cancel</button>
-        <p class="error-message" id="lyft-exists">Lyft already exists!</p>
-      </div>
-      <div class="container-box" id="new-workout-container">
-        <h4 id="workout-name">Lyft session</h4>
-        <input type="text" id="workout-name-input" required>
-        <i class="fas fa-check" id="save-workout-name-button"></i>
-        <i class="fas fa-pen" id="change-workout-name-button"></i>
-        <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Tip: Tap a lyft name set the log values. Tap on the weight / reps to edit values.</span></i>
-        <div id="workout-table-container">
-          <table id="workout-table">
-            <tr>
-              <th class="hidden" width="0%">Key</th>
-              <th class="hidden" width="0%">ExerciseId</th>
-              <th width="60%">Lyft</th>
-              <th width="10%">Weight</th>
-              <th width="10%">Reps</th>
-              <th width="10%"></th>
-            </tr>
-          </table>
-          <br />
-          <button type="button" class="nav-button" id="save-workout-button">Save workout</button>
-          <button type="button" class="nav-button" id="clear-workout-button">Clear workout</button>
+      <div id="Log" class="tab">
+        <div class="container-box" id="log-training-container">
+          <form id="log-training-form">
+            <label for="category">Category:</label>
+            <select id="category" name="category" required>
+              <option>Barbell</option> 
+              <option>Dumbell</option> 
+              <option>Bodyweight</option> 
+              </select>
+              <br/>
+            <label for="lyft">Lyft:</label>
+            <select id="lyft" name="lyft" required>
+              <%for (let i = 0; i < lifts.length; i++) { %>
+                <% if (lifts[i].category === "Barbell") { %>
+                <option><%= lifts[i].name %></option> 
+                <% } %>
+              <% } %>
+            </select>
+  
+            <br />
+            <label for="weight">Weight(kg):</label>
+            <i class="fas fa-minus-square fa-2x" onclick="removeWeight()"></i>
+            <input type="number" id="weight" value="0" onclick="this.select()" required>
+            <i class="fas fa-plus-square fa-2x" onclick="addWeight()"></i>
+            <% if (!user.weight) { %>
+              <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i>
+              <% } else { %>
+                <span class="hidden" id="user-weight"><%= user.weight %></span>
+              <% } %>
+            <br />
+            <label for="reps">Reps:</label>
+            <i class="fas fa-minus-square fa-2x" onclick="removeRep()"></i>
+            <input type="number" id="reps" value="0" onclick="this.select()" required>
+            <i class="fas fa-plus-square fa-2x" onclick="addRep()"></i>
+            <br />
+            <div class="flex-container button-container">
+              <button type="button" class="nav-button" id="submit-set-button">Save set</button>
+              <h5 class="link" id="add-new-lyft-button">Add new lyft</h5>
+            </div>
+          </form>
         </div>
+
+        <div class="container-box" id="add-lyft-container">
+          <h4>Add a lyft</h4>
+          <label for="add-category">Category:</label>
+          <select id="add-category" name="add-category">
+            <option value="Barbell">Barbell</option>
+            <option value="Dumbell">Dumbell</option>
+            <option value="Bodyweight">Bodyweight</option>
+          </select>
+          <br />
+          <label for="add-name">Name:</label>
+          <input type="text" id="add-name" value="" required />
+          <br />
+          <button type="button" class="nav-button" id="save-lyft-button">Add lyft</button>
+          <button type="button" class="nav-button" id="cancel-lyft-button">Cancel</button>
+          <p class="error-message" id="lyft-exists">Lyft already exists!</p>
+        </div>
+
+        <div class="container-box" id="new-workout-container">
+          <h4 id="workout-name">Lyft session</h4>
+          <input type="text" id="workout-name-input" required>
+          <i class="fas fa-check" id="save-workout-name-button"></i>
+          <i class="fas fa-pen" id="change-workout-name-button"></i>
+          <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Tip: Tap a lyft name set the log values. Tap on the weight / reps to edit values.</span></i>
+          <div id="workout-table-container">
+            <table id="workout-table">
+              <tr>
+                <th class="hidden" width="0%">Key</th>
+                <th class="hidden" width="0%">ExerciseId</th>
+                <th width="60%">Lyft</th>
+                <th width="10%">Weight</th>
+                <th width="10%">Reps</th>
+                <th width="10%"></th>
+              </tr>
+            </table>
+            <div class="flex-container button-container">
+              <button type="button" class="nav-button" id="save-workout-button">Save workout</button>
+              <button type="button" class="nav-button" id="clear-workout-button">Clear workout</button>
+            </div>
+            
+          </div>
+        </div>
+
       </div>
       
+      <div id="History" class="tab" style="display:none">
+
+      </div>
+      
+
+
+
+
+
+
+
     </main>
     <script src="./log-workout.js"></script>
   </body>

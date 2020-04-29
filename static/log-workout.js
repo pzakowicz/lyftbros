@@ -42,6 +42,8 @@ categoryDropdown.addEventListener("change", () => {
 addNewLyftButton.addEventListener("click", ()=> {
   document.getElementById("log-training-container").style.display = "none";
   document.getElementById("add-lyft-container").style.display = "inline-block";
+  document.getElementById("add-category").selectedIndex = categoryDropdown.selectedIndex;
+
 })
 
 //decrement weight
@@ -99,15 +101,15 @@ addSetButton.addEventListener("click", async () => {
     }   
   })
 
+  //set a key
   let key = "i";
   let keys = await workout.keys();
   console.log(keys[0]);
-
   if (keys[0]) {
     key =keys[keys.length-1]+"i";
   }
 
-  
+  //add to indexedDB
   val.push(exerciseId, lyft, weight, reps);
   await workout.setItem(key, val);
 
@@ -132,11 +134,13 @@ addSetButton.addEventListener("click", async () => {
   <td class="hidden" width="0%">${key}</td>
   <td class="hidden" width="0%">${exerciseId}</td>
   <td width="70%">${lyft}</td>
-  <td width="10%"><span>${weight}</span><span class="unit"> kg</span></td>
+  <td width="10%"><span class="weight">${weight}</span><span class="unit"> kg</span></td>
   <td width="10%">${reps}</td>
   <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
   workoutContainer.style.display = "block";
 
+
+  
  }
 });
 
@@ -149,7 +153,7 @@ function populateTable() {
     <td class="hidden" width="0%">${key}</td>
     <td class="hidden" width="0%">${value[0]}</td>
     <td width="70%">${value[1]}</td>
-    <td width="10%"><span>${value[2]}</span><span class="unit"> kg</span></td>
+    <td width="10%"><span class="weight">${value[2]}</span><span class="unit"> kg</span></td>
     <td width="10%">${value[3]}</td>
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
     workoutTable.appendChild(newSet);
@@ -418,3 +422,12 @@ async function getExercisesForCategory() {
   })
 };
 
+//show tab button
+function openTab(tabName) {
+  var i;
+  var x = document.getElementsByClassName("tab");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  document.getElementById(tabName).style.display = "flex";
+}

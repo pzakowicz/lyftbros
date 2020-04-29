@@ -514,7 +514,7 @@ cursor: pointer;
 
 .tip-container {
   display: block;
-  width: 100%;
+  width: 100vw;
 
 }
 
@@ -524,9 +524,30 @@ cursor: pointer;
   margin: 0px;
 }
 
+#tabs-container {
+  width: 100%;
+  display: flex;
+}
+
+.tab-button {
+  width: 50%;
+  height: 40px;
+  margin: 0px;
+  background-color: white;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.tab {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
 #log-training-container {
-  min-width: 40%;
-  min-height: 170px;
+  width: 100%;
+
+  margin: 4px;
 }
 
 #log-training-form {
@@ -562,9 +583,13 @@ cursor: pointer;
   margin: 10px 0px;
 }
 
-#log-training-button-container {
+
+
+.button-container {
+  margin-top: 5px;
   justify-content: space-between;
 }
+
 
 #add-new-lyft-button {
   display: inline;
@@ -573,7 +598,7 @@ cursor: pointer;
 
 #add-lyft-container {
   display: none;
-  width: 30%;
+  width: 100%;
 }
 
 #add-lyft-container label {
@@ -589,11 +614,19 @@ cursor: pointer;
   width: 195px;
 }
 
-#new-workout-container {
-  min-height: 170px;
-  min-width: 40%;
-  margin: 1% 25%;
+#lift-table-container {
+ width: 100%;
+ margin: 4px;
 
+}
+
+#lift-table {
+  width: 100%;
+}
+
+
+#new-workout-container {
+  width: 100%;
 }
 
 #workout-name {
@@ -610,11 +643,14 @@ cursor: pointer;
 
 #workout-table {
   width: 100%;
-
 }
 
-#workout-owner {
-  margin-top: 15px;
+#workout-table th, #workout-table td {
+  padding: 4px;
+}
+
+.weight {
+  font-size: medium;
 }
 
 .id {
@@ -654,6 +690,8 @@ cursor: pointer;
 
   #log-training-container {
     width: 100%;
+    padding: 10px;
+    margin: 2px;
   }
 
   #add-lyft-container {
@@ -683,7 +721,7 @@ cursor: pointer;
 
   #log-training-form select {
     font-size: large;
-    width: 250px;
+    width: 230px;
   
   }
 
