@@ -130,6 +130,7 @@ addSetButton.addEventListener("click", async () => {
 
   //insert set next to an existing set of the same exercise
   let newSet = workoutTable.insertRow(insertIndex);
+  newSet.setAttribute("onclick", "selectRow(this)");
   newSet.innerHTML = `
   <td class="hidden" width="0%">${key}</td>
   <td class="hidden" width="0%">${exerciseId}</td>
@@ -145,10 +146,23 @@ addSetButton.addEventListener("click", async () => {
 });
 
 //populate table from local storage
-function populateTable() {
+async function populateTable() {
   //add all sets in the local storage
   workout.iterate(function (value, key) {
-    let newSet = document.createElement("tr");
+
+    let insertIndex = 0;
+    for (let i = 0; i < workoutTable.rows.length; i++) { 
+      if (workoutTable.rows[i].cells[2].innerHTML === value[1]) {
+        insertIndex = i;
+        break;
+      } else {
+        insertIndex = workoutTable.rows.length;
+      }
+    }
+  
+    //insert set next to an existing set of the same exercise
+    let newSet = workoutTable.insertRow(insertIndex);
+    newSet.setAttribute("onclick", "selectRow(this)");
     newSet.innerHTML = `
     <td class="hidden" width="0%">${key}</td>
     <td class="hidden" width="0%">${value[0]}</td>
@@ -156,7 +170,10 @@ function populateTable() {
     <td width="10%"><span class="weight">${value[2]}</span><span class="unit"> kg</span></td>
     <td width="10%">${value[3]}</td>
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
-    workoutTable.appendChild(newSet);
+    workoutContainer.style.display = "block";
+
+
+
   })
   //update the workout name if there is one
   localWorkout.getItem("workoutName").then( function(result) {
