@@ -80,16 +80,15 @@ function addRep() {
 
 // add set to workout
 addSetButton.addEventListener("click", async () => {
-  let lyft = document.getElementById("lyft").value;
-  //let id = document.getElementById("lyft-id").textContent;
-  let weight = document.getElementById("weight").value;
-  let reps = document.getElementById("reps").value;
+  let category = categoryDropdown.value;
+  let lyft = exerciseDropdown.value;
+  let weight = weightInput.value;
+  let reps = repsInput.value;
 
-  if (lyft && weight > 0 && reps > 0) {
+  if (category && lyft && weight > 0 && reps > 0) {
 
   //add set to localforage
   let val = [];
-  let category = categoryDropdown.value;
   let exerciseId = 0;
   lifts.iterate(function (value, key1) {
     if (key1 === category) {
@@ -110,7 +109,7 @@ addSetButton.addEventListener("click", async () => {
   }
 
   //add to indexedDB
-  val.push(exerciseId, lyft, weight, reps);
+  val.push(exerciseId, category, lyft, weight, reps);
   await workout.setItem(key, val);
 
   workout.iterate(function (value, key) {
@@ -134,6 +133,7 @@ addSetButton.addEventListener("click", async () => {
   newSet.innerHTML = `
   <td class="hidden" width="0%">${key}</td>
   <td class="hidden" width="0%">${exerciseId}</td>
+  <td class="hidden" width="0%">${category}</td>
   <td width="70%">${lyft}</td>
   <td width="10%"><span class="weight">${weight}</span><span class="unit"> kg</span></td>
   <td width="10%">${reps}</td>
@@ -146,13 +146,13 @@ addSetButton.addEventListener("click", async () => {
 });
 
 //populate table from local storage
-async function populateTable() {
+function populateTable() {
   //add all sets in the local storage
   workout.iterate(function (value, key) {
 
     let insertIndex = 0;
     for (let i = 0; i < workoutTable.rows.length; i++) { 
-      if (workoutTable.rows[i].cells[2].innerHTML === value[1]) {
+      if (workoutTable.rows[i].cells[2].innerHTML === value[2]) {
         insertIndex = i;
         break;
       } else {
@@ -166,13 +166,12 @@ async function populateTable() {
     newSet.innerHTML = `
     <td class="hidden" width="0%">${key}</td>
     <td class="hidden" width="0%">${value[0]}</td>
-    <td width="70%">${value[1]}</td>
-    <td width="10%"><span class="weight">${value[2]}</span><span class="unit"> kg</span></td>
-    <td width="10%">${value[3]}</td>
+    <td class="hidden" width="0%">${value[1]}</td>
+    <td width="70%">${value[2]}</td>
+    <td width="10%"><span class="weight">${value[3]}</span><span class="unit"> kg</span></td>
+    <td width="10%">${value[4]}</td>
     <td width="10%"></i><i class="fas fa-trash" onclick="deleteRow(this)"></i></td>`;
     workoutContainer.style.display = "block";
-
-
 
   })
   //update the workout name if there is one
@@ -209,7 +208,7 @@ saveWorkoutNameButton.addEventListener("click", () => {
 //delete set from workout
 async function deleteRow(r) {
   //delete row from table
-  var i = r.parentNode.parentNode.rowIndex;
+  let i = r.parentNode.parentNode.rowIndex;
   document.getElementById("workout-table").deleteRow(i);
 
   //delete set from local storage
@@ -220,6 +219,19 @@ async function deleteRow(r) {
     console.log(key, value);
   })
 };
+
+//select row and populate logger with 
+async function selectRow(r) {
+  let setCategory = r.children[2].innerHTML;
+  let setLift = r.children[3].innerHTML;
+  let setWeight = r.children[4].children[0].innerHTML;
+  let setReps = r.children[5].innerHTML;
+  categoryDropdown.value = setCategory;
+  await getExercisesForCategory();
+  weightInput.value = setWeight;
+  repsInput.value = setReps;
+  exerciseDropdown.value = setLift;
+}
 
 //save workout helper function
 async function saveWorkout() {
@@ -253,12 +265,8 @@ async function saveSets() {
 
   data.sets = [];
   for (let i = 1; i < workoutTable.rows.length; i++) { 
-    data.sets.push([Number(workoutTable.rows[i].cells[1].innerHTML), Number(workoutTable.rows[i].cells[3].children[0].innerHTML), Number(workoutTable.rows[i].cells[4].innerHTML), id]);
+    data.sets.push([Number(workoutTable.rows[i].cells[1].innerHTML), Number(workoutTable.rows[i].cells[4].children[0].innerHTML), Number(workoutTable.rows[i].cells[5].innerHTML), id]);
   };
-
-  //await workout.iterate( function (value, key) {
-    //data.sets.push([value[0], value[2], value[3], id]);
-  //})
 
   console.log("Sets to be saved: ", data);
   let response = await fetch(`/api/sets/`,
@@ -428,10 +436,11 @@ async function getAllExercisesForLocalStorage() {
 async function getExercisesForCategory() {
   let category = categoryDropdown.value;
   exerciseDropdown.innerHTML = "";
-  lifts.iterate( function (value, key) {
+  await lifts.iterate( function (value, key) {
     if (key === category) {
       value.forEach(element => {
         let newExercise = document.createElement("option");
+        newExercise.setAttribute("value", element[1]);
         newExercise.innerHTML = element[1];
         exerciseDropdown.appendChild(newExercise);
       });
