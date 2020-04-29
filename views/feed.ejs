@@ -23,6 +23,7 @@
               <% if (model[i].email === user.email) { %>
                 <p><a href="/workouts/<%= model[i].id %>"><%= model[i].workout_name %></a> -  
                   <% let today = new Date() %>
+                  <% let offset = today.getTimezoneOffset(); %> 
                   <% let todayDate = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
                   <% let yesterdayDate = today.getDate()-1+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
                   <% let workoutDate = model[i].date_time.getDate()+'-'+(model[i].date_time.getMonth()+1)+'-'+model[i].date_time.getFullYear(); %>
@@ -33,7 +34,7 @@
                   <% } else { %>
                     <%= workoutDate %>
                   <% } %>
-                  @ <%= model[i].date_time.getHours() %>:<%= (model[i].date_time.getMinutes()<10?'0':'') + model[i].date_time.getMinutes()  %></p>
+                  @ <%= (model[i].date_time.getHours()-(offset/60)) %>:<%= (model[i].date_time.getMinutes()<10?'0':'') + model[i].date_time.getMinutes()  %></p>
                 <% break %>
                 <% } %> 
                 <% } %> 

@@ -16,6 +16,7 @@
         <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
         <p class="subtitle">                    
           <% let today = new Date() %>
+          <% let offset = today.getTimezoneOffset(); %> 
           <% let todayDate = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
           <% let yesterdayDate = (today.getDate()-1)+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
           <% let workoutDate = model[0].date_time.getDate()+'-'+(model[0].date_time.getMonth()+1)+'-'+model[0].date_time.getFullYear(); %>
@@ -26,7 +27,7 @@
           <% } else { %>
             <%= workoutDate %>
           <% } %>
-          @ <%= model[0].date_time.getHours() %>:<%= (model[0].date_time.getMinutes()<10?'0':'') + model[0].date_time.getMinutes()  %>
+          @ <%= (model[0].date_time.getHours()-(offset/60)) %>:<%= (model[0].date_time.getMinutes()<10?'0':'') + model[0].date_time.getMinutes()  %>
         </p>
         <h3 class="workout-name"><%= model[0].workout_name %></h3>
         <% let workoutVolume = 0; %>
