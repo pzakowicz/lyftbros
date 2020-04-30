@@ -4,10 +4,6 @@ const workoutTable = document.getElementById("workout-table");
 const exerciseDropdown = document.getElementById("lyft");
 const weightInput = document.getElementById("weight");
 const repsInput = document.getElementById("reps");
-const workoutName = document.getElementById("workout-name");
-const changeWorkoutNameButton = document.getElementById("change-workout-name-button");
-const saveWorkoutNameButton = document.getElementById("save-workout-name-button");
-const changeWorkoutNameInput = document.getElementById("workout-name-input");
 const saveWorkoutButton = document.getElementById("save-workout-button");
 const clearWorkoutButton = document.getElementById("clear-workout-button");
 const userId = document.getElementById("user-id");
@@ -21,6 +17,7 @@ const categoryDropdown = document.getElementById("category");
 const userWeight = document.getElementById("user-weight");
 const category = document.getElementById("add-category").value;
 const name = document.getElementById("add-name").value;
+let workoutName = "Lyft session";
 
 
 function fillUserWeight() {
@@ -209,36 +206,10 @@ function populateTable() {
     workoutContainer.style.display = "block";
 
   })
-  //update the workout name if there is one
-  localWorkout.getItem("workoutName").then( function(result) {
-    if (result) {
-      workoutName.innerHTML = result;
-    }
-  })
+
 }
 
-//change workout name
-changeWorkoutNameButton.addEventListener("click", () => {
-  changeWorkoutNameInput.style.display = "inline";
-  changeWorkoutNameInput.value = workoutName.innerHTML;
-  changeWorkoutNameButton.style.display = "none";
-  workoutName.style.display = "none";
-  saveWorkoutNameButton.style.display = "inline";
-})
 
-//save new workout name
-saveWorkoutNameButton.addEventListener("click", () => {
-  if (changeWorkoutNameInput.value) {
-    workoutName.innerHTML = changeWorkoutNameInput.value;
-    changeWorkoutNameInput.style.display = "none";
-    changeWorkoutNameButton.style.display = "";
-    workoutName.style.display = "";
-    saveWorkoutNameButton.style.display = "none";
-
-    //save name to local storage
-    localWorkout.setItem("workoutName", workoutName.innerHTML);
-  }
-})
 
 //delete set from workout
 async function deleteRow(r) {
@@ -267,7 +238,7 @@ async function selectRow(r) {
 
 //save workout helper function
 async function saveWorkout() {
-  const name = workoutName.textContent;
+  const name = workoutName;
   const data = {
     name: name
   };
@@ -315,24 +286,25 @@ async function saveSets() {
 };
 
 //remove sets and name from local storage helper function
-async function removeSetsAndNameFromLocalStorage() {
+async function removeSetsFromLocalStorage() {
    await workout.clear(function () {
     console.log("Sets cleared.")
   })
-  localWorkout.removeItem("workoutName");
+
 }
 
 //POST workout
 saveWorkoutButton.addEventListener("click", async () => {
   if ( await workout.key(0)) {
-    if (confirm("Ready to publish workout?")) {
+    workoutName = prompt("Give your workout a name", "Lyft session")
+    if (workoutName) {
       saveWorkoutButton.innerHTML = "Saving...";
       saveWorkoutButton.disabled = true;
       let saveWorkoutResult = await saveWorkout();
       if (saveWorkoutResult.status === 201) {
         let saveSetsResult = await saveSets();
         if (saveSetsResult.status === 201) {
-          await removeSetsAndNameFromLocalStorage();
+          await removeSetsFromLocalStorage();
           saveWorkoutButton.innerHTML = "Save";
           saveWorkoutButton.disabled = false;
           window.location.href = "/feed";
@@ -360,10 +332,8 @@ clearWorkoutButton.addEventListener("click", () => {
       workoutTable.deleteRow(i);
     }
     
-    //change workout name to default
-    workoutName.innerHTML = "Lyft session";
 
-    removeSetsAndNameFromLocalStorage()
+    removeSetsFromLocalStorage()
   }
 })
 
@@ -433,7 +403,7 @@ window.addEventListener("load", async function () {
   lifts = localforage.createInstance({ 'name': 'lifts'});
   workout = localforage.createInstance({ 'name': 'workout'});
   localWorkout = localforage.createInstance({ 'name': 'local'});
-  userWorkouts = localforage.createInstance({'name': 'userWorlouts'});
+  userWorkouts = localforage.createInstance({'name': 'userWorkouts'});
   getAllExercisesForLocalStorage()
   populateTable();
   await getUserWorkouts();
