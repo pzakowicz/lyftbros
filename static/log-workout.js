@@ -51,6 +51,7 @@ function createLiftHistory() {
       if (value[i][0] === exerciseDropdown.value) {
       let newWorkout = document.createElement("table");
       newWorkout.setAttribute("id", key);
+      newWorkout.classList.add("lift-history");
       newWorkout.innerHTML = `
       <tr> 
         <th><a href="/workouts/${key}">${value[0][0]}</a></th>
@@ -66,9 +67,9 @@ function createLiftHistory() {
       if (value[i][0] === exerciseDropdown.value) {
         let set = document.createElement("tr");
         set.innerHTML = `
-        <td>${value[i][0]}</td>
-        <td>${value[i][1]} kg</td>
-        <td>${value[i][2]} reps</td>`;
+        <td width="50%">${value[i][0]}</td>
+        <td width="20%">${value[i][1]} kg</td>
+        <td width="20%">${value[i][2]} reps</td>`;
         document.getElementById(key).appendChild(set);
       }
     }
@@ -141,7 +142,7 @@ addSetButton.addEventListener("click", async () => {
   //set a key
   let key = "i";
   let keys = await workout.keys();
-  console.log(keys[0]);
+
   if (keys[0]) {
     key =keys[keys.length-1]+"i";
   }
@@ -149,10 +150,6 @@ addSetButton.addEventListener("click", async () => {
   //add to indexedDB
   val.push(exerciseId, category, lyft, weight, reps);
   await workout.setItem(key, val);
-
-  workout.iterate(function (value, key) {
-    console.log(key, value);
-  })
 
   //find if there is a lift of this name already added and at which row
   let insertIndex = 0;
@@ -253,9 +250,6 @@ async function deleteRow(r) {
   let key = r.parentNode.parentNode.children[0].innerHTML;
   await workout.removeItem(key);
 
-  workout.iterate(function (value, key) {
-    console.log(key, value);
-  })
 };
 
 //select row and populate logger with 
@@ -510,7 +504,6 @@ async function getUserWorkouts() {
             val.push([workoutArray[j].lift_name, workoutArray[j].weight, workoutArray[j].reps]);
           }
         }
-        console.log(key, val);
         userWorkouts.setItem(key, val);
       }
     }
