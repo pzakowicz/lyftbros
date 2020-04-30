@@ -29,7 +29,7 @@
               <option>Dumbell</option> 
               <option>Bodyweight</option> 
               </select>
-              <br/>
+              <br />
             <label for="lyft">Lyft:</label>
             <select id="lyft" name="lyft" required>
               <%for (let i = 0; i < lifts.length; i++) { %>
@@ -38,8 +38,8 @@
                 <% } %>
               <% } %>
             </select>
-  
             <br />
+
             <label for="weight">Weight(kg):</label>
             <i class="fas fa-minus-square fa-2x" onclick="removeWeight()"></i>
             <input type="number" id="weight" value="0" onclick="this.select()" required>
@@ -54,9 +54,8 @@
             <i class="fas fa-minus-square fa-2x" onclick="removeRep()"></i>
             <input type="number" id="reps" value="0" onclick="this.select()" required>
             <i class="fas fa-plus-square fa-2x" onclick="addRep()"></i>
-            <br />
             <div class="flex-container button-container">
-              <button type="button" class="nav-button" id="submit-set-button">Save set</button>
+              <button type="button" id="submit-set-button">Save set</button>
               <h5 class="link" id="add-new-lyft-button">Add new lyft</h5>
             </div>
           </form>
@@ -74,8 +73,8 @@
           <label for="add-name">Name:</label>
           <input type="text" id="add-name" value="" required />
           <br />
-          <button type="button" class="nav-button" id="save-lyft-button">Add lyft</button>
-          <button type="button" class="nav-button" id="cancel-lyft-button">Cancel</button>
+          <button type="button" id="save-lyft-button">Add lyft</button>
+          <button type="button" id="cancel-lyft-button">Cancel</button>
           <p class="error-message" id="lyft-exists">Lyft already exists!</p>
         </div>
 
@@ -94,8 +93,8 @@
               </tr>
             </table>
             <div class="flex-container button-container">
-              <button type="button" class="nav-button" id="save-workout-button">Save workout</button>
-              <button type="button" class="nav-button" id="clear-workout-button">Clear workout</button>
+              <button type="button" id="save-workout-button">Save workout</button>
+              <button type="button" id="clear-workout-button">Clear workout</button>
             </div>
             
           </div>

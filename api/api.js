@@ -18,7 +18,7 @@ apiRouter.use("/exercises", exerciseRouter);
 apiRouter.get("/workouts/user/", (req, res, next) => {
   
   let connection = mysql.createConnection(config);
-  connection.query(`SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.email, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = ? ORDER BY Workouts.date_time DESC LIMIT 150;`, [req.user[0].email], (error, results, fields) => {
+  connection.query(`SELECT Workouts.id, Workouts.name as 'workout_name', Workouts.date_time, Users.email, Lifts.name as 'lift_name', Sets.weight, Sets.reps FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id 	LEFT JOIN Users on Workouts.user_id = Users.id WHERE Users.email = ? ORDER BY Workouts.date_time DESC LIMIT 100;`, [req.user[0].email], (error, results, fields) => {
     if (error) {
       return console.error(error.message);
     }

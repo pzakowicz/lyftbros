@@ -398,21 +398,11 @@ cancelNewLyftButton.addEventListener("click", () => {
   document.getElementById("add-lyft-container").style.display = "none"
 })
 
-// setting up indexedDB with localforage
-window.addEventListener("load", async function () {
-  lifts = localforage.createInstance({ 'name': 'lifts'});
-  workout = localforage.createInstance({ 'name': 'workout'});
-  localWorkout = localforage.createInstance({ 'name': 'local'});
-  userWorkouts = localforage.createInstance({'name': 'userWorkouts'});
-  getAllExercisesForLocalStorage()
-  populateTable();
-  await getUserWorkouts();
 
-
-})
 
 //save all exercises from mysql to indexedDB
 async function getAllExercisesForLocalStorage() {
+  await lifts.clear();
   await fetch(`/api/exercises/`)
   .then(response => {
     return response.json();
@@ -491,3 +481,18 @@ function openTab(tabName) {
   createLiftHistory();
   document.getElementById(tabName).style.display = "flex";
 }
+
+// setting up indexedDB with localforage
+window.addEventListener("load", async function () {
+  lifts = localforage.createInstance({ 'name': 'lifts'});
+  workout = localforage.createInstance({ 'name': 'workout'});
+  localWorkout = localforage.createInstance({ 'name': 'local'});
+  userWorkouts = localforage.createInstance({'name': 'userWorkouts'});
+  getAllExercisesForLocalStorage()
+  userWorkouts = localforage.createInstance({'name': 'userWorkouts'});
+  getUserWorkouts();
+  populateTable();
+
+
+
+})

@@ -188,12 +188,17 @@ label, span {
 }
 
 input, select {
-  margin: 5px 0px;
+  margin: 4px 0px;
 }
 
 button {
-  margin: 10px 0px;
+  margin: 5px 0px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 5px;
 }
+
 
 
 /* ------------------------- Login for mobile  ------------------------- */
@@ -236,10 +241,10 @@ button {
   justify-content: space-between;
   border-bottom: 1px solid rgb(233, 233, 233);
   position: fixed;
-  width: 100%;
   background-color: white;
   top: 0;
-  z-index: 1;
+  width:100%;
+
 }
 
 nav {
@@ -330,6 +335,9 @@ button:hover {
 
   .nav-button {
     margin: 0px 5px;
+    font-size: larger;
+    padding: 5px;
+    min-width: 100px;
   }
 
 }
@@ -426,6 +434,7 @@ button:hover {
   width: 50px;
   border: none;
   border-radius: 4px;
+  font-size: small;
 }
 
 .comment-button:hover { 
@@ -569,7 +578,7 @@ cursor: pointer;
   font-size: larger;
   font-weight: bold;
   text-align: center;
-  margin: 5px 0px;
+
   vertical-align: middle;
 
 }
@@ -588,7 +597,7 @@ cursor: pointer;
 #log-training-form label {
   display: inline-block;
   width: 90px;
-  margin: 10px 0px;
+  margin: 5px 0px;
 }
 
 #lift-history {
@@ -596,19 +605,19 @@ cursor: pointer;
 }
 
 .button-container {
-  margin-top: 5px;
   justify-content: space-between;
 }
 
 
 #add-new-lyft-button {
   display: inline;
-  margin: 10px;
+  margin: auto 5px;
 }
 
 #add-lyft-container {
   display: none;
   width: 100%;
+
 }
 
 #add-lyft-container label {
@@ -627,17 +636,6 @@ cursor: pointer;
 
 #new-workout-container {
   width: 100%;
-}
-
-#workout-name {
-  display: inline-block;
-}
-
-#workout-name-input {
-  display: none;
-}
-
-#save-workout-name-button {
   display: none;
 }
 
@@ -674,10 +672,9 @@ cursor: pointer;
   border-radius: 6px;
   position: absolute;
   z-index: 1;
-  width: 150px;
-  top: 100%;
-  left: 50%;
-  margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+  top: -5px;
+  right: 105%;
+
 }
 
 .tooltip:hover .tooltiptext {
@@ -692,6 +689,7 @@ cursor: pointer;
     width: 100%;
     padding: 10px;
     margin: 2px;
+    font-size: medium;
   }
 
   #add-lyft-container {
@@ -704,7 +702,7 @@ cursor: pointer;
   }
 
   #add-lyft-container select {
-    font-size: large;
+
     width: 230px;
   }
 
@@ -717,9 +715,9 @@ cursor: pointer;
     width: 100%;
   }
 
-.tab {
-  width:100%;
-}
+  .tab {
+    width:100%;
+  }
 
   #log-training-form label {
     font-size: medium;
@@ -729,12 +727,6 @@ cursor: pointer;
     font-size: large;
     width: 230px;
   
-  }
-
-  #save-lyft-button, #save-workout-button, #submit-set-button  {
-    margin-left: 0px;
-    font-size: medium;
-
   }
 
   #save-lyft-button {
