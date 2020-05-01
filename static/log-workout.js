@@ -310,10 +310,14 @@ saveWorkoutButton.addEventListener("click", async () => {
           window.location.href = "/feed";
         } else {
           alert("Failed to save sets, try again.");
+          saveWorkoutButton.innerHTML = "Save";
+          saveWorkoutButton.disabled = false;
         }
         
       } else {
         alert("Failed to save workout, try again.");
+        saveWorkoutButton.innerHTML = "Save";
+        saveWorkoutButton.disabled = false;
       }
       
     };
