@@ -126,7 +126,7 @@ addSetButton.addEventListener("click", async () => {
   //add set to localforage
   let val = [];
   let exerciseId = 0;
-  lifts.iterate(function (value, key1) {
+  await lifts.iterate(function (value, key1) {
     if (key1 === category) {
       value.forEach(element => {
         if (element[1] === lyft) {
