@@ -14,8 +14,6 @@ const auth = require("./auth");
 const mysql = require("mysql2");
 const config = require("./config");
 
-
-
 // create application
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -44,7 +42,7 @@ app.use(auth.session);
 app.use(auth.setUser);
 app.use(morgan("dev"));
 app.use(cors());
-app.use(express.static(path.join(__dirname, "./static")));
+app.use(express.static(path.join(__dirname, "./public")));
 app.use(errorhandler());
 
 //HELPER FUNCTIONS ----------------------------------
@@ -63,15 +61,15 @@ function redirectToFeed(req, res, next) {
 
 //ROUTES ----------------------------------
 
-//mounting routers
+//mounting API router
 app.use("/api/", apiRouter);
 
-//GET login page
+//Render login page
 app.get("/", redirectToFeed, (req, res) => {
   res.render("login");  
 });
 
-//GET feed page
+//Render feed page
 app.get("/feed", redirectToLogin, (req, res) => {
   let fistBumps;
   let totalLeaderboard;
@@ -118,7 +116,7 @@ app.get("/feed", redirectToLogin, (req, res) => {
 
 });
 
-//GET log-workout page
+//Render log-workout page
 app.get("/log-workout", redirectToLogin, (req, res) => {
 
   let connection = mysql.createConnection(config);
@@ -133,7 +131,7 @@ app.get("/log-workout", redirectToLogin, (req, res) => {
 });
 
 
-//GET user details page
+//Render user details page
 app.get("/users/:email", redirectToLogin, (req, res) => {
   let prs;
   let bro;
@@ -181,7 +179,7 @@ app.get("/users/:email", redirectToLogin, (req, res) => {
 
 });
 
-//GET workout details page
+//Render workout details page
 app.get("/workouts/:id", redirectToLogin, (req, res) => {
   let fistBumps;
   let connection = mysql.createConnection(config);
@@ -209,12 +207,12 @@ app.get("/workouts/:id", redirectToLogin, (req, res) => {
 
 
 
-//GET account page
+//Render account page
 app.get("/account", redirectToLogin, (req, res) => {
   return res.render("account", { user: req.user[0] });  
 });
 
-//GET logout page
+//Render logout page
 app.get("/logout", (req, res) => {
   req.logout();
   console.log("User logged out");
