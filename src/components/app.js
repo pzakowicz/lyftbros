@@ -1,5 +1,7 @@
 //imports 
 import React, {Component} from 'react';
+import LoginForm from './login-form';
+import RegisterForm from './register-form';
 
 
 //creating the master component
@@ -7,39 +9,29 @@ class App extends Component {
   
   //setting state object for the master component
   state = { 
-    freeBookmark: true,
-    data: [],
-    welcome: "test",
-    loading: false,
-    videosVisible: false
+    loginFormVisible: true,
+    showCreateAccountVisible: true,
+    registerFormVisible: false
    }
 
-  //using the didmount method to fetch data for children elements
-  componentDidMount() {
-    this.setState({loading: true})
-    fetch('https://hplussport.com/api/products/order/price/sort/asc/qty/1')
-      .then(data => data.json())
-      .then(data => this.setState({data, loading: false}))
-  }
 
-  //testing the didupdate method
-  componentDidUpdate() {
-    console.log("Library component updated!")
-  }
 
-  toggleVisibility = () => {
+  toggleFormVisibility = () => {
     this.setState(prevState => ({
-      videosVisible: !prevState.videosVisible
+      loginFormVisible: !prevState.loginFormVisible, 
+      showCreateAccountVisible: !prevState.showCreateAccountVisible, 
+      registerFormVisible: !prevState.registerFormVisible, 
     }))
   }
 
-  //rendering the master component
+
   render() {
-    //setting books as a variable to avoid repeating this.props for each variable
 
     return (
     <div>
-        <h1>Welcome to the React! {this.state.welcome}</h1>
+      {this.state.loginFormVisible && <LoginForm  />}
+      {this.state.showCreateAccountVisible && <h5 className="link" id="show-create-account-form" onClick={this.toggleFormVisibility}>New to Lyftbros? Create an account.</h5>}
+      {this.state.registerFormVisible && <RegisterForm visibility={toggleFormVisibility}/>}
         
     </div>
     )
