@@ -14,9 +14,7 @@ class App extends Component {
     registerFormVisible: false
    }
 
-
-
-  toggleFormVisibility = () => {
+  toggleForms = () => {
     this.setState(prevState => ({
       loginFormVisible: !prevState.loginFormVisible, 
       showCreateAccountVisible: !prevState.showCreateAccountVisible, 
@@ -30,8 +28,8 @@ class App extends Component {
     return (
     <div>
       {this.state.loginFormVisible && <LoginForm  />}
-      {this.state.showCreateAccountVisible && <h5 className="link" id="show-create-account-form" onClick={this.toggleFormVisibility}>New to Lyftbros? Create an account.</h5>}
-      {this.state.registerFormVisible && <RegisterForm visibility={toggleFormVisibility}/>}
+      {this.state.showCreateAccountVisible && <h5 className="link" id="show-create-account-form" onClick={this.toggleForms}>New to Lyftbros? Create an account.</h5>}
+      {this.state.registerFormVisible && <RegisterForm toggle={this.toggleForms}/>}
         
     </div>
     )

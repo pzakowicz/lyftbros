@@ -44,7 +44,6 @@ class LoginForm extends Component {
       } else if (response.status === 401){
         console.log("Incorrect password or user");
         this.setState({errorMessageVisible: true, logging: false});
-        console.log(this.state.errorMessageVisible);
       }
     }
   }

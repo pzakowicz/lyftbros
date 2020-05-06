@@ -74,7 +74,8 @@ if (!name || !surname || !gender || !email || !password) {
     let connection = mysql.createConnection(config);
     connection.query(`INSERT INTO Users (first_name, surname, gender, email, password) VALUES (?, ?, ?, ?, ?)`, [name, surname, gender, email, hash], (error, results, fields) => {
       if (error) {
-        return console.error(error.message);
+        console.error(error.message);
+        return res.sendStatus(400);
       }
       res.status(201).json({ user: results.insertId });
     });
@@ -118,7 +119,6 @@ userRouter.put("/", (req, res, next) => {
 userRouter.post("/login/", passport.authenticate('local', { 
   session: true,
   successRedirect: '/feed'
-  //failureRedirect: '/'
   }
   )); 
 

@@ -47,7 +47,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "nodemon --exec babel-node server.js --ignore public/",
+    "start": "nodemon --exec babel-node server.js --ignore public/resources/",
     "dev": "webpack -wd"
   },
   "repository": {
