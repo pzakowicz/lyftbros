@@ -12,68 +12,12 @@
     <%- include("partials/_header") -%>
     
     <main id="feed-main">
+      <div id="root">
+
+      </div>
 
       <!-- container with user stats -->
-      <div class="container-box" id="stat-container">
-        <% if (user) { %>
-          <h4>Welcome <a href="/users/<%= user.email %>/"><%= user.first_name %>!</a></h4>
-          <div class="inner-container">
-            <h5>Your last workout:</h5>
-            <% for (let i = 0; i < model.length; i++) { %>   
-              <% if (model[i].email === user.email) { %>
-                <p><a href="/workouts/<%= model[i].id %>"><%= model[i].workout_name %></a> -  
-                  <% let today = new Date() %>
-                  <% let offset = today.getTimezoneOffset(); %> 
-                  <% let todayDate = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
-                  <% let yesterdayDate = today.getDate()-1+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
-                  <% let workoutDate = model[i].date_time.getDate()+'-'+(model[i].date_time.getMonth()+1)+'-'+model[i].date_time.getFullYear(); %>
-                  <% if (workoutDate === todayDate) { %>
-                    Today
-                  <% } else if (workoutDate === yesterdayDate) { %> 
-                    Yesterday
-                  <% } else { %>
-                    <%= workoutDate %>
-                  <% } %>
-                  @ <%= (model[i].date_time.getHours()-(offset/60)) %>:<%= (model[i].date_time.getMinutes()<10?'0':'') + model[i].date_time.getMinutes()  %></p>
-                <% break %>
-                <% } %> 
-                <% } %> 
-          </div>
-          <div class="inner-container">
-            <h5>Last 4 weeks:</h5>
-            
-              <% let countedWorkouts = []; %>
-              <% for (let i = 0; i < model.length; i++) { %>   
-                <% if (model[i].email === user.email && !countedWorkouts.includes(model[i].id)) { %>
-                  <% countedWorkouts.push(model[i].id) %>
-                  <% } %> 
-                  <% } %>
-              <div class="flex-container list-item">
-                <span>Workouts: </span><span class="value"><%= countedWorkouts.length %></span> 
-              </div> 
-              <% let totalVolume = 0; %>
-              <% let totalSets = 0; %>
-              <% let totalReps = 0; %>
-              <% for (let i = 0; i < model.length; i++) { %>   
-                <% if (model[i].email === user.email) { %>
-                  <% totalVolume += (model[i].avg_weight * model[i].avg_reps * model[i].sets); %>
-                  <% totalSets += model[i].sets; %>
-                  <% totalReps += model[i].avg_reps * model[i].sets; %>
-                  <% } %> 
-                  <% } %>
-                <div class="flex-container list-item">
-                  <span>Sets: </span><span class="value"><%= totalSets %></span>
-                </div>
-                <div class="flex-container list-item">
-                  <span>Reps: </span><span class="value"><%= (totalReps).toFixed(0) %></span>
-                </div>
-                <div class="flex-container list-item">
-                  <span>Volume: </span><span class="value"><%= (totalVolume/1000).toFixed(1) %> t</span>
-                </div>
-
-          </div>
-        <% } %>
-      </div>
+      
 
       <!-- container with the feed-->
       <div class="container" id="feed-container">
@@ -115,5 +59,6 @@
         <%- include("partials/_comment-modal") -%> 
       </div>
     </main>
+    <script src="/bundle.js"></script>
   </body>
 </html>

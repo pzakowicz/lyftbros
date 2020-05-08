@@ -115,7 +115,6 @@ userRouter.put("/", (req, res, next) => {
 
 
 //POST - Login as a created user
-
 userRouter.post("/login/", passport.authenticate('local', { 
   session: true,
   successRedirect: '/feed'
@@ -124,3 +123,13 @@ userRouter.post("/login/", passport.authenticate('local', {
 
 //exports
 module.exports = userRouter;
+
+//GET logged in user details
+userRouter.get("/session/", (req, res, next) => {
+  console.log("Requested logged in user details ");
+  console.log("Returned logged in user details: ", req.user[0]);
+  res.status(200).send(req.user[0]);
+
+ 
+  
+  });

@@ -1,12 +1,10 @@
 //imports 
 import React, {Component} from 'react';
-import Login from './login/login';
-import Feed from './feed/feed';
-import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
-
+import LoginForm from './login-form';
+import RegisterForm from './register-form';
 
 //creating the master component
-class App extends Component {
+class Login extends Component {
   
   //setting state object for the master component
   state = { 
@@ -27,19 +25,15 @@ class App extends Component {
   render() {
 
     return (
-      <div>
-        <BrowserRouter>
-            <div className="app">
-              <Route exact path="/" component={Login} />
-              <Route path="/feed" component={Feed} />
-
-            </div>
-        </BrowserRouter>
-      </div>
-
+    <div>
+      {this.state.loginFormVisible && <LoginForm  />}
+      {this.state.showCreateAccountVisible && <h5 className="link" id="show-create-account-form" onClick={this.toggleForms}>New to Lyftbros? Create an account.</h5>}
+      {this.state.registerFormVisible && <RegisterForm toggle={this.toggleForms}/>}
+        
+    </div>
     )
   }
 
 }
 
-export default App;
+export default Login;

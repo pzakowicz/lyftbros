@@ -132,14 +132,14 @@ app.get("/log-workout", redirectToLogin, (req, res) => {
 
 
 //Render user details page
-app.get("/users/:email", redirectToLogin, (req, res) => {
+app.get("/users/:id", redirectToLogin, (req, res) => {
   let prs;
   let bro;
   let fistBumps;
   let connection = mysql.createConnection(config);
 
     //get user data
-    connection.query(`SELECT first_name, surname, gender, email FROM Users WHERE email = ?;`, [ req.params.email ], (error, results, fields) => {
+    connection.query(`SELECT * FROM Users WHERE id = ?;`, [ req.params.id ], (error, results, fields) => {
       if (error) {
         return console.error(error.message);
       }

@@ -1,5 +1,6 @@
 //imports 
 import React, {Component} from 'react';
+import { Redirect } from 'react-router-dom';
 
 class LoginForm extends Component {
 
@@ -7,7 +8,8 @@ class LoginForm extends Component {
     email: '',
     password: '',
     errorMessageVisible: false,
-    logging: false
+    logging: false,
+    redirect: false,
   }
 
   changeHandler = (event) => {
@@ -39,7 +41,7 @@ class LoginForm extends Component {
       if (response.status === 200) {
         console.log("login successful");
         this.setState({errorMessageVisible: false, logging: false});
-        window.location.href = response.url;
+        this.setState({redirect: true});
 
       } else if (response.status === 401){
         console.log("Incorrect password or user");
@@ -64,6 +66,7 @@ class LoginForm extends Component {
           : <button className="nav-button" type="submit" id="login-button">Login</button>}
           <br />
           {this.state.errorMessageVisible && <p className="error-message" id="user-not-found"> Wrong email and/or password. </p>}
+          {this.state.redirect && <Redirect push to="/feed" />}
         </form>
     )
   }
