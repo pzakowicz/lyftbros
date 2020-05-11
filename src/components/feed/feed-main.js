@@ -47,7 +47,7 @@ function FeedMain() {
   }, []);
     if (!loading) {      
       return (
-        <div>
+        <div className="inner-container">
           {uniqueWorkouts.map(
             (workout, i) => <Workout 
               key={i}
@@ -57,12 +57,6 @@ function FeedMain() {
               first_name={workout.first_name}
               surname={workout.surname}
               user_id={workout.user_id}
-              lift_name={workout.lift_name}
-              sets={workout.sets}
-              avg_reps={workout.avg_reps}
-              avg_sets={workout.avg_sets}
-              avg_weight={workout.avg_weight}
-              max_weight={workout.max_weight}
             /> 
           )}
         </div>

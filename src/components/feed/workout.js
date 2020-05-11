@@ -1,21 +1,24 @@
 //imports 
 import React, {useState, useEffect, useContext} from 'react';
-import {WorkoutContext, UserContext} from './feed';
+import {WorkoutContext, UserContext, FistBumpsContext} from './feed';
 
 
 //creating the master component
-function Workout({workout_id, workout_name, date_time, first_name, surname, user_id, lift_name, sets, avg_reps, avg_sets, avg_weight, max_weight }) {
+function Workout({workout_id, workout_name, date_time, first_name, surname, user_id }) {
 
   //importing context
   const workouts = useContext(WorkoutContext);
   const user = useContext(UserContext);
+  const fistBumps = useContext(FistBumpsContext);
 
   //setting state
 
   const [loading, setLoading] = useState(true);
-  const [currentWorkout, setCurrentWorkout] = useState();
   const [workoutDateTime, setWorkoutDateTime] = useState({});
   const [workoutStats, setWorkoutStats] = useState({});
+  const [fistBumpsCount, setFistBumpsCount] = useState();
+  const [userHasBumped, setUserHasBumped] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
   
 
   useEffect(() => {
@@ -48,15 +51,65 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
       setWorkoutStats({totalVolume: totalVolume, totalSets: totalSets, totalReps: totalReps});
     }
 
+    const countFistBumps = () => {
+      let count = 0; 
+      for (let i = 0; i < fistBumps.length; i++) {
+        if (fistBumps[i].workout_id === workout_id) {
+          count++;
+        }
+      }
+      setFistBumpsCount(count);
+    }
+
+    const userHasBumped = () => {
+      for (let i = 0; i < fistBumps.length; i++) {
+        if (fistBumps[i].workout_id === workout_id && fistBumps[i].user_id === user.id) {
+          setUserHasBumped(true);
+        }
+      }
+    }
+
+    
+
     setWorkoutTimeAndDate();
     calcWorkoutStats();
+    countFistBumps();
+    userHasBumped();
     setLoading(false);
 
   }, []);
+
+  async function addFistBump(e) {
+    const data = {
+      workoutId: workout_id
+    };
+    let response = await fetch(`/api/workouts/fist-bumps/add/`,
+    {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    console.log("requested to add fist bump:", data);
+    // check if fist bump has been added
+    if (response.status === 201) {
+      console.log("Fist bump added");
+      setFistBumpsCount(fistBumpsCount + 1);
+      setUserHasBumped(true);
+    }
+  };
+
+    const toggleModal = () => {
+      setModalVisible(prevState => !prevState)
+    }
+  
+
+
    
     if (!loading) {
       return (
-        <div className="inner-container">
+
   
                 <div className="container-box"> 
                   <h5 className="user-name"><a href={'/users/' + user_id}>{first_name} {surname}</a></h5>
@@ -85,7 +138,6 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
                     </thead>
                     <tbody>
 
-                        {/*add logic for looping through table row */}
                         { workouts.map((workout, i) => {
                           return workout.id === workout_id ? 
                           <tr key={i}>
@@ -94,19 +146,29 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
                             <td width="10%">{(workout.avg_reps/1).toFixed(0)}</td>
                             <td width="10%">{(workout.avg_weight/1).toFixed(0)}<span className="unit"> kg</span></td>
                             <td width="10%">{workout.max_weight}<span className="unit"> kg</span></td>      
-                          </tr> :
-                          null
+                          </tr> : null
                         })}
                     </tbody>
-                        
-                      
-               
                   </table>
+                  <div className="flex-container comment-section">
+                    <span id={"comment-summary-" + workout_id} onClick={toggleModal}>
+                      { (fistBumpsCount > 0) 
+                      ? <span id={"fist-bump-count-" + workout_id}>{fistBumpsCount} fist bumps!</span> 
+                      : <span>Be the first one to bump your bro!</span>}
+                            
+                    </span>
+                    <div id="button-container">
+                      <button type="button" className="comment-button" id={workout_id} onClick={addFistBump}>
+                        { userHasBumped ? <i className="fas fa-hand-rock" id={"fist-" + workout_id }></i> 
+                          : <i className="far fa-hand-rock" id={"fist-" + workout_id }></i> }
+                      </button>
+                      <button type="button" className="comment-button" id="comment"><i className="far fa-comment"></i></button>
+                    </div> 
+                  </div>
+                </div>
+                 
+  
 
-                </div> 
-  
-  
-      </div>
           
           
     )
