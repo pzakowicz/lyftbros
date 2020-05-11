@@ -50,7 +50,6 @@ let connection = mysql.createConnection(config);
     if (error) {
       return console.error(error.message);
     }
-    console.log("Returned user with id: ", results);
     res.status(200).json({ user: results });
   });
   connection.end();

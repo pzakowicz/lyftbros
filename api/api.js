@@ -18,7 +18,7 @@ apiRouter.use("/exercises", exerciseRouter);
 apiRouter.get("/workouts/", (req, res, next) => {
   
   let connection = mysql.createConnection(config);
-  connection.query(`SELECT Workouts.id, Workouts.name as  workout_name, workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN (NOW() - INTERVAL 4 WEEK) AND NOW() GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;`, (error, results, fields) => {
+  connection.query(`SELECT Workouts.id, Workouts.name as  workout_name, workouts.date_time, Users.first_name, Users.surname, Users.id as user_id, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN (NOW() - INTERVAL 4 WEEK) AND NOW() GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;`, (error, results, fields) => {
     if (error) {
       return console.error(error.message);
     }
@@ -102,7 +102,23 @@ apiRouter.post("/workouts/fist-bumps/add/", (req, res, next) => {
   }
 });
 
-//GET fist-bumps and users
+//GET all fist bumps with count
+apiRouter.get("/workouts/fist-bumps/", (req, res, next) => {
+  console.log("Requested fist-bumps");
+
+  let connection = mysql.createConnection(config);
+  connection.query(`SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id`, [req.params.workoutid], (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    res.status(200).send(results);
+  });
+  connection.end();
+
+});
+
+
+//GET fist-bumps and users for workout id
 apiRouter.get("/workouts/fist-bumps/:workoutid", (req, res, next) => {
   console.log("Requested fist-bumps for workout id: ", req.params);
 

@@ -1,62 +1,54 @@
 //imports 
-import React, {Component} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import {WorkoutContext, UserContext} from './feed';
 
 
 //creating the master component
-class Last4Months extends Component {
+function Last4Months() {
+
+  //importing context
+  const workouts = useContext(WorkoutContext);
+  const user = useContext(UserContext);
+
+  //setting state
+  const [workoutCount, setworkoutCount] = useState();
+  const [workoutStats, setWorkoutStats] = useState({});
+  const [loading, setLoading] = useState(true);
   
-  //setting state object for the master component
-  state = { 
-    loading: true,
-    workoutCount: 0,
-    totalVolume: 0,
-    totalSets: 0,
-    totalReps: 0
 
-   }
+  useEffect(() => {
 
+    const calcUserWorkouts = () => {
+      let countedWorkouts = [];
+      for (let i = 0; i < workouts.length; i++) {
+        if (workouts[i].user_id === user.id && !countedWorkouts.includes(workouts[i].id)) {
+          countedWorkouts.push(workouts[i].id)
+        }
+      }
+      setworkoutCount(countedWorkouts.length)
+    }
+
+    const calcWorkoutStats = () => {
+      let totalVolume = 0;
+      let totalSets = 0;
+      let totalReps = 0;
+      for (let i = 0; i < workouts.length; i++) {
+        if (workouts[i].user_id === user.id) {
+          totalVolume += (workouts[i].avg_weight * workouts[i].avg_reps * workouts[i].sets);
+          totalSets += workouts[i].sets;
+          totalReps += workouts[i].avg_reps * workouts[i].sets;
+        }
+      }
+      setWorkoutStats({totalVolume: totalVolume, totalSets: totalSets, totalReps: totalReps});
+    }
+
+    calcUserWorkouts();
+    calcWorkoutStats();
+    setLoading(false);
+
+  }, []);
    
-  async componentDidMount() {
-
-    await this.calcUserWorkouts();
-    await this.calcWorkoutStats();
-
-    this.setState({loading: false});
-
-  }
-    
-  calcUserWorkouts = () => {
-    let countedWorkouts = [];
-    for (let i = 0; i < this.props.workouts.length; i++) {
-      if (this.props.workouts[i].email === this.props.user.email && !countedWorkouts.includes(this.props.workouts[i].id)) {
-        countedWorkouts.push(this.props.workouts[i].id)
-      }
-    }
-    this.setState({workoutCount: countedWorkouts.length})
-  }
-
-  calcWorkoutStats = () => {
-    let totalVolume = 0;
-    let totalSets = 0;
-    let totalReps = 0;
-    for (let i = 0; i < this.props.workouts.length; i++) {
-      if (this.props.workouts[i].email === this.props.user.email) {
-        totalVolume += (this.props.workouts[i].avg_weight * this.props.workouts[i].avg_reps * this.props.workouts[i].sets);
-        totalSets += this.props.workouts[i].sets;
-        totalReps += this.props.workouts[i].avg_reps * this.props.workouts[i].sets;
-      }
-    }
-    this.setState({totalVolume: totalVolume, totalSets: totalSets, totalReps: totalReps});
-  }
-
-
-  render() {
-    const { workoutCount, totalVolume, totalSets, totalReps } = this.state;
-
-
-
-
-    if (!this.state.loading) {
+    if (!loading) {
       
       return (
         <div className="inner-container">
@@ -67,13 +59,13 @@ class Last4Months extends Component {
           </div> 
 
             <div className="flex-container list-item">
-              <span>Sets: </span><span className="value">{ totalSets }</span>
+              <span>Sets: </span><span className="value">{ workoutStats.totalSets }</span>
             </div>
             <div className="flex-container list-item">
-              <span>Reps: </span><span className="value">{(totalReps).toFixed(0) }</span>
+              <span>Reps: </span><span className="value">{(workoutStats.totalReps).toFixed(0) }</span>
             </div>
             <div className="flex-container list-item">
-              <span>Volume: </span><span className="value">{(totalVolume/1000).toFixed(1)} t</span>
+              <span>Volume: </span><span className="value">{(workoutStats.totalVolume/1000).toFixed(1)} t</span>
             </div>
   
       </div>
@@ -85,7 +77,7 @@ class Last4Months extends Component {
     } else {
       return (
         <div className="inner-container">
-          <h2>Loading...</h2>
+          <h5>Loading...</h5>
         </div>
       )
     }
@@ -93,7 +85,7 @@ class Last4Months extends Component {
 
       
 
-  }
+
 
 }
 

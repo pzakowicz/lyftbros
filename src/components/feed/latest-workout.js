@@ -1,87 +1,80 @@
 //imports 
-import React, {Component} from 'react';
-import { WorkoutConsumer } from '../../context/workoutContext';
-
+import React, {useState, useEffect, useContext} from 'react';
+import {WorkoutContext, UserContext} from './feed';
 
 //creating the master component
-class LatestWorkout extends Component {
+function LatestWorkout() {
+
+  //importing context
+  const workouts = useContext(WorkoutContext);
+  const user = useContext(UserContext);
+
+  //setting state
+  const [latestWorkout, setLatestWorkout] = useState({});
+  const [workoutStats, setWorkoutStats] = useState({});
+  const [loading, setLoading] = useState(true);
   
-  //setting state object for the master component
-  state = { 
-    loading: true,
-    todayDate: '',
-    yesterdayDate: '',
-    workoutDate: '',
-    workoutTime: '',
-    latestWorkout: {}
-   }
+  useEffect(() => {
 
-   
-  async componentDidMount() {
-    await this.findLatestWorkout();
-    this.setWorkoutTimeAndDate();
-    this.setState({loading: false});
-
-  }
-    
-    
-  findLatestWorkout = () => {
-    for (let i = 0; i < this.props.workouts.length; i++) {
-      if (this.props.workouts[i].email === this.props.user.email) {
-        this.setState({latestWorkout: this.props.workouts[i]});
+  let latestWorkout2 = {};
+  const findLatestWorkout = () => {
+    for (let i = 0; i < workouts.length; i++) {
+      if (workouts[i].user_id === user.id) {
+        latestWorkout2 = workouts[i];
+        setLatestWorkout(workouts[i]);
         break
       }
     }   
   }
-  
-  setWorkoutTimeAndDate = () => {
 
+  findLatestWorkout();
+
+  const setWorkoutTimeAndDate = () => {
     let today = new Date();
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     let offset = today.getTimezoneOffset();
     let todayDate = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
     let yesterdayDate = today.getDate()-1+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-    let workoutDateObject = new Date(Date.parse(this.state.latestWorkout.date_time));
+    let workoutDateObject = new Date(Date.parse(latestWorkout2.date_time));
     let workoutDate = workoutDateObject.getDate()+'-'+(workoutDateObject.getMonth()+1)+'-'+workoutDateObject.getFullYear();
+    let formattedDate = (months[workoutDateObject.getMonth()+1]) + ' ' + workoutDateObject.getDate()+', '+workoutDateObject.getFullYear()+' ';
     let workoutTime = (workoutDateObject.getHours()-(offset/60))+ ':' + workoutDateObject.getMinutes();
-    this.setState({todayDate: todayDate, yesterdayDate: yesterdayDate, workoutDate: workoutDate, workoutTime: workoutTime });
+    let userStats = {todayDate: todayDate, yesterdayDate: yesterdayDate, workoutDate: workoutDate, formattedDate: formattedDate, workoutTime: workoutTime };
+    setWorkoutStats(userStats);
   }
 
-  render() {
-    const { latestWorkout, workoutDate, workoutTime, todayDate, yesterdayDate } = this.state;
 
 
+  setWorkoutTimeAndDate();
+  setLoading(false);
 
+  }, []);
 
-    if (!this.state.loading) {
-      return (
-          <WorkoutConsumer>
-          <div className="inner-container">
+  if (!loading) {
+    return (
+      <div className="inner-container">
 
-            <h5>Your last workout:</h5>
-              <p>
-                <a href={"/workouts/" + latestWorkout.id}>{latestWorkout.workout_name} </a>   
-                  {(workoutDate === todayDate) && 'Today '}
-                  {(workoutDate === yesterdayDate) && 'Yesterday ' }
-                  {(workoutDate !== todayDate && workoutDate !== yesterdayDate) && workoutDate + ''}
-                @ {workoutTime}
-              </p>
-          </div> 
-          </WorkoutConsumer>
+        <h5>Your last workout:</h5>
+          <p>
+            <a href={"/workouts/" + latestWorkout.id}>{latestWorkout.workout_name} </a>   
+              {(workoutStats.workoutDate === workoutStats.todayDate) && 'Today '}
+              {(workoutStats.workoutDate === workoutStats.yesterdayDate) && 'Yesterday ' }
+              {(workoutStats.workoutDate !== workoutStats.todayDate && workoutStats.workoutDate !== workoutStats.yesterdayDate) && workoutStats.formattedDate + ''}
+            @ {workoutStats.workoutTime}
+          </p>
+      </div> 
     )
+  } else if (loading) {
+    return (
+      <div className="inner-container">
 
+        <h5>Loading</h5>
 
-    } else {
-      return (
-        <div className="inner-container">
-          <h2>Loading...</h2>
-        </div>
-      )
-    }
-
-
-      
-
+      </div> 
+    )
   }
+  
+    
 
 }
 
