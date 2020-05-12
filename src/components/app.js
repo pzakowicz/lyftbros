@@ -27,15 +27,15 @@ class App extends Component {
   render() {
 
     return (
-      <div>
+
         <BrowserRouter>
-            <div className="app">
+
               <Route exact path="/" component={Login} />
               <Route path="/feed" component={Feed} />
+              <Route path="/workouts/:id" component={DetailedWorkout}
 
-            </div>
         </BrowserRouter>
-      </div>
+
 
     )
   }

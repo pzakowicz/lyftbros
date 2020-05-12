@@ -57,6 +57,8 @@ function LatestWorkout() {
         <h5>Your last workout:</h5>
           <p>
             <a href={"/workouts/" + latestWorkout.id}>{latestWorkout.workout_name} </a>   
+          </p>
+          <p>
               {(workoutStats.workoutDate === workoutStats.todayDate) && 'Today '}
               {(workoutStats.workoutDate === workoutStats.yesterdayDate) && 'Yesterday ' }
               {(workoutStats.workoutDate !== workoutStats.todayDate && workoutStats.workoutDate !== workoutStats.yesterdayDate) && workoutStats.formattedDate + ''}

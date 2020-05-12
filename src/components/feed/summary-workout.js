@@ -4,7 +4,7 @@ import {WorkoutContext, UserContext, FistBumpsContext} from './feed';
 
 
 //creating the master component
-function Workout({workout_id, workout_name, date_time, first_name, surname, user_id }) {
+function SummaryWorkout({workout_id, workout_name, date_time, first_name, surname, user_id }) {
 
   //importing context
   const workouts = useContext(WorkoutContext);
@@ -19,6 +19,7 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
   const [fistBumpsCount, setFistBumpsCount] = useState();
   const [userHasBumped, setUserHasBumped] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [localFistBumps, setLocalFistBumps] = useState([]);
   
 
   useEffect(() => {
@@ -75,6 +76,7 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
     calcWorkoutStats();
     countFistBumps();
     userHasBumped();
+    setLocalFistBumps(fistBumps);
     setLoading(false);
 
   }, []);
@@ -83,7 +85,7 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
     const data = {
       workoutId: workout_id
     };
-    let response = await fetch(`/api/workouts/fist-bumps/add/`,
+    let response = await fetch(`/api/fist-bumps/add/`,
     {
         method: "POST",
         headers: {
@@ -97,6 +99,11 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
       console.log("Fist bump added");
       setFistBumpsCount(fistBumpsCount + 1);
       setUserHasBumped(true);
+
+      await fetch('api/fist-bumps/')
+      .then(data => data.json())
+      .then(fistBumps => setLocalFistBumps(fistBumps))
+
     }
   };
 
@@ -168,7 +175,7 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
                 </div>
 
                 { modalVisible ? 
-                  <div id="commentModal" class="modal">
+                  <div id="commentModal" className="modal">
                     <div className="modal-content">
                       <span className="close" onClick={toggleModal}>&times;</span>
                       <table id="fist-bumps-table">
@@ -178,7 +185,7 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
                           </tr>
                         </thead>
                         <tbody>
-                        {fistBumps.map((fistBump, i) => {
+                        {localFistBumps.map((fistBump, i) => {
                           return fistBump.workout_id === workout_id ? 
                           <tr key={i}>
                             <td><a href={"/users/"+ fistBump.user_id}>{fistBump.first_name} {fistBump.surname}</a></td>
@@ -190,19 +197,8 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
                     </div>
                   </div> 
                 : null}
-              </div>
-
-
-                
-
-
-                 
-  
-
-                      
-          
+              </div>          
     )
-
 
     } else {
       return (
@@ -212,11 +208,6 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
       )
     }
 
-
-      
-
-
-
 }
 
-export default Workout;
+export default SummaryWorkout;

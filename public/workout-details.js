@@ -5,7 +5,7 @@ async function addFistBump(e) {
   const data = {
     workoutId: workoutId
   };
-  let response = await fetch(`/api/workouts/fist-bumps/add/`,
+  let response = await fetch(`/api/fist-bumps/add/`,
   {
       method: "POST",
       headers: {

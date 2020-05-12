@@ -1,7 +1,7 @@
 //imports 
 import React, {useState, useEffect, useContext} from 'react';
 import {WorkoutContext, UserContext} from './feed';
-import Workout from './workout';
+import SummaryWorkout from './summary-workout';
 
 
 //creating the master component
@@ -19,7 +19,7 @@ function FeedMain() {
 
   useEffect(() => {
 
-    const loopThroughWorkouts = () => {
+    const findUniqueWorkouts = () => {
       
       let uniqueWorkoutsIds = []; 
       let uniqueWorkouts = [];
@@ -33,23 +33,15 @@ function FeedMain() {
     
     }
 
-    const objectToArray = () => {
-
-
-    }
-
-
-
-
-    loopThroughWorkouts();
+    findUniqueWorkouts();
     setLoading(false);
 
   }, []);
     if (!loading) {      
       return (
-        <div className="inner-container">
+        <div >
           {uniqueWorkouts.map(
-            (workout, i) => <Workout 
+            (workout, i) => <SummaryWorkout 
               key={i}
               workout_id={workout.id} 
               workout_name={workout.workout_name} 
@@ -68,7 +60,7 @@ function FeedMain() {
     } else {
       return (
         <div>
-          <h5>Loading...</h5>
+          
         </div>
       )
     }

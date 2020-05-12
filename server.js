@@ -71,50 +71,11 @@ app.get("/", redirectToFeed, (req, res) => {
 
 //Render feed page
 app.get("/feed", redirectToLogin, (req, res) => {
-  let fistBumps;
-  let totalLeaderboard;
-  let volumeLeaderboard;
-
-  let connection = mysql.createConnection(config);
-  
-
-    //get list and count of fist bumps
-    connection.query(`SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id`, (error, results, fields) => {
-      if (error) {
-        return console.error(error.message);
-      }
-
-      fistBumps = results;   
-    });
-
-    //get workout total leader
-    connection.query(`SELECT Users.first_name, Users.surname, Users.email, Lifts.name, COUNT(DISTINCT Workouts.id) as workouts FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN (NOW() - INTERVAL 4 WEEK) AND NOW() GROUP BY first_name, surname ORDER BY workouts DESC`, (error, results, fields) => {
-      if (error) {
-        return console.error(error.message);
-      }
-      totalLeaderboard = results;
-    });
-
-    //get workout volume leader
-    connection.query(`SELECT Users.first_name, Users.surname, Users.email, Lifts.name, SUM(Sets.reps * Sets.weight) as volume FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN (NOW() - INTERVAL 4 WEEK) AND NOW() GROUP BY first_name, surname ORDER BY volume DESC`, (error, results, fields) => {
-      if (error) {
-        return console.error(error.message);
-      }
-      volumeLeaderboard = results;
-    });
-
-    //get list of workouts and send response
-    connection.query(`SELECT Workouts.id, Workouts.name as  workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id WHERE Workouts.date_time BETWEEN (NOW() - INTERVAL 4 WEEK) AND NOW() GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;`, (error, results, fields) => {
-      if (error) {
-        return console.error(error.message);
-      }
-      
-      res.render("feed", { model: results, user: req.user[0], bumps: fistBumps, totalLeaderboard: totalLeaderboard, volumeLeaderboard: volumeLeaderboard });      
-    });
-    
-    connection.end();
-
+  res.render("feed");      
 });
+    
+
+
 
 //Render log-workout page
 app.get("/log-workout", redirectToLogin, (req, res) => {

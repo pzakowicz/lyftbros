@@ -11,53 +11,8 @@
   <body>
     <%- include("partials/_header") -%>
     
-    <main id="feed-main">
-      <div id="root">
+    <main id="root">
 
-      </div>
-
-      <!-- container with user stats -->
-      
-
-      <!-- container with the feed-->
-      <div class="container" id="feed-container">
-        
-
-        <%# include("partials/_activity-feed") -%>
-
-      </div> <!-- closing the feed container -->
-
-      <!-- Leaderboard container -->
-      <div class="container-box" id="leaderboard-container">
-        <h4 id="leaderboard-heading">Leaderboards</h4>
-        <p class="subtitle">(Last 4 weeks)</p>
-        <div class="inner-container">
-          <% if (totalLeaderboard[0]) { %>
-            <h5>Most workouts:</h5>
-            <% for (let i = 0; i < totalLeaderboard.length; i++) { %>
-                <div class="flex-container list-item">
-                  <a href="/users/<%= totalLeaderboard[i].email %>"><span><%= i+1 %>. <%= totalLeaderboard[i].first_name %> <%= totalLeaderboard[i].surname %> </a></span><span class="value"><%= totalLeaderboard[i].workouts %></span>
-                </div>
-            <% } %>
-          <% } %>
-        </div>
-        <div class="inner-container">
-
-          <% if (volumeLeaderboard[0]) { %>
-            <h5>Total volume:</h5>
-            <% for (let i = 0; i < volumeLeaderboard.length; i++) { %>
-              <div class="flex-container list-item">
-                <a href="/users/<%= volumeLeaderboard[i].email %>"><span class="user-list-item"><%= i+1 %>. <%= volumeLeaderboard[i].first_name %> <%= volumeLeaderboard[i].surname %></span></a><span class="value"><%= (volumeLeaderboard[i].volume/1000).toFixed(1) %> t</span>
-              </div>
-                <% } %>
-          <% } %>
-        </div>
-      </div>
-
-      <!-- hidden comment modal container -->
-      <!--<div id="commentModal" class="modal"></div>
-        <%# include("partials/_comment-modal") -%> 
-      </div>-->
     </main>
     <script src="/bundle.js"></script>
   </body>

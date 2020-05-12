@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import UserStats from './user-stats';
 import FeedMain from './feed-main';
+import Leaderboard from './leaderboard';
 
 export const WorkoutContext = React.createContext();
 export const UserContext = React.createContext();
@@ -20,21 +21,18 @@ class Feed extends Component {
 
    async componentDidMount() {
     this.setState({loading: true})
+
    await fetch('api/workouts/')
    .then(data => data.json())
    .then(workouts => this.setState({workouts}))
    
-   await fetch('api/workouts/fist-bumps/')
+   await fetch('api/fist-bumps/')
    .then(data => data.json())
    .then(fistBumps => this.setState({fistBumps}))
 
    await fetch('api/users/session/')
    .then(data => data.json())
    .then(user => this.setState({user, loading: false}))
-
-
-
-
 
  }
 
@@ -49,6 +47,7 @@ class Feed extends Component {
   
               <UserStats user={this.state.user} />
               <FeedMain />
+              <Leaderboard />
 
             </FistBumpsContext.Provider>
           </UserContext.Provider>
