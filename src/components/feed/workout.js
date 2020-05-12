@@ -110,7 +110,7 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
     if (!loading) {
       return (
 
-  
+              <div>
                 <div className="container-box"> 
                   <h5 className="user-name"><a href={'/users/' + user_id}>{first_name} {surname}</a></h5>
                   <p className="subtitle">
@@ -166,10 +166,40 @@ function Workout({workout_id, workout_name, date_time, first_name, surname, user
                     </div> 
                   </div>
                 </div>
+
+                { modalVisible ? 
+                  <div id="commentModal" class="modal">
+                    <div className="modal-content">
+                      <span className="close" onClick={toggleModal}>&times;</span>
+                      <table id="fist-bumps-table">
+                        <thead>
+                          <tr>
+                            <th>Fist bumps</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {fistBumps.map((fistBump, i) => {
+                          return fistBump.workout_id === workout_id ? 
+                          <tr key={i}>
+                            <td><a href={"/users/"+ fistBump.user_id}>{fistBump.first_name} {fistBump.surname}</a></td>
+                          </tr> 
+                          : null
+                        })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div> 
+                : null}
+              </div>
+
+
+                
+
+
                  
   
 
-          
+                      
           
     )
 
