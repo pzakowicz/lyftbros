@@ -1,10 +1,10 @@
 //imports 
 import React, {useState, useEffect, useContext} from 'react';
-import {WorkoutContext, UserContext, FistBumpsContext} from './feed';
+import {WorkoutContext, UserContext, FistBumpsContext} from '../feed/feed';
 
 
 //creating the master component
-function SummaryWorkout({workout_id, workout_name, date_time, first_name, surname, user_id }) {
+function SummaryWorkout() {
 
   //importing context
   const workouts = useContext(WorkoutContext);
