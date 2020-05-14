@@ -1,14 +1,11 @@
 //imports 
-import React, {useState, useEffect, useContext} from 'react';
-import {WorkoutContext, UserContext} from './feed';
+import React, {useState, useEffect} from 'react';
+import { connect } from 'react-redux';
+
 
 
 //creating the master component
 function Leaderboard() {
-
-  //importing context
-  const workouts = useContext(WorkoutContext);
-  const user = useContext(UserContext);
 
   //setting state
   const [workoutLeader, setWorkoutLeader] = useState([]);
@@ -88,4 +85,12 @@ function Leaderboard() {
 
 }
 
-export default Leaderboard;
+
+const mapStateToProps = state => ({
+  workouts: state.workouts,
+  user: state.user,
+  fistBumps: state.fistBumps
+
+});
+
+export default connect(mapStateToProps)(Leaderboard);

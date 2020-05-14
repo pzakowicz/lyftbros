@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import LatestWorkout from './latest-workout';
 import Last4Months from './last4months';
+import { connect } from 'react-redux';
 
 
 //creating the master component
@@ -27,4 +28,8 @@ class UserStats extends Component {
 
 }
 
-export default UserStats;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(UserStats);

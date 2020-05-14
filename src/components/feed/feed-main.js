@@ -1,15 +1,16 @@
 //imports 
 import React, {useState, useEffect, useContext} from 'react';
-import {WorkoutContext, UserContext} from './feed';
+//import {WorkoutContext, UserContext} from './feed';
 import SummaryWorkout from './summary-workout';
+import { connect } from 'react-redux';
 
 
 //creating the master component
-function FeedMain() {
+function FeedMain({workouts}) {
 
   //importing context
-  const workouts = useContext(WorkoutContext);
-  const user = useContext(UserContext);
+  //const workouts = useContext(WorkoutContext);
+
 
   //setting state
 
@@ -72,4 +73,11 @@ function FeedMain() {
 
 }
 
-export default FeedMain;
+
+
+const mapStateToProps = state => ({
+  workouts: state.workouts,
+
+});
+
+export default connect(mapStateToProps)(FeedMain);

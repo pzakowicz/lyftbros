@@ -1,15 +1,16 @@
 //imports 
 import React, {useState, useEffect, useContext} from 'react';
 import {WorkoutContext, UserContext, FistBumpsContext} from './feed';
+import { connect } from 'react-redux';
 
 
 //creating the master component
-function SummaryWorkout({workout_id, workout_name, date_time, first_name, surname, user_id }) {
+function SummaryWorkout({workout_id, workout_name, date_time, first_name, surname, user_id, user, fistBumps, workouts }) {
 
   //importing context
-  const workouts = useContext(WorkoutContext);
-  const user = useContext(UserContext);
-  const fistBumps = useContext(FistBumpsContext);
+  //const workouts = useContext(WorkoutContext);
+  //const user = useContext(UserContext);
+  //const fistBumps = useContext(FistBumpsContext);
 
   //setting state
 
@@ -210,4 +211,11 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
 
 }
 
-export default SummaryWorkout;
+const mapStateToProps = state => ({
+  workouts: state.workouts,
+  user: state.user,
+  fistBumps: state.fistBumps
+
+});
+
+export default connect(mapStateToProps)(SummaryWorkout);

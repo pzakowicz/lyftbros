@@ -1,14 +1,11 @@
 //imports 
-import React, {useState, useEffect, useContext} from 'react';
-import {WorkoutContext, UserContext} from './feed';
+import React, {useState, useEffect} from 'react';
+import { connect } from 'react-redux';
 
 
 //creating the master component
-function Last4Months() {
+function Last4Months({workouts, user}) {
 
-  //importing context
-  const workouts = useContext(WorkoutContext);
-  const user = useContext(UserContext);
 
   //setting state
   const [workoutCount, setworkoutCount] = useState();
@@ -89,4 +86,10 @@ function Last4Months() {
 
 }
 
-export default Last4Months;
+
+const mapStateToProps = state => ({
+  workouts: state.workouts,
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Last4Months);

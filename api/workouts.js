@@ -6,7 +6,7 @@ const config = require("../config");
 //create router
 const workoutRouter = express.Router();
 
-//GET all workouts for the feed
+//GET all summarised workouts for the feed
 workoutRouter.get("/", (req, res, next) => {
   
   let connection = mysql.createConnection(config);
