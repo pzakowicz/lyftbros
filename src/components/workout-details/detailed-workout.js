@@ -1,14 +1,13 @@
 //imports 
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-//import {WorkoutContext, UserContext, FistBumpsContext} from '../feed/feed';
 import { connect } from 'react-redux';
-import { createTodo } from '../../actions';
-import { loadWorkouts } from '../../thunks';
+//import { createTodo } from '../../actions';
+
 
 
 //creating the master component
-function DetailedWorkout( { workouts, onCreatePressed, isLoading, startLoadingWorkouts }) {
+function DetailedWorkout( { workouts }) {
 
   //importing context
   // const workouts = useContext(WorkoutContext);
@@ -33,7 +32,7 @@ function DetailedWorkout( { workouts, onCreatePressed, isLoading, startLoadingWo
 
   useEffect(() => {
  
-    startLoadingWorkouts();
+
 
 
 
@@ -167,8 +166,7 @@ function DetailedWorkout( { workouts, onCreatePressed, isLoading, startLoadingWo
 
 
    
-    if (isLoading) {
-      console.log(workouts);
+    if (!loading && workout.length > 0) {
       return (
 
 
