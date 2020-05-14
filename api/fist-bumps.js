@@ -59,12 +59,12 @@ fistBumpRouter.get("/:workoutid", (req, res, next) => {
   console.log("Requested fist-bumps for workout id: ", req.params);
 
   let connection = mysql.createConnection(config);
-  connection.query(`SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub3.email, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname, Users.email FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id WHERE Sub1.workout_id = ?;`, [req.params.workoutid], (error, results, fields) => {
+  connection.query(`SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub3.id as user_id, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname, Users.email FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id WHERE Sub1.workout_id = ?;`, [req.params.workoutid], (error, results, fields) => {
     if (error) {
       return console.error(error.message);
     }
     console.log("Returned fist-bumps: ", results);
-    res.status(200).json({ bumps: results });
+    res.status(200).json(results);
   });
   connection.end();
 

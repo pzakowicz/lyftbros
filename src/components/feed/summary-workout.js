@@ -165,9 +165,9 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
                             
                     </span>
                     <div id="button-container">
-                      <button type="button" className="comment-button" id={workout_id} onClick={addFistBump}>
-                        { userHasBumped ? <i className="fas fa-hand-rock" id={"fist-" + workout_id }></i> 
-                          : <i className="far fa-hand-rock" id={"fist-" + workout_id }></i> }
+                      <button type="button" className="comment-button"  onClick={addFistBump}>
+                        { userHasBumped ? <i className="fas fa-hand-rock"></i> 
+                          : <i className="far fa-hand-rock"></i> }
                       </button>
                       <button type="button" className="comment-button" id="comment"><i className="far fa-comment"></i></button>
                     </div> 

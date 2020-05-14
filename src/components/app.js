@@ -2,8 +2,8 @@
 import React, {Component} from 'react';
 import Login from './login/login';
 import Feed from './feed/feed';
+import DetailedWorkout from './workout-details/detailed-workout';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
-import {DetailedWorkout} from './workout-details/detailed-workout';
 
 
 //creating the master component

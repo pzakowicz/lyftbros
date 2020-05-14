@@ -62,6 +62,20 @@ workoutRouter.get("/volumeLeader/", (req, res, next) => {
   
   });
 
+
+  //GET workout by id
+workoutRouter.get("/:id/", (req, res, next) => {
+  
+  let connection = mysql.createConnection(config);
+  connection.query(`SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.id as user_id, Lifts.category, Lifts.name as lift_name, Sets.weight, Sets.reps FROM Sets JOIN Workouts ON Workouts.id = Sets.workout_id JOIN Lifts ON Sets.exercise_id = Lifts.id JOIN Users ON Workouts.user_id = Users.id WHERE Workouts.id = ?`, [req.params.id], (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    res.status(200).send(results);
+  });
+  connection.end();
+  
+  });
   
 
 //POST new workout
