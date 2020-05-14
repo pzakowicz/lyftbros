@@ -2,10 +2,13 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {useParams} from 'react-router-dom';
 //import {WorkoutContext, UserContext, FistBumpsContext} from '../feed/feed';
+import { connect } from 'react-redux';
+import { createTodo } from '../../actions';
+import { loadWorkouts } from '../../thunks';
 
 
 //creating the master component
-function DetailedWorkout() {
+function DetailedWorkout( { workouts, onCreatePressed, isLoading, startLoadingWorkouts }) {
 
   //importing context
   // const workouts = useContext(WorkoutContext);
@@ -30,6 +33,7 @@ function DetailedWorkout() {
 
   useEffect(() => {
  
+    startLoadingWorkouts();
 
 
 
@@ -163,7 +167,8 @@ function DetailedWorkout() {
 
 
    
-    if (!loading && workout.length > 0) {
+    if (isLoading) {
+      console.log(workouts);
       return (
 
 
@@ -252,4 +257,15 @@ function DetailedWorkout() {
 
 }
 
-export default DetailedWorkout;
+const mapStateToProps = state => ({
+  
+  isLoading: state.isLoading,
+  workouts: state.workouts,
+});
+
+const mapDispatchToProps = dispatch => ({
+  startLoadingWorkouts: () => dispatch(loadWorkouts()),
+  onCreatePressed: text => dispatch(createTodo(text)) 
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailedWorkout);
