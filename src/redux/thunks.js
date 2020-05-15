@@ -10,7 +10,7 @@ import {
 export const loadWorkouts = () => async (dispatch, getState) => {
   try {
     dispatch(loadWorkoutsInProgress());
-    const response = await fetch('api/workouts/')
+    const response = await fetch('/api/workouts/')
     const workouts = await response.json();
     dispatch(loadWorkoutsSuccess(workouts));
   } catch(error) {
@@ -23,7 +23,7 @@ export const loadWorkouts = () => async (dispatch, getState) => {
   export const loadUser = () => async (dispatch, getState) => {
     try {
       dispatch(loadUserInProgress());
-      const response = await fetch('api/users/session/')
+      const response = await fetch('/api/users/session/')
       const user = await response.json();
       dispatch(loadUserSuccess(user));
     } catch(error) {
@@ -36,7 +36,7 @@ export const loadWorkouts = () => async (dispatch, getState) => {
 export const loadFistBumps = () => async (dispatch, getState) => {
   try {
     dispatch(loadFistBumpsInProgress());
-    const response = await fetch('api/fist-bumps/')
+    const response = await fetch('/api/fist-bumps/')
     const fistBumps = await response.json();
     dispatch(loadFistBumpsSuccess(fistBumps));
   } catch(error) {
@@ -49,7 +49,7 @@ export const loadFistBumps = () => async (dispatch, getState) => {
 export const loadSets = () => async (dispatch, getState) => {
   try {
     dispatch(loadSetsInProgress());
-    const response = await fetch('api/workouts/sets/')
+    const response = await fetch('/api/workouts/sets/')
     const sets = await response.json();
     dispatch(loadSetsSuccess(sets));
   } catch(error) {

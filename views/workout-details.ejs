@@ -11,91 +11,9 @@
   <body>
     <%- include("partials/_header") -%>
 
-    <main id="workout-main">
-      <div class="container-box" id="workout-container">
-        <h5 class="user-name"><a href="/users/<%= model[0].email %>"><%= model[0].first_name %> <%= model[0].surname %></a></h5>
-        <p class="subtitle">                    
-          <% let today = new Date() %>
-          <% let offset = today.getTimezoneOffset(); %> 
-          <% let todayDate = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
-          <% let yesterdayDate = (today.getDate()-1)+'-'+(today.getMonth()+1)+'-'+today.getFullYear(); %>
-          <% let workoutDate = model[0].date_time.getDate()+'-'+(model[0].date_time.getMonth()+1)+'-'+model[0].date_time.getFullYear(); %>
-          <% if (workoutDate === todayDate) { %>
-            Today
-          <% } else if (workoutDate === yesterdayDate) { %> 
-            Yesterday
-          <% } else { %>
-            <%= workoutDate %>
-          <% } %>
-          @ <%= (model[0].date_time.getHours()-(offset/60)) %>:<%= (model[0].date_time.getMinutes()<10?'0':'') + model[0].date_time.getMinutes()  %>
-        </p>
-        <h3 class="workout-name"><%= model[0].workout_name %></h3>
-        <% let workoutVolume = 0; %>
-        <% let workoutSets = 0; %>
-        <% let workoutReps = 0; %>
-        <% let currentWorkout = model[0].id %>
-        <% for (let i = 0; i < model.length; i++) { %>    
-            <% workoutVolume += model[i].reps * model[i].weight; %>
-            <% workoutSets ++; %>
-            <% workoutReps += model[i].reps; %>
-        <% } %>
-        <div class="flex-container workout-summary">
-          <h4 class="flex-summary-item">Sets: <%= workoutSets %></h4>
-          <h4 class="flex-summary-item">Reps: <%= workoutReps %></h4>
-          <h4 class="flex-summary-item">Volume: <%= (workoutVolume/1000).toFixed(1) %> t</h4>
-        </div>
-        <div id="workout-table-container">
-          <table id="workout-table">
-            <tr>
-              <th width="70%">Lyft</th>
-              <th width="10%">Weight</th>
-              <th width="10%">Reps</th>
-            </tr>
-            <% for (let i = 0; i < model.length; i++) { %>
-                  <tr>
-                    <td width="70%"><%= model[i].lift_name %></td>
-                    <td width="10%"><%= model[i].weight %> <span class="unit">kg</span></td>
-                    <td width="10%"><%= model[i].reps %></td>
-                  </tr>
-            <% } %>
-          </table>
-        </div>
-        <div class="flex-container comment-section">
-          <span id="comment-summary-<%= model[0].id %>" onclick="showModal(this)">
-            <% if (bumps[0]) { %>
-              <span id="fist-bump-count-<%= model[0].id %>"><%= bumps[0].count %></span><span> fist bumps!</span>   
-            <% } else { %>   
-              <span>Be the first one to bump your bro!</span>
-            <% } %> 
-          </span>
-          <div id="button-container">
-            <button type="button" class="comment-button" onclick="addFistBump(this)" id="<%= model[0].id %>">
-              <% if (bumps[0]) { %>
-                <% for (let j = 0; j < bumps.length; j++) { %>
-                  <% if (user.id === bumps[j].user_id) { %>
-                    <i class="fas fa-hand-rock" id="fist-<%= model[0].id %>"></i>
-                    <% break %>
-                  <% } else if (j === bumps.length -1) { %>
-                    <i class="far fa-hand-rock" id="fist-<%= model[0].id %>"></i>
-                  <% } %>
-                <% } %>
-              <% } else { %>
-                <i class="far fa-hand-rock" id="fist-<%= model[0].id %>"></i>
-              <% } %>
-                      </button>
-                      <button type="button" class="comment-button" id="comment"><i class="far fa-comment"></i></button>
-                    </div> <!-- closing the button container -->
-                  </div> <!-- closing the comment section -->
-          </div> <!-- close the previous workout container -->
+    <main id="root">
 
-          <!-- <div id="commentModal" class="modal">
-            <%# include("partials/_comment-modal") -%> 
-          </div> -->
-        <div id="root">
-          
-        </div>
     </main>
-    <!-- <script src="../workout-details.js"></script> -->
     <script src="/bundle.js"></script>
 
   </body>

@@ -7,90 +7,64 @@ import { connect } from 'react-redux';
 
 
 //creating the master component
-function DetailedWorkout( { workouts }) {
-
-  //importing context
-  // const workouts = useContext(WorkoutContext);
-  // const user = useContext(UserContext);
-  // const fistBumps = useContext(FistBumpsContext);
+function DetailedWorkout( { workouts, fistBumps, user, sets }) {
 
   //getting params
-  let {id} = useParams();
+  let {workout_id} = useParams();
 
   //setting state
   const [loading, setLoading] = useState(true);
-  const [workoutDateTime, setWorkoutDateTime] = useState({});
-  const [workoutStats, setWorkoutStats] = useState({});
   const [fistBumpsCount, setFistBumpsCount] = useState(0);
   const [userHasBumped, setUserHasBumped] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [localFistBumps, setLocalFistBumps] = useState([]);
   const [workout, setWorkout] = useState([]);
-  const [fistBumps, setFistBumps] = useState([]);
-  const [user, setUser] = useState([]);
-  
 
+  
   useEffect(() => {
  
+    function findThisWorkout() {
 
-
-
-
-
-    async function getWorkoutData() {
-      await fetch(`../api/workouts/${id}`)
-      .then(data => data.json())
-      .then(table => setWorkout(table))
-
+      let thisWorkout = [];
+      for (let i = 0; i < sets.length; i++) {
+        if (sets[i].id === Number(workout_id)) {
+          thisWorkout.push(sets[i]);
+        }
+      }
+      setWorkout(thisWorkout);
     }
-      
-    async function getFistBumps() {
-      await fetch(`../api/fist-bumps/${id}`)
-      .then(data => data.json())
-      .then(table => {
-        setLocalFistBumps(table);
-        setFistBumpsCount(table.length);
-        for (let i = 0; i < table.length; i++) {
-          console.log(user.id)
-          if (table[i].user_id === user.id) {
+
+    function setFistBumps() {
+      for (let i = 0; i < fistBumps.length; i++) {
+        if (fistBumps[i].workout_id === Number(workout_id)) {
+          setFistBumpsCount(fistBumps[i].count);
+          if (fistBumps[i].user_id === user.id) {
             setUserHasBumped(true);
+            setLocalFistBumps(fistBumps);
           }
         }
-      })
-
+      }
     }
 
-    async function getUser() {
-      await fetch('../api/users/session/')
-     .then(data => data.json())
-     .then(async table => await setUser(table))
-
+    const hasUserBumped = () => {
+      for (let i = 0; i < fistBumps.length; i++) {
+        if (fistBumps[i].user_id === user.id) {
+          setUserHasBumped(true);
+        }
+      }
     }
 
-
-    getUser();
-    getWorkoutData();
-    getFistBumps();
-
-    
-
-
-    //hasUserBumped();
+    setFistBumps();
+    findThisWorkout();
+    hasUserBumped();
     setLoading(false);
 
   }, []);
 
-  const hasUserBumped = () => {
-    for (let i = 0; i < localFistBumps.length; i++) {
-      if (localFistBumps[i].user_id === user.id) {
-        //setUserHasBumped(true);
-        return true
-      }
-    }
-  }
+
 
   const calcWorkoutTimeAndDate = () => {
-    if (workout.length > 0) {
+
       let today = new Date();
       let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
       let offset = today.getTimezoneOffset();
@@ -108,7 +82,7 @@ function DetailedWorkout( { workouts }) {
                         @ {workoutTime}
                     </p>
       )
-    }
+
   }
 
   const calcWorkoutStats = () => {
@@ -150,23 +124,18 @@ function DetailedWorkout( { workouts }) {
       setFistBumpsCount(fistBumpsCount + 1);
       setUserHasBumped(true);
 
-      await fetch('api/fist-bumps/')
+      await fetch('/api/fist-bumps/')
       .then(data => data.json())
       .then(fistBumps => setLocalFistBumps(fistBumps))
 
     }
   };
 
-
-
-    const toggleModal = () => {
-      setModalVisible(prevState => !prevState)
-    }
+  const toggleModal = () => {
+    setModalVisible(prevState => !prevState)
+  }
   
-
-
-   
-    if (!loading && workout.length > 0) {
+    if (!loading) {
       return (
 
 
@@ -211,7 +180,7 @@ function DetailedWorkout( { workouts }) {
                     </span>
                     <div id="button-container">
                       <button type="button" className="comment-button" onClick={addFistBump}>
-                        { hasUserBumped() ? <i className="fas fa-hand-rock" ></i> 
+                        { userHasBumped ? <i className="fas fa-hand-rock" ></i> 
                           : <i className="far fa-hand-rock"></i> }
                       </button>
                       <button type="button" className="comment-button" id="comment"><i className="far fa-comment"></i></button>
@@ -231,7 +200,7 @@ function DetailedWorkout( { workouts }) {
                         </thead>
                         <tbody>
                         {localFistBumps.map((fistBump, i) => {
-                          return fistBump.workout_id === workout.workout_id ? 
+                          return fistBump.workout_id === Number(workout_id) ? 
                           <tr key={i}>
                             <td><a href={"/users/"+ fistBump.user_id}>{fistBump.first_name} {fistBump.surname}</a></td>
                           </tr> 
@@ -256,14 +225,13 @@ function DetailedWorkout( { workouts }) {
 }
 
 const mapStateToProps = state => ({
-  
   isLoading: state.isLoading,
   workouts: state.workouts,
+  fistBumps: state.fistBumps,
+  user: state.user,
+  sets: state.sets,
 });
 
-const mapDispatchToProps = dispatch => ({
-  startLoadingWorkouts: () => dispatch(loadWorkouts()),
-  onCreatePressed: text => dispatch(createTodo(text)) 
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetailedWorkout);
+
+export default connect(mapStateToProps)(DetailedWorkout);

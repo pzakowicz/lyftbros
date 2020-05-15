@@ -42,7 +42,7 @@ class App extends Component {
 
               <Route exact path="/" component={Login} />
               <Route path="/feed" component={Feed} />
-              <Route path="/workouts/:id" component={DetailedWorkout} />
+              <Route path="/workouts/:workout_id" component={DetailedWorkout} />
 
         </BrowserRouter>
 

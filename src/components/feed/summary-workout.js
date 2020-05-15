@@ -1,19 +1,14 @@
 //imports 
-import React, {useState, useEffect, useContext} from 'react';
-import {WorkoutContext, UserContext, FistBumpsContext} from './feed';
+import React, {useState, useEffect} from 'react';
+import { Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 
 //creating the master component
 function SummaryWorkout({workout_id, workout_name, date_time, first_name, surname, user_id, user, fistBumps, workouts }) {
 
-  //importing context
-  //const workouts = useContext(WorkoutContext);
-  //const user = useContext(UserContext);
-  //const fistBumps = useContext(FistBumpsContext);
 
   //setting state
-
   const [loading, setLoading] = useState(true);
   const [workoutDateTime, setWorkoutDateTime] = useState({});
   const [workoutStats, setWorkoutStats] = useState({});
@@ -127,7 +122,7 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
                       {(workoutDateTime.workoutDate !== workoutDateTime.todayDate && workoutDateTime.workoutDate !== workoutDateTime.yesterdayDate) && workoutDateTime.formattedDate + ''}
                       @ {workoutDateTime.workoutTime}
                   </p>
-                  <h3 className="workout-name"><a href={"/workouts/" + workout_id}>{workout_name}</a></h3>
+                  <h3 className="workout-name"><Link to={"/workouts/" + workout_id}>{workout_name}</Link></h3>
                   <div className="flex-container workout-summary">
                     <h4 className="flex-summary-item">Sets: { workoutStats.totalSets }</h4>
                     <h4 className="flex-summary-item">Reps: {(workoutStats.totalReps).toFixed(0) }</h4>
