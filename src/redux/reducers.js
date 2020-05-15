@@ -4,6 +4,7 @@ import {
   LOAD_WORKOUTS_IN_PROGRESS, LOAD_WORKOUTS_SUCCESS, LOAD_WORKOUTS_FAILURE, 
   LOAD_USER_IN_PROGRESS, LOAD_USER_SUCCESS, LOAD_USER_FAILURE,
   LOAD_FISTBUMPS_IN_PROGRESS, LOAD_FISTBUMPS_SUCCESS, LOAD_FISTBUMPS_FAILURE, 
+  LOAD_SETS_IN_PROGRESS, LOAD_SETS_SUCCESS, LOAD_SETS_FAILURE,
 } from './actions';
 
 //ADDING AND REMOVING A TODO EXAMPLE
@@ -76,6 +77,22 @@ export const fistBumps = (state=[], action) => {
   }
 }
 
+//adding the sets reducers
+export const sets = (state=[], action) => {
+  const { type, payload} = action;
+
+  switch (type) {
+    case LOAD_SETS_SUCCESS: {
+      const { sets } = payload;
+      return sets;
+    }
+    case LOAD_SETS_IN_PROGRESS:
+    case LOAD_SETS_FAILURE:
+    default:
+      return state
+  }
+}
+
 
 //adding the loading state reducer
 export const isLoading = (state=false, action) => {
@@ -94,3 +111,4 @@ export const isLoading = (state=false, action) => {
       return state;
     }
 }
+

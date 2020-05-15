@@ -62,3 +62,20 @@ export const LOAD_FISTBUMPS_FAILURE = 'LOAD_FISTBUMPS_FAILURE';
 export const loadFistBumpsFailure = () => ({
   type: LOAD_FISTBUMPS_FAILURE,
 })
+
+//getting the sets into the store
+export const LOAD_SETS_IN_PROGRESS = 'LOAD_SETS_IN_PROGRESS';
+export const loadSetsInProgress = () => ({
+  type: LOAD_SETS_IN_PROGRESS,
+})
+
+export const LOAD_SETS_SUCCESS = 'LOAD_SETS_SUCCESS';
+export const loadSetsSuccess = sets => ({
+  type: LOAD_SETS_SUCCESS,
+  payload: { sets },
+})
+
+export const LOAD_SETS_FAILURE = 'LOAD_SETS_FAILURE';
+export const loadSetsFailure = () => ({
+  type: LOAD_SETS_FAILURE,
+})

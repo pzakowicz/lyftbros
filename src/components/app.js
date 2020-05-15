@@ -5,7 +5,7 @@ import Feed from './feed/feed';
 import DetailedWorkout from './workout-details/detailed-workout';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadWorkouts, loadUser, loadFistBumps } from '../redux/thunks';
+import { loadWorkouts, loadUser, loadFistBumps, loadSets } from '../redux/thunks';
 
 
 //creating the master component
@@ -30,6 +30,7 @@ class App extends Component {
     this.props.startLoadingWorkouts();
     this.props.startLoadingUser();
     this.props.startLoadingFistBumps();
+    this.props.startLoadingSets();
   }
 
 
@@ -63,6 +64,7 @@ const mapDispatchToProps = dispatch => ({
   startLoadingWorkouts: () => dispatch(loadWorkouts()),
   startLoadingUser: () => dispatch(loadUser()),
   startLoadingFistBumps: () => dispatch(loadFistBumps()),
+  startLoadingSets: () => dispatch(loadSets()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

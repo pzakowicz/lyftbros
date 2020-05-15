@@ -3,6 +3,7 @@ import {
   loadWorkoutsInProgress, loadWorkoutsSuccess, loadWorkoutsFailure,
   loadUserInProgress, loadUserSuccess, loadUserFailure,
   loadFistBumpsInProgress, loadFistBumpsSuccess, loadFistBumpsFailure,
+  loadSetsInProgress, loadSetsSuccess, loadSetsFailure,
 } from './actions'
 
 //adding thunk for getting workouts
@@ -40,6 +41,19 @@ export const loadFistBumps = () => async (dispatch, getState) => {
     dispatch(loadFistBumpsSuccess(fistBumps));
   } catch(error) {
     dispatch(loadFistBumpsFailure());
+    dispatch(displayAlert(error))
+  }
+}
+
+//adding thunk for getting the sets
+export const loadSets = () => async (dispatch, getState) => {
+  try {
+    dispatch(loadSetsInProgress());
+    const response = await fetch('api/workouts/sets/')
+    const sets = await response.json();
+    dispatch(loadSetsSuccess(sets));
+  } catch(error) {
+    dispatch(loadSetsFailure());
     dispatch(displayAlert(error))
   }
 }
