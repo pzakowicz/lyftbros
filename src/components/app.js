@@ -5,7 +5,7 @@ import Feed from './feed/feed';
 import DetailedWorkout from './workout-details/detailed-workout';
 import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadWorkouts, loadUser, loadFistBumps } from '../thunks';
+import { loadWorkouts, loadUser, loadFistBumps } from '../redux/thunks';
 
 
 //creating the master component

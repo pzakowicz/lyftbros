@@ -20,6 +20,20 @@ workoutRouter.get("/", (req, res, next) => {
   
   });
 
+//GET all workouts with sets
+workoutRouter.get("/sets/", (req, res, next) => {
+  
+  let connection = mysql.createConnection(config);
+  connection.query(`SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.id as user_id, Lifts.category, Lifts.name as lift_name, Sets.weight, Sets.reps FROM Sets JOIN Workouts ON Workouts.id = Sets.workout_id JOIN Lifts ON Sets.exercise_id = Lifts.id JOIN Users ON Workouts.user_id = Users.id;`, (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    res.status(200).send(results);
+  });
+  connection.end();
+  
+  });
+
 //GET all workouts for a given user
 workoutRouter.get("/user/", (req, res, next) => {
   

@@ -5,7 +5,7 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import App from "./components/app";
 import { Provider } from 'react-redux';
-import { configureStore } from './store';
+import { configureStore } from './redux/store';
 
 const store = configureStore();
 const persistor = persistStore(store);
