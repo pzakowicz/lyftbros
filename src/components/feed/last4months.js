@@ -14,11 +14,13 @@ function Last4Months({workouts, user}) {
   
 
   useEffect(() => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    let now = new Date();
 
     const calcUserWorkouts = () => {
       let countedWorkouts = [];
-      for (let i = 0; i < workouts.length; i++) {
-        if (workouts[i].user_id === user.id && !countedWorkouts.includes(workouts[i].id)) {
+      for (let i = 0; i < workouts.length; i++ ) {
+        if (workouts[i].user_id === user.id && !countedWorkouts.includes(workouts[i].id) && (Math.round(Math.abs((new Date(Date.parse(workouts[i].date_time)) - now) / oneDay))) <30) {
           countedWorkouts.push(workouts[i].id)
         }
       }
@@ -26,11 +28,12 @@ function Last4Months({workouts, user}) {
     }
 
     const calcWorkoutStats = () => {
+
       let totalVolume = 0;
       let totalSets = 0;
       let totalReps = 0;
       for (let i = 0; i < workouts.length; i++) {
-        if (workouts[i].user_id === user.id) {
+        if (workouts[i].user_id === user.id && (Math.round(Math.abs((new Date(Date.parse(workouts[i].date_time)) - now) / oneDay))) <30) {
           totalVolume += (workouts[i].avg_weight * workouts[i].avg_reps * workouts[i].sets);
           totalSets += workouts[i].sets;
           totalReps += workouts[i].avg_reps * workouts[i].sets;

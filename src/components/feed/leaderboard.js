@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 
 //creating the master component
-function Leaderboard() {
+function Leaderboard({workouts, user}) {
 
   //setting state
   const [workoutLeader, setWorkoutLeader] = useState([]);
@@ -15,25 +15,53 @@ function Leaderboard() {
 
   useEffect( () => {
 
-    async function getWorkoutLeaderboard() {
-      await fetch('api/workouts/workoutLeader/')
-     .then(data => data.json())
-     .then(table => setWorkoutLeader(table))
-    }
-
-    getWorkoutLeaderboard();
-
-    async function getVolumeLeaderboard() {
-      await fetch('api/workouts/volumeLeader/')
-      .then(data => data.json())
-      .then(table => setVolumeLeader(table))
-    }
-
-    getVolumeLeaderboard();
+    findVolumeLeader();
+    findWorkoutLeader();
 
     setLoading(false);
 
   }, []);
+
+  const findWorkoutLeader = () => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    let now = new Date();
+    var tempResult = {}
+
+    for(let { user_id, first_name, surname, date_time } of workouts)
+    if ((Math.round(Math.abs((new Date(Date.parse(date_time)) - now) / oneDay))) <30 ) {
+      tempResult[user_id] = { 
+          id: user_id, 
+          name: (first_name + ' ' + surname), 
+          count: tempResult[user_id] ? tempResult[user_id].count + 1 : 1
+      }      
+    }
+
+    let result = Object.values(tempResult)
+
+    result.sort((a, b) => parseFloat(b.count) - parseFloat(a.count));
+
+    setWorkoutLeader(result);
+  }
+
+  const findVolumeLeader = () => {
+    const oneDay = 24 * 60 * 60 * 1000;
+    let now = new Date();
+    var tempResult = {}
+
+    for(let { user_id, first_name, surname, date_time, sets, avg_reps, avg_weight } of workouts)
+    if ((Math.round(Math.abs((new Date(Date.parse(date_time)) - now) / oneDay))) <30 ) {
+      tempResult[user_id] = { 
+          id: user_id, 
+          name: (first_name + ' ' + surname), 
+          volume: tempResult[user_id] ? tempResult[user_id].volume + (sets * avg_reps * avg_weight) : (sets * avg_reps * avg_weight)
+      }      
+    }
+
+    let result = Object.values(tempResult)
+
+    result.sort((a, b) => parseFloat(b.volume) - parseFloat(a.volume));
+    setVolumeLeader(result);
+  }
    
     if (!loading) {
 
@@ -45,12 +73,13 @@ function Leaderboard() {
 
           <div className="inner-container">
               <h5>Most workouts:</h5>
+
               {workoutLeader.map((user, i) => {
                 return <div key={i} className="flex-container list-item">
                   <a href={"/users/" + user.id}>
-                    <span>{(i+1) + '. ' + user.first_name + ' ' + user.surname}</span>
+                    <span>{(i+1) + '. ' + user.name}</span>
                   </a>
-                  <span className="value">{user.workouts}</span>
+                  <span className="value">{user.count}</span>
                 </div> 
               })}
           </div>
@@ -61,7 +90,7 @@ function Leaderboard() {
               {volumeLeader.map((user, i) => {
                 return <div key={i} className="flex-container list-item">
                   <a href={"/users/" + user.id}>
-                    <span>{(i+1) + '. ' + user.first_name + ' ' + user.surname}</span>
+                    <span>{(i+1) + '. ' + user.name}</span>
                   </a>
                   <span className="value">{(user.volume/1000).toFixed(1) + ' t'}</span>
                 </div> 
