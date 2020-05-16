@@ -1,50 +1,37 @@
 //imports 
-import React, {Component} from 'react';
+import React from 'react';
+import {Link} from 'react-router-dom'
 
 
 //creating the master component
-class Header extends Component {
+function Header() {
   
-  //setting state object for the master component
-  state = { 
-    loggedIn
-   }
+  return (
+    <header id="partial-header">
+      <nav>
+        <Link to="/feed">
+          <div className="flex-container">
+            <img id="logo-img" src="../../resources/lbs logo 2.png" />
+            <h2 id="logo-text">Lyftbros</h2>
+          </div>
+        </Link>
+        <Link to="/log-workout">
+          <button type="button" className="nav-button primary-button" id="log-button">Log</button>
+        </Link>
+        <Link to="/feed">
+          <button type="button" className="nav-button secondary-button" id="feed-button">Feed</button>
+        </Link>
+      </nav>
+        <div className="dropdown flex-container">
+          <img className="dropbtn" id="account-pic" src="/resources/profile pic.png" /><i className="fas fa-caret-down"></i>
+          <div className="dropdown-content">
+            <Link to="/account">Account</Link>
+            <Link to="/logout">Logout</Link>
+          </div>
+        </div>
+    </header>
+  )
 
-  toggleForms = () => {
-    this.setState(prevState => ({
-
-    }))
-  }
-
-
-  render() {
-
-    return (
-<header id="partial-header">
-  <nav>
-    <a href="../../feed">
-      <div class="flex-container">
-        <img id="logo-img" src="../../resources/lbs logo 2.png" />
-        <h2 id="logo-text">Lyftbros</h2>
-      </div>
-    </a>
-    <a href="../../log-workout">
-      <button type="button" class="nav-button primary-button" id="log-button">Log</button>
-    </a>
-    <a href="../../feed">
-      <button type="button" class="nav-button secondary-button" id="feed-button">Feed</button>
-    </a>
-  </nav>
-    <div class="dropdown flex-container">
-      <img class="dropbtn" id="account-pic" src="../../resources/profile pic.png" /><i class="fas fa-caret-down"></i>
-      <div class="dropdown-content">
-        <a href="/account">Account</a>
-        <a href="/logout">Logout</a>
-      </div>
-    </div>
-</header>
-    )
-  }
 
 }
 

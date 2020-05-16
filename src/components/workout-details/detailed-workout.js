@@ -2,7 +2,8 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
-//import { createTodo } from '../../actions';
+import { Link } from 'react-router-dom';
+
 
 
 
@@ -142,11 +143,11 @@ function DetailedWorkout( { workouts, fistBumps, user, sets }) {
 
               <div>
                 <div className="container-box"> 
-                  <h5 className="user-name"><a href={'/users/' + workout[0].user_id}>{workout[0].first_name} {workout[0].surname}</a></h5>
+                  <h5 className="user-name"><Link to={'/users/' + workout[0].user_id}>{workout[0].first_name} {workout[0].surname}</Link></h5>
 
                   {calcWorkoutTimeAndDate()}
                   
-                  <h3 className="workout-name"><a href={"/workouts/" + workout[0].id}>{workout[0].workout_name}</a></h3>
+                  <h3 className="workout-name"><Link to={"/workouts/" + workout[0].id}>{workout[0].workout_name}</Link></h3>
                   <div className="flex-container workout-summary">
                     {calcWorkoutStats()}
                   </div>
@@ -202,7 +203,7 @@ function DetailedWorkout( { workouts, fistBumps, user, sets }) {
                         {localFistBumps.map((fistBump, i) => {
                           return fistBump.workout_id === Number(workout_id) ? 
                           <tr key={i}>
-                            <td><a href={"/users/"+ fistBump.user_id}>{fistBump.first_name} {fistBump.surname}</a></td>
+                            <td><Link to={"/users/"+ fistBump.user_id}>{fistBump.first_name} {fistBump.surname}</Link></td>
                           </tr> 
                           : null
                         })}

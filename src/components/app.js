@@ -2,10 +2,13 @@
 import React, {Component} from 'react';
 import Login from './login/login';
 import Feed from './feed/feed';
+import Header from './header/header';
 import DetailedWorkout from './workout-details/detailed-workout';
-import {BrowserRouter, Route, Switch, Link} from 'react-router-dom';
+import UserDetails from './user-details/user-details';
+import {BrowserRouter, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadWorkouts, loadUser, loadFistBumps, loadSets } from '../redux/thunks';
+
 
 
 //creating the master component
@@ -39,10 +42,19 @@ class App extends Component {
     return (
 
         <BrowserRouter>
-
               <Route exact path="/" component={Login} />
-              <Route path="/feed" component={Feed} />
-              <Route path="/workouts/:workout_id" component={DetailedWorkout} />
+              <Route path="/feed">
+                  <Header />
+                  <Feed />
+              </Route>
+              <Route path="/workouts/:workout_id">
+                <Header/>
+                <DetailedWorkout/>
+              </Route>
+              <Route path="/users/:user_id">
+                <Header/>
+                <UserDetails/>
+              </Route>
 
         </BrowserRouter>
 

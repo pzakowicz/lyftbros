@@ -1,6 +1,7 @@
 //imports 
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 
 
@@ -76,9 +77,9 @@ function Leaderboard({workouts, user}) {
 
               {workoutLeader.map((user, i) => {
                 return <div key={i} className="flex-container list-item">
-                  <a href={"/users/" + user.id}>
+                  <Link to={"/users/" + user.id}>
                     <span>{(i+1) + '. ' + user.name}</span>
-                  </a>
+                  </Link>
                   <span className="value">{user.count}</span>
                 </div> 
               })}
@@ -89,9 +90,9 @@ function Leaderboard({workouts, user}) {
               <h5>Total volume:</h5>
               {volumeLeader.map((user, i) => {
                 return <div key={i} className="flex-container list-item">
-                  <a href={"/users/" + user.id}>
+                  <Link to={"/users/" + user.id}>
                     <span>{(i+1) + '. ' + user.name}</span>
-                  </a>
+                  </Link>
                   <span className="value">{(user.volume/1000).toFixed(1) + ' t'}</span>
                 </div> 
               })}

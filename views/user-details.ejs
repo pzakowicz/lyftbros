@@ -9,83 +9,21 @@
     <title>User details</title>
   </head>
   <body>
-    <%- include("partials/_header") -%>
-    <main id="user-main">
-      <div class="container-box tile" id="user-summary-container">
-        <h4>Bro's summary</h4>
-        <div class="flex-container list-item">
-          <span>Name: </span><span class="value"><%= bro.first_name %> <%= bro.surname %></span>
-        </div>
-        <div class="flex-container list-item">
-          <span>Gender: </span><span class="value"><%= bro.gender %></span>
-        </div>
+   
+    <div id="root">
 
-        <div class="inner-container">
-          <h5>Last 4 weeks:</h5>
-          
-          <% let countedWorkouts = []; %>
-          <% for (let i = 0; i < model.length; i++) { %>   
-            <% if (model[i].email === bro.email && !countedWorkouts.includes(model[i].id)) { %>
-              <% countedWorkouts.push(model[i].id) %>
-              <% } %> 
-              <% } %>
-          <div class="flex-container list-item">
-            <span>Workouts: </span><span class="value"><%= countedWorkouts.length %></span> 
-          </div> 
-          <% let totalVolume = 0; %>
-          <% let totalSets = 0; %>
-          <% let totalReps = 0; %>
-          <% for (let i = 0; i < model.length; i++) { %>   
-            <% if (model[i].email === bro.email) { %>
-              <% totalVolume += (model[i].avg_weight * model[i].avg_reps * model[i].sets); %>
-              <% totalSets += model[i].sets; %>
-              <% totalReps += model[i].avg_reps * model[i].sets; %>
-              <% } %> 
-              <% } %>
-              <div class="flex-container list-item">
-                <span>Sets: </span><span class="value"><%= totalSets %></span>
-              </div>
-              <div class="flex-container list-item">
-                <span>Reps: </span><span class="value"><%= (totalReps).toFixed(0) %></span>
-              </div>
-              <div class="flex-container list-item">
-                <span>Volume: </span><span class="value"><%= (totalVolume/1000).toFixed(1) %> t</span>
-              </div>
 
-        </div>
-      </div>
 
-      <div id="user-activity-container">
 
-        <%- include("partials/_activity-feed") -%>
 
-      </div>  
-
-      <div class="container-box tile" id="user-prs-container">
-        <h4>Bro's PRs</h4>
-        <table>
-          <tr>
-            <th>Lyft</th>
-            <th>10 reps</th>
-            <th>5 reps</th>
-          </tr>
-          <tr>
-            <%for (let i = 0; i < prs.length; i++) { %>
-            </tr>
-              <td width="50%"><%= prs[i].name %></td>
-              <td width="25%"><%= prs[i].ten_reps %> <span class="unit">kg</span></td>
-              <td width="25%"><%= prs[i].five_reps %> <span class="unit">kg</span></td>
-            <tr>
-            <% } %>
-            
-          </tr>
-        </table>
-      </div>
 
       <!-- hidden comment modal container -->
       <div id="commentModal" class="modal">
         <%- include("partials/_comment-modal") -%>
       </div>
-    </main>
+      
+    </div>
+
+    <script src="/bundle.js"></script>
   </body>
 </html>

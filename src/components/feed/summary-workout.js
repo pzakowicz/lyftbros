@@ -1,7 +1,7 @@
 //imports 
 import React, {useState, useEffect} from 'react';
-import { Link} from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 
 //creating the master component
@@ -96,7 +96,7 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
       setFistBumpsCount(fistBumpsCount + 1);
       setUserHasBumped(true);
 
-      await fetch('api/fist-bumps/')
+      await fetch('/api/fist-bumps/')
       .then(data => data.json())
       .then(fistBumps => setLocalFistBumps(fistBumps))
 
@@ -115,7 +115,7 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
 
               <div>
                 <div className="container-box"> 
-                  <h5 className="user-name"><a href={'/users/' + user_id}>{first_name} {surname}</a></h5>
+                  <h5 className="user-name"><Link to={'/users/' + user_id}>{first_name} {surname}</Link></h5>
                   <p className="subtitle">
                       {(workoutDateTime.workoutDate === workoutDateTime.todayDate) && 'Today '}
                       {(workoutDateTime.workoutDate === workoutDateTime.yesterdayDate) && 'Yesterday ' }
@@ -184,7 +184,7 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
                         {localFistBumps.map((fistBump, i) => {
                           return fistBump.workout_id === workout_id ? 
                           <tr key={i}>
-                            <td><a href={"/users/"+ fistBump.user_id}>{fistBump.first_name} {fistBump.surname}</a></td>
+                            <td><Link to={"/users/"+ fistBump.user_id}>{fistBump.first_name} {fistBump.surname}</Link></td>
                           </tr> 
                           : null
                         })}
@@ -206,11 +206,5 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
 
 }
 
-const mapStateToProps = state => ({
-  workouts: state.workouts,
-  user: state.user,
-  fistBumps: state.fistBumps
 
-});
-
-export default connect(mapStateToProps)(SummaryWorkout);
+export default SummaryWorkout;

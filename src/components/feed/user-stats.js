@@ -1,24 +1,25 @@
 //imports 
 import React, {Component} from 'react';
 import LatestWorkout from './latest-workout';
-import Last4Months from './last4months';
+import Last4Weeks from './last4weeks';
 import { connect } from 'react-redux';
+import {Link} from 'react-router-dom';
 
 
 //creating the master component
 class UserStats extends Component {
    
   render() {
-    const { user } = this.props;
+    const { user, workouts } = this.props;
 
 
       return (
         <div className="container-box" id="stat-container">
                     
-          <h4>Welcome <a href={'/users/' + user.id}>{user.first_name}!</a></h4>  
+          <h4>Welcome <Link to={'/users/' + user.id}>{user.first_name}!</Link></h4>  
 
           <LatestWorkout />
-          <Last4Months />
+          <Last4Weeks user={user} workouts={workouts}/>
 
         </div>
       
@@ -30,6 +31,7 @@ class UserStats extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
+  workouts: state.workouts,
 });
 
 export default connect(mapStateToProps)(UserStats);
