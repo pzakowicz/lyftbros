@@ -191,7 +191,7 @@ input, select {
 }
 
 button {
-  margin: 5px 0px;
+  margin: 5px 5px 5px 0px;
   border-radius: 4px;
   font-size: 16px;
   font-weight: bold;
@@ -819,14 +819,33 @@ cursor: pointer;
   font-size: small;
 }
 
+#account-details-container label {
+  display: inline-block;
+  width: 100px;
+  margin-top: 7px;
+}
+
+#account-details-container input {
+  display: inline-block;
+  width: 195px;
+}
+
+#account-details-container select {
+  display: inline-block;
+  width: 200px;
+}
+
+
 #account-details-container span {
   font-weight: bold;
   font-size: small;
 }
 
-#account-details-container input, #account-details-container select  {
-  display: none;
+#account-details-container button {
+margin-top: 10px;
 }
+
+
 
 .hidden {
   display: none;

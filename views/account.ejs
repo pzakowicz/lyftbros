@@ -12,46 +12,10 @@
     <title>Your account</title>
   </head>
   <body>
+    <div id='root'>
 
-    <%- include("partials/_header") -%>
-
-    <main id="account-main">
-      <div class="container-box tile" id="account-details-container">
-        <h4>Your account details</h4>
-        <% if (user) { %>
-          <p>Name: <span id="user-name"><%= user.first_name %></span><input type="text" id="user-name-input" required></p>
-          <p>Surname: <span id="user-surname"><%= user.surname %></span><input type="text" id="user-surname-input" required></p>
-          <p>Email: <span id="user-email"><%= user.email %></span><input type="email" id="user-email-input" required></p>
-          <p>Gender: <span id="user-gender"><%= user.gender %></span>
-            <select id="user-gender-input" name="gender" required>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </p>
-          <p>Date of birth: 
-            <span id="user-dob">
-            <% if (user.date_of_birth) { %>
-              <% let dob = user.date_of_birth.getDate()+'/'+(user.date_of_birth.getMonth()+1)+'/'+user.date_of_birth.getFullYear(); %>
-              <%= dob %>
-            <% } %>
-            </span>
-            <input type="date" id="user-dob-input" required>
-          </p>
-          <p>Weight (kg): 
-            <span id="user-weight">
-              <% if (user.weight) { %>
-                <%= user.weight %>
-              <% } %>
-            </span>
-            <input type="number" id="user-weight-input" required>
-          </p>
-       <% } %>
-       <button type="button" id="edit-account-button">Edit</button>
-       <button type="button" class="hidden" id="save-account-button">Save</button>
-       <button type="button" class="hidden" id="cancel-changes-button">Cancel</button>
-      </div>      
-    </main>
-    <script src="./account.js"></script>
+    </div>
+    <script src="./bundle.js"></script>
   </body>
 </html>
 

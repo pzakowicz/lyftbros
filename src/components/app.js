@@ -5,6 +5,7 @@ import Feed from './feed/feed';
 import Header from './header/header';
 import DetailedWorkout from './workout-details/detailed-workout';
 import UserDetails from './user-details/user-details';
+import AccountForm from './account/account-form';
 import {BrowserRouter, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadWorkouts, loadUser, loadFistBumps, loadSets } from '../redux/thunks';
@@ -54,6 +55,10 @@ class App extends Component {
               <Route path="/users/:user_id">
                 <Header/>
                 <UserDetails/>
+              </Route>
+              <Route>
+                <Header />
+                <AccountForm />
               </Route>
 
         </BrowserRouter>

@@ -102,9 +102,11 @@ userRouter.put("/", (req, res, next) => {
     let connection = mysql.createConnection(config);
     connection.query(`UPDATE Users SET first_name = ?, surname = ?, email = ?, gender = ?, date_of_birth = ?, weight = ? WHERE id = ?`, [name, surname, email, gender, dob, weight, id], (error, results, fields) => {
       if (error) {
-        return console.error(error.message);
+        console.error(error.message);
+        return res.sendStatus(400)
       }
-      res.status(201).json({ user: results.affectedRows });
+      console.log("Account updated")
+      return res.sendStatus(201);
     });
     connection.end();
 
