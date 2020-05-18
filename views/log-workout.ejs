@@ -10,9 +10,11 @@
     <title>Log training</title>
   </head>
   <body>
+    <div id="root">
 
-    <%- include("partials/_header") -%>
-    <div id="root"></div> 
+    </div> 
+
+
     <main id="training-main">
 
 
@@ -22,46 +24,6 @@
       </div>
 
       <div id="Log" class="tab">
-        <div class="container-box" id="log-training-container">
-          <form id="log-training-form">
-            <label for="category">Category:</label>
-            <select id="category" name="category" required>
-              <option>Barbell</option> 
-              <option>Dumbell</option> 
-              <option>Bodyweight</option> 
-              </select>
-              <br />
-            <label for="lyft">Lyft:</label>
-            <select id="lyft" name="lyft" required>
-              <%for (let i = 0; i < lifts.length; i++) { %>
-                <% if (lifts[i].category === "Barbell") { %>
-                <option><%= lifts[i].name %></option> 
-                <% } %>
-              <% } %>
-            </select>
-            <br />
-
-            <label for="weight">Weight(kg):</label>
-            <i class="fas fa-minus-square fa-2x" onclick="removeWeight()"></i>
-            <input type="number" id="weight" value="0" onclick="this.select()" required>
-            <i class="fas fa-plus-square fa-2x" onclick="addWeight()"></i>
-            <% if (!user.weight) { %>
-              <i class="fas fa-info-circle tooltip"><span class="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i>
-              <% } else { %>
-                <span class="hidden" id="user-weight"><%= user.weight %></span>
-              <% } %>
-            <br />
-            <label for="reps">Reps:</label>
-            <i class="fas fa-minus-square fa-2x" onclick="removeRep()"></i>
-            <input type="number" id="reps" value="0" onclick="this.select()" required>
-            <i class="fas fa-plus-square fa-2x" onclick="addRep()"></i>
-            <div class="flex-container button-container">
-              <button type="button" id="submit-set-button">Save set</button>
-              <h5 class="link" id="add-new-lyft-button">Add new lyft</h5>
-            </div>
-          </form>
-        </div>
-
         <div class="container-box" id="add-lyft-container">
           <h4>Add a lyft</h4>
           <label for="add-category">Category:</label>
@@ -117,7 +79,7 @@
 
 
     </main>
-    <script src="./log-workout.js"></script>
+    <!-- <script src="./log-workout.js"></script> -->
     <script src="./bundle.js"></script>
   </body>
 </html>

@@ -5,12 +5,10 @@ import { connect } from 'react-redux';
 class Logger extends Component {
 
   state = {
-    first_name: this.props.user.first_name,
-    surname: this.props.user.surname,
-    email: this.props.user.email,
-    gender: this.props.user.gender,
-    dob: this.props.user.date_of_birth,
-    weight: this.props.user.weight,
+    category: this.props.lifts[0].category,
+    lift: this.props.lifts[0].name,
+    weight: 0,
+    reps: 0,
     isEditable: false, 
     loggerVisible: true,
     saving: false
@@ -20,6 +18,28 @@ class Logger extends Component {
     let name = event.target.name;
     let value = event.target.value;
     this.setState({[name]: value});
+  }
+
+  findFirstLift = (category) => {
+
+    for (let i = 0; i < this.props.lifts.length; i++) {
+      if (this.props.lifts[i].category === category) {
+        return this.props.lifts[i].name;
+      }
+    }
+  }
+
+  changeCategory = (event) => {
+    let lift = this.findFirstLift(event.target.value);
+    if (event.target.value === 'Bodyweight' && this.props.user.weight) {
+      this.setState({category: event.target.value, 
+        lift: lift,
+        weight: this.props.user.weight});
+    } else {
+      this.setState({category: event.target.value, 
+        lift: lift,
+        weight: 0});
+    }
   }
 
   submitHandler = async (event) => {
@@ -62,96 +82,89 @@ class Logger extends Component {
     }))
   }
 
-  getUserDob = () => {
-    if (this.props.user.date_of_birth) {
-      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      let dateObject = new Date(Date.parse(this.props.user.date_of_birth));
-      let formattedDate = (months[dateObject.getMonth()]) + ' ' + dateObject.getDate()+', '+dateObject.getFullYear();
-      return formattedDate;
+  addWeight = () => {
+    this.setState(prevState => ({
+      weight: prevState.weight + 1, 
+    }))
+  }
+
+  addRep = () => {
+    this.setState(prevState => ({
+      reps: prevState.reps + 1, 
+    }))
+
+  }
+
+  removeWeight = () => {
+    if (this.state.weight >= 1) {
+      this.setState(prevState => ({
+        weight: prevState.weight - 1, 
+      }))
+    }
+  }
+
+  removeRep = () => {
+    if (this.state.reps >= 1) {
+      this.setState(prevState => ({
+        reps: prevState.reps - 1, 
+      }))
     }
   }
 
   render() {
-
-    const { isEditable } = this.state;
+    const { isEditable, category } = this.state;
+    const { lifts, user } = this.props;
 
     return (
 
-          <main>
-            <div className="w3-bar w3-black" id="tabs-container">
-              <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>Log</button>
-              <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
-            </div>
+      <main id="training-main">
+        <div className="w3-bar w3-black" id="tabs-container">
+          <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>Log</button>
+          <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
+        </div>
 
-            {/* <form id="log-training-form">
-              <label for="category">Category:</label>
-              <select name="category" onChange={this.changeHandler} id="category" required>
+        <div id="Log" className="tab">
+
+          <div className="container-box" id="log-training-container">
+            <form id="log-training-form">
+              <label>Category:</label>
+              <select name="category" onChange={this.changeCategory} id="category" required>
                 <option>Barbell</option> 
                 <option>Dumbell</option> 
                 <option>Bodyweight</option> 
                 </select>
                 <br />
-              <label for="lyft">Lyft:</label>
-              <select id="lyft" name="lyft" onChange={this.changeHandler} required>
-                <%for (let i = 0; i < lifts.length; i++) { %>
-                  <% if (lifts[i].category === "Barbell") { %>
-                  <option><%= lifts[i].name %></option> 
-                  <% } %>
-                <% } %>
+              <label>Lyft:</label>
+              <select id="lift" name="lift" onChange={this.changeHandler} required>
+              { lifts.map((lift, i) => {
+                          return (lift.category === category) ?
+                            (<option key={i}>{lift.name}</option>)
+                            : null
+                        })}
+
               </select>
               <br />
 
-              <label for="weight">Weight(kg):</label>
-              <i className="fas fa-minus-square fa-2x" onClick="removeWeight()"></i>
-              <input type="number" id="weight" value="0" onClick="this.select()" required>
-              <i className="fas fa-plus-square fa-2x" onClick="addWeight()"></i>
-              <% if (!user.weight) { %>
-                <i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i>
-                <% } else { %>
-                  <span className="hidden" id="user-weight"><%= user.weight %></span>
-                <% } %>
+              <label>Weight(kg):</label>
+              <i className="fas fa-minus-square fa-2x" onClick={this.removeWeight}></i>
+              <input name="weight" type="number" value={this.state.weight} id="weight" onChange={this.changeHandler} required />
+              <i className="fas fa-plus-square fa-2x" onClick={this.addWeight}></i>
+              {!user.weight ? <i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i> : null}
+            
+
               <br />
-              <label for="reps">Reps:</label>
-              <i className="fas fa-minus-square fa-2x" onClick="removeRep()"></i>
-              <input type="number" id="reps" value="0" onClick="this.select()" required>
-              <i className="fas fa-plus-square fa-2x" onClick="addRep()"></i>
+              <label>Reps:</label>
+              <i className="fas fa-minus-square fa-2x" onClick={this.removeRep}></i>
+              <input name="reps" type="number" value={this.state.reps} id="reps" onChange={this.changeHandler} required />
+              <i className="fas fa-plus-square fa-2x" onClick={this.addRep}></i>
               <div className="flex-container button-container">
                 <button type="button" id="submit-set-button">Save set</button>
                 <h5 className="link" id="add-new-lyft-button">Add new lyft</h5>
               </div>
-            </form> */}
-
-
-
-
-            <form className="container-box" id="account-details-container" onSubmit={this.submitHandler}>
-              <h4>Your account details</h4>
-              <label>Name: </label>{ !isEditable ? <span id="user-name">{this.state.first_name}</span> : <input name="first_name" onChange={this.changeHandler} type="text" id="user-name-input" value={this.state.first_name}  required />}
-              <br/>
-              <label>Surname: </label>{ !isEditable ? <span id="user-surname">{this.state.surname}</span> : <input name="surname" onChange={this.changeHandler}type="text" id="user-surname-input" value={this.state.surname} required />}
-              <br/>
-              <label>Email: </label>{ !isEditable ? <span id="user-email">{this.state.email}</span> : <input name="email" onChange={this.changeHandler}type="email" id="user-email-input" required value={this.state.email} />}
-              <br/>
-              <label>Gender: </label>{ !isEditable ? <span id="user-gender">{this.state.gender}</span> :
-              <select name="gender" onChange={this.changeHandler} id="user-gender-input" value={this.state.gender} required>
-                  <option value="male">male</option>
-                  <option value="female">female</option>
-              </select>}
-              <br/>
-              <label>Date of birth: </label>{ !isEditable ? <span id="user-dob">{ this.state.dob && this.getUserDob() }</span> : <input name="dob" onChange={this.changeHandler} type="date" id="user-dob-input" value={
-                new Date(Date.parse(this.state.dob)).getFullYear() + '-' + ('0' + (new Date(Date.parse(this.state.dob)).getMonth()+1)).slice(-2) + '-' + ('0' + new Date(Date.parse(this.state.dob)).getDate()).slice(-2)} required />}
-              <br/>
-              <label>Weight (kg): </label>{ !isEditable ? <span id="user-weight">{ this.state.weight && this.state.weight }</span> : 
-              <input name="weight" onChange={this.changeHandler} type="number" id="user-weight-input" required value={this.state.weight} />}
-              <br/>
-              { !isEditable ? <button type="button" id="edit-account-button" onClick={this.toggleEditability}>Edit</button> :
-              <div>
-                <button type="submit" id="save-account-button">{this.state.saving ? 'Saving...' : 'Save'}</button>
-                <button type="button" id="cancel-changes-button" onClick={this.toggleEditability}>Cancel</button>
-              </div>}
             </form>
-          </main>
-
+          </div>
+        </div>
+      </main>
     )
   }
   
@@ -159,6 +172,7 @@ class Logger extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
+  lifts: state.lifts,
 });
 
 
