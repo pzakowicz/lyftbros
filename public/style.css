@@ -616,7 +616,6 @@ cursor: pointer;
 }
 
 #add-lyft-container {
-  display: none;
   width: 100%;
 
 }
@@ -637,7 +636,7 @@ cursor: pointer;
 
 #new-workout-container {
   width: 100%;
-  display: none;
+
 }
 
 #workout-table {

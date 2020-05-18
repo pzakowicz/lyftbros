@@ -9,9 +9,17 @@ class Logger extends Component {
     lift: this.props.lifts[0].name,
     weight: 0,
     reps: 0,
-    isEditable: false, 
+    addCategory: '',
+    addLift: '',
     loggerVisible: true,
+    liftExists: false,
     saving: false
+  }
+
+  toggleForms = () => {
+    this.setState(prevState => ({
+      loggerVisible: !prevState.loggerVisible, 
+    }))
   }
 
   changeHandler = (event) => {
@@ -112,35 +120,29 @@ class Logger extends Component {
   }
 
   render() {
-    const { isEditable, category } = this.state;
+    const { category } = this.state;
     const { lifts, user } = this.props;
 
     return (
 
-      <main id="training-main">
-        <div className="w3-bar w3-black" id="tabs-container">
-          <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>Log</button>
-          <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
-        </div>
+
 
         <div id="Log" className="tab">
 
+          {this.state.loggerVisible ? 
           <div className="container-box" id="log-training-container">
             <form id="log-training-form">
               <label>Category:</label>
               <select name="category" onChange={this.changeCategory} id="category" required>
-                <option>Barbell</option> 
-                <option>Dumbell</option> 
-                <option>Bodyweight</option> 
+                <option>Barbell</option>
+                <option>Dumbell</option>
+                <option>Bodyweight</option>
                 </select>
                 <br />
-              <label>Lyft:</label>
+              <label>Lift:</label>
               <select id="lift" name="lift" onChange={this.changeHandler} required>
-              { lifts.map((lift, i) => {
-                          return (lift.category === category) ?
-                            (<option key={i}>{lift.name}</option>)
-                            : null
-                        })}
+                
+
 
               </select>
               <br />
@@ -159,12 +161,28 @@ class Logger extends Component {
               <i className="fas fa-plus-square fa-2x" onClick={this.addRep}></i>
               <div className="flex-container button-container">
                 <button type="button" id="submit-set-button">Save set</button>
-                <h5 className="link" id="add-new-lyft-button">Add new lyft</h5>
+                <h5 onClick={this.toggleForms} className="link" id="add-new-lyft-button">Add new lyft</h5>
               </div>
             </form>
-          </div>
+
+          </div> :
+          <div className="container-box" id="add-lyft-container">
+            <h4>Add a lyft</h4>
+            <label>Category:</label>
+            <select name="addCategory" id="add-category" name="add-category">
+              <option>Barbell</option>
+              <option>Dumbell</option>
+              <option>Bodyweight</option>
+            </select>
+            <br />
+            <label>Name:</label>
+            <input name="addLift" type="text" id="add-name" required />
+            <br />
+            <button type="button" id="save-lyft-button">Add lyft</button>
+            <button onClick={this.toggleForms} type="button" id="cancel-lyft-button">Cancel</button>
+            {this.state.liftExists ? <p className="error-message" id="lyft-exists">Lyft already exists!</p> : null }
+          </div>}
         </div>
-      </main>
     )
   }
   

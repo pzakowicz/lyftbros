@@ -6,7 +6,7 @@ import Header from './header/header';
 import DetailedWorkout from './workout-details/detailed-workout';
 import UserDetails from './user-details/user-details';
 import AccountForm from './account/account-form';
-import Logger from './log-workout/logger';
+import LogWorkout from './log-workout/log-workout';
 import {BrowserRouter, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadWorkouts, loadUser, loadFistBumps, loadSets, loadLifts } from '../redux/thunks';
@@ -64,7 +64,7 @@ class App extends Component {
               </Route>
               <Route path="/log-workout">
                 <Header />
-                <Logger />
+                <LogWorkout />
               </Route>
         </BrowserRouter>
 
