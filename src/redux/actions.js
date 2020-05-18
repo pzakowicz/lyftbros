@@ -79,3 +79,20 @@ export const LOAD_SETS_FAILURE = 'LOAD_SETS_FAILURE';
 export const loadSetsFailure = () => ({
   type: LOAD_SETS_FAILURE,
 })
+
+//getting the lifts into the store
+export const LOAD_LIFTS_IN_PROGRESS = 'LOAD_LIFTS_IN_PROGRESS';
+export const loadLiftsInProgress = () => ({
+  type: LOAD_LIFTS_IN_PROGRESS,
+})
+
+export const LOAD_LIFTS_SUCCESS = 'LOAD_LIFTS_SUCCESS';
+export const loadLiftsSuccess = lifts => ({
+  type: LOAD_LIFTS_SUCCESS,
+  payload: { lifts },
+})
+
+export const LOAD_LIFTS_FAILURE = 'LOAD_LIFTS_FAILURE';
+export const loadLiftsFailure = () => ({
+  type: LOAD_LIFTS_FAILURE,
+})

@@ -6,9 +6,10 @@ import Header from './header/header';
 import DetailedWorkout from './workout-details/detailed-workout';
 import UserDetails from './user-details/user-details';
 import AccountForm from './account/account-form';
+import Logger from './log-workout/logger';
 import {BrowserRouter, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadWorkouts, loadUser, loadFistBumps, loadSets } from '../redux/thunks';
+import { loadWorkouts, loadUser, loadFistBumps, loadSets, loadLifts } from '../redux/thunks';
 
 
 
@@ -35,6 +36,7 @@ class App extends Component {
     this.props.startLoadingUser();
     this.props.startLoadingFistBumps();
     this.props.startLoadingSets();
+    this.props.startLoadingLifts();
   }
 
 
@@ -56,11 +58,14 @@ class App extends Component {
                 <Header/>
                 <UserDetails/>
               </Route>
-              <Route>
+              <Route path="/account">
                 <Header />
                 <AccountForm />
               </Route>
-
+              <Route path="/log-workout">
+                <Header />
+                <Logger />
+              </Route>
         </BrowserRouter>
 
 
@@ -82,6 +87,7 @@ const mapDispatchToProps = dispatch => ({
   startLoadingUser: () => dispatch(loadUser()),
   startLoadingFistBumps: () => dispatch(loadFistBumps()),
   startLoadingSets: () => dispatch(loadSets()),
+  startLoadingLifts: () => dispatch(loadLifts()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

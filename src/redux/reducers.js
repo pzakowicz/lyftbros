@@ -5,6 +5,7 @@ import {
   LOAD_USER_IN_PROGRESS, LOAD_USER_SUCCESS, LOAD_USER_FAILURE,
   LOAD_FISTBUMPS_IN_PROGRESS, LOAD_FISTBUMPS_SUCCESS, LOAD_FISTBUMPS_FAILURE, 
   LOAD_SETS_IN_PROGRESS, LOAD_SETS_SUCCESS, LOAD_SETS_FAILURE,
+  LOAD_LIFTS_IN_PROGRESS, LOAD_LIFTS_SUCCESS, LOAD_LIFTS_FAILURE,
 } from './actions';
 
 //ADDING AND REMOVING A TODO EXAMPLE
@@ -88,6 +89,22 @@ export const sets = (state=[], action) => {
     }
     case LOAD_SETS_IN_PROGRESS:
     case LOAD_SETS_FAILURE:
+    default:
+      return state
+  }
+}
+
+//adding the lifts reducers
+export const lifts = (state=[], action) => {
+  const { type, payload} = action;
+
+  switch (type) {
+    case LOAD_LIFTS_SUCCESS: {
+      const { lifts } = payload;
+      return lifts;
+    }
+    case LOAD_LIFTS_IN_PROGRESS:
+    case LOAD_LIFTS_FAILURE:
     default:
       return state
   }

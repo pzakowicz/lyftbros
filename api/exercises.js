@@ -15,7 +15,7 @@ exerciseRouter.get("/", (req, res, next) => {
     if (error) {
       return console.error(error.message);
     }
-    res.status(200).json({ exercises: results });
+    res.status(200).send(results);
   });
   connection.end();
 

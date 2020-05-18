@@ -4,6 +4,7 @@ import {
   loadUserInProgress, loadUserSuccess, loadUserFailure,
   loadFistBumpsInProgress, loadFistBumpsSuccess, loadFistBumpsFailure,
   loadSetsInProgress, loadSetsSuccess, loadSetsFailure,
+  loadLiftsInProgress, loadLiftsSuccess, loadLiftsFailure,
 } from './actions'
 
 //adding thunk for getting workouts
@@ -54,6 +55,19 @@ export const loadSets = () => async (dispatch, getState) => {
     dispatch(loadSetsSuccess(sets));
   } catch(error) {
     dispatch(loadSetsFailure());
+    dispatch(displayAlert(error))
+  }
+}
+
+//adding thunk for getting lifts
+export const loadLifts = () => async (dispatch, getState) => {
+  try {
+    dispatch(loadLiftsInProgress());
+    const response = await fetch('/api/exercises/')
+    const lifts = await response.json();
+    dispatch(loadLiftsSuccess(lifts));
+  } catch(error) {
+    dispatch(loadLiftsFailure());
     dispatch(displayAlert(error))
   }
 }

@@ -73,7 +73,6 @@ class AccountForm extends Component {
   render() {
 
     const { isEditable } = this.state;
-    console.log(this.state.dob);
 
     return (
 
