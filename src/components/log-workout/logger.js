@@ -140,9 +140,21 @@ class Logger extends Component {
     } else {
       alert("Name cannot be blank.")
     }
-  
-    
   };
+
+  populateSets = () => {
+    let sortedSets = this.props.currentWorkout.sort((a,b) => (a.lift_name > b.lift_name) ? 1 : ((b.lift_name > a.lift_name) ? -1 : 0)); 
+    return sortedSets.map((set, i) => {
+      return (
+        <tr key={i}>
+          <td width="70%">{set.lift_name}</td>
+          <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span></td>
+          <td width="10%">{set.reps}</td>
+          <td width="10%"><i className="fas fa-trash" onClick={() => this.props.deleteThisSet(i)}></i></td>
+        </tr>
+      )
+    })
+  }
 
 
 
@@ -230,7 +242,8 @@ class Logger extends Component {
                 </tr>
                 </thead>
                 <tbody>
-                {this.props.currentWorkout.map((set, i) => {
+                  {this.populateSets()}
+                {/* {this.props.currentWorkout.map((set, i) => {
                 return (
               <tr key={i}>
                 <td width="70%">{set.lift_name}</td>
@@ -241,7 +254,7 @@ class Logger extends Component {
                 
 
                 
-              })}
+              })} */}
                 </tbody>
               </table>
               <div className="flex-container button-container">
