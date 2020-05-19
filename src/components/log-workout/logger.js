@@ -1,9 +1,9 @@
 //imports 
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { loadLifts } from '../../redux/thunks';
+import { loadLifts, loadWorkouts, loadSets } from '../../redux/thunks';
 import { addSet, clearCurrentWorkout, removeSet } from '../../redux/actions';
-import {Link } from 'react-router-dom';
+import {Link, Redirect } from 'react-router-dom';
  
 class Logger extends Component {
 
@@ -21,7 +21,7 @@ class Logger extends Component {
     liftExists: false,
     savingLift: false,
     savingWorkout: false,
-    currentWorkout: [],
+    redirect: false,
   }
 
   toggleForms = () => {
@@ -214,7 +214,6 @@ class Logger extends Component {
           </tr> : null
           })}
           </tbody>
-
       </table>
       )
 
@@ -236,11 +235,66 @@ class Logger extends Component {
     }
   }
 
+  saveWorkout = async () => {
+    if (this.props.currentWorkout.length > 0) {
+      let workoutName = prompt("Give your workout a name", "Lyft session");
+      if (workoutName) {
+        this.setState({savingWorkout: true})
+        //save workout
+        let data = {
+          name: workoutName,
+        };
+        let response = await fetch(`/api/workouts/`,
+        {
+           method: "POST",
+           headers: {
+             "Content-Type": "application/json"
+         },
+         body: JSON.stringify(data)
+        })
+        let json = await response.json();
 
+        let workoutId = json.workout[0].id;
+        if (response.status === 201) {
+            //save sets
+            const data = {};
+            data.sets = [];
+            for (let i = 0; i < this.props.currentWorkout.length; i++) { 
+              data.sets.push([this.props.currentWorkout[i].lift_id, this.props.currentWorkout[i].weight, this.props.currentWorkout[i].reps, workoutId]);
+            };
+            let response = await fetch(`/api/sets/`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+            })
+            if (response.status === 201) {
+              this.props.clearWorkout();
+              this.props.startLoadingWorkouts();
+              this.props.startLoadingSets();
+              this.setState({savingWorkout: false, redirect: true});
+              
+            } else {
+              alert("Failed to save sets, try again.");
+              this.setState({savingWorkout: false});
+            }
+          } else {
+            alert("Failed to save workout, try again.");
+            this.setState({savingWorkout: false});
+          }
+      } else {
+        alert("Workout name cannot be empty")
+      }
 
+    } else {
+      alert("Add at least one set to save a workout.")
+    }
 
-
-
+  
+  }
+    
 
   render() {
     const { lifts, user } = this.props;
@@ -289,10 +343,15 @@ class Logger extends Component {
                 <input name="reps" type="number" value={this.state.reps} id="reps" onChange={this.changeHandler} required />
                 <i className="fas fa-plus-square fa-2x" onClick={this.addRep}></i>
                 <div className="flex-container button-container">
-                  <button onClick={() => {this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: this.state.weight, reps: this.state.reps})}} type="button" id="submit-set-button">Save set</button>
+                  <button onClick={() => { if (this.state.weight > 0 && this.state.reps > 0) {
+                    this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: this.state.weight, reps: this.state.reps})}}
+                  } type="button" id="submit-set-button">Save set</button>
+                  
+                  
                   <h5 onClick={this.toggleForms} className="link" id="add-new-lyft-button">Add new lyft</h5>
                 </div>
               </form>
+              {this.state.redirect && <Redirect push to="/feed" />}
   
             </div> :
             <div className="container-box" id="add-lyft-container">
@@ -332,12 +391,14 @@ class Logger extends Component {
                   </tbody>
                 </table>
                 <div className="flex-container button-container">
-                  <button type="button" id="save-workout-button">Save workout</button>
+                  <button onClick={this.saveWorkout} type="button" id="save-workout-button">Save workout</button>
                   <button onClick={this.props.clearWorkout} type="button" id="clear-workout-button">Clear workout</button>
+                  
                 </div>
               </div>
             </div> 
             : null}
+
               
   
           </div>
@@ -383,6 +444,8 @@ const mapDispatchToProps = dispatch => ({
   addSetToCurrentWorkout: (set) => dispatch(addSet(set)),
   clearWorkout: () => dispatch(clearCurrentWorkout()),
   deleteThisSet: (key) => dispatch(removeSet(key)),
+  startLoadingWorkouts: () => dispatch(loadWorkouts()),
+  startLoadingSets: () => dispatch(loadSets()),
 });
 
 
