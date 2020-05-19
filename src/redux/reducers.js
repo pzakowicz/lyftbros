@@ -1,29 +1,25 @@
 // IMPORTING ACTIONS
 import { 
-  CREATE_TODO, REMOVE_TODO,
+  ADD_SET, CLEAR_CURRENT_WORKOUT,
   LOAD_WORKOUTS_IN_PROGRESS, LOAD_WORKOUTS_SUCCESS, LOAD_WORKOUTS_FAILURE, 
   LOAD_USER_IN_PROGRESS, LOAD_USER_SUCCESS, LOAD_USER_FAILURE,
   LOAD_FISTBUMPS_IN_PROGRESS, LOAD_FISTBUMPS_SUCCESS, LOAD_FISTBUMPS_FAILURE, 
   LOAD_SETS_IN_PROGRESS, LOAD_SETS_SUCCESS, LOAD_SETS_FAILURE,
-  LOAD_LIFTS_IN_PROGRESS, LOAD_LIFTS_SUCCESS, LOAD_LIFTS_FAILURE,
+  LOAD_LIFTS_IN_PROGRESS, LOAD_LIFTS_SUCCESS, LOAD_LIFTS_FAILURE, 
+
 } from './actions';
 
 //ADDING AND REMOVING A TODO EXAMPLE
-export const todos = (state=[], action) => {
+export const currentWorkout = (state=[], action) => {
   const { type, payload} = action;
 
   switch (type) {
-    case CREATE_TODO: {
-      const { text } = payload;
-      const newTodo = {
-        text,
-        isCompleted: false,
-      };
-      return state.concat(newTodo)
+    case ADD_SET: {
+      const { set } = payload;
+      return state.concat(set)
     }
-    case REMOVE_TODO: {
-      const { text} = payload;
-      return state.filter(todo => todo.text !== text);
+    case CLEAR_CURRENT_WORKOUT: {
+      return [];
     }
     default:
       return state

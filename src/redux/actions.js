@@ -1,15 +1,15 @@
 
 //example reducers
-export const CREATE_TODO = 'CREATE_TODO';
-export const createTodo = text => ({
-  type: CREATE_TODO,
-  payload: { text },
+export const ADD_SET = 'ADD_SET';
+export const addSet = set => ({
+  type: ADD_SET,
+  payload: { set },
 });
 
-export const REMOVE_TODO = 'REMOVE_TODO';
-export const removeTodo = text => ({
-  type: REMOVE_TODO,
-  payload: { text },
+export const CLEAR_CURRENT_WORKOUT = 'CLEAR_CURRENT_WORKOUT';
+export const clearCurrentWorkout = () => ({
+  type: CLEAR_CURRENT_WORKOUT,
+  //payload: { text },
 });
 
 //getting the workouts into the store
