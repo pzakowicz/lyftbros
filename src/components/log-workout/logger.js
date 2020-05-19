@@ -146,7 +146,7 @@ class Logger extends Component {
     let sortedSets = this.props.currentWorkout.sort((a,b) => (a.lift_name > b.lift_name) ? 1 : ((b.lift_name > a.lift_name) ? -1 : 0)); 
     return sortedSets.map((set, i) => {
       return (
-        <tr key={i}>
+        <tr onClick={() => this.selectRow(i)} key={i}>
           <td width="70%">{set.lift_name}</td>
           <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span></td>
           <td width="10%">{set.reps}</td>
@@ -155,6 +155,19 @@ class Logger extends Component {
       )
     })
   }
+
+  selectRow = (key) => {
+    let set = this.props.currentWorkout[key];
+    this.setState({
+      category: set.category,
+      lift: set.lift_name,
+      liftId: set.lift_id,
+      weight: set.weight,
+      reps: set.reps,
+      addCategory: set.category,
+    })
+  }
+
 
 
 
@@ -174,14 +187,14 @@ class Logger extends Component {
           <div className="container-box" id="log-training-container">
             <form id="log-training-form">
               <label>Category:</label>
-              <select name="category" onChange={this.changeCategory} id="category" required>
+              <select name="category" onChange={this.changeCategory} id="category" value={this.state.category} required>
                 <option>Barbell</option>
                 <option>Dumbell</option>
                 <option>Bodyweight</option>
                 </select>
                 <br />
               <label>Lift:</label>
-              <select id="lift" name="lift" onChange={this.changeLift} required>
+              <select id="lift" name="lift" onChange={this.changeLift} value={this.state.lift} required>
               {lifts.map((lift, i) => {
                 return lift.category === this.state.category ? 
               <option key={i}>{lift.name}</option> : null
@@ -234,7 +247,6 @@ class Logger extends Component {
               <table id="workout-table">
                 <thead>
                 <tr>
-
                   <th width="60%">Lyft</th>
                   <th width="10%">Weight</th>
                   <th width="10%">Reps</th>
