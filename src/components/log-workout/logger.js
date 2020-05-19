@@ -3,6 +3,7 @@ import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { loadLifts } from '../../redux/thunks';
 import { addSet, clearCurrentWorkout, removeSet } from '../../redux/actions';
+import {Link } from 'react-router-dom';
  
 class Logger extends Component {
 
@@ -15,6 +16,7 @@ class Logger extends Component {
     addCategory: this.props.lifts[0].category,
     addLift: '',
     loggerVisible: true,
+    logTabVisible: true,
     workoutVisible: false,
     liftExists: false,
     savingLift: false,
@@ -25,6 +27,12 @@ class Logger extends Component {
   toggleForms = () => {
     this.setState(prevState => ({
       loggerVisible: !prevState.loggerVisible, 
+    }))
+  }
+
+  toggleTabs = () => {
+    this.setState(prevState => ({
+      logTabVisible: !prevState.logTabVisible, 
     }))
   }
 
@@ -168,6 +176,66 @@ class Logger extends Component {
     })
   }
 
+  formatDate = (date) => {
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let workoutDateObject = new Date(Date.parse(date));
+    let formattedDate = (months[workoutDateObject.getMonth()]) + ' ' + workoutDateObject.getDate()+', '+workoutDateObject.getFullYear()+' ';
+    return formattedDate;
+  }
+
+  populateHistory = () => {
+    let filteredSets = this.props.sets.filter(set => set.user_id === this.props.user.id && set.lift_name === this.state.lift);
+    let sortedSets = filteredSets.sort((a,b) => (a.date_time > b.date_time) ? -1 : ((b.date_time > a.date_time) ? 1 : 0)); 
+    let uniqueSetIds = []; 
+    let uniqueSets = [];
+    for (let i = 0; i < sortedSets.length; i++) {
+      if (!uniqueSetIds.includes(sortedSets[i].id)) {
+        uniqueSetIds.push(sortedSets[i].id);
+        uniqueSets.push(sortedSets[i]);
+      }
+    }
+    return uniqueSets.map((set, i) => {
+      let currentWorkout = set.id;
+      return (
+      <table key={set.id} id={set.id}>
+        <thead>
+          <tr> 
+            <th><Link to={'/workouts/' + set.id}>{set.workout_name}</Link></th>
+            <th colSpan="2">{this.formatDate(set.date_time)}</th>
+          </tr>
+        </thead>
+          <tbody>
+          {sortedSets.map((set, i) => {
+            return set.id === currentWorkout ? 
+            <tr key={i}>
+            <td width="50%">{set.lift_name}</td>
+            <td width="20%">{set.weight} kg</td>
+            <td width="20%">{set.reps} reps</td>
+          </tr> : null
+          })}
+          </tbody>
+
+      </table>
+      )
+
+    })
+    
+  }
+
+  populateHistorySets = () => {
+    let filteredSets = this.props.sets.filter(set => set.user_id === this.props.user.id && set.lift_name === this.state.lift);
+    let sortedSets = filteredSets.sort((a,b) => (a.date_time > b.date_time) ? -1 : ((b.date_time > a.date_time) ? 1 : 0)); 
+    for (let i = 0; i < sortedSets.length; i++) {
+      let newSet = 
+      <tr >
+        <td width="50%">{sortedSets[i].lift_name}</td>
+        <td width="20%">{sortedSets[i].weight} kg</td>
+        <td width="20%">{sortedSets[i].reps} reps</td>
+      </tr>
+      document.getElementById(sortedSets[i].id).append(newSet);
+    }
+  }
+
 
 
 
@@ -177,109 +245,128 @@ class Logger extends Component {
   render() {
     const { lifts, user } = this.props;
 
-    return (
+    if (this.state.logTabVisible) {
 
+      return (
 
-
-        <div id="Log" className="tab">
-
-          {this.state.loggerVisible ? 
-          <div className="container-box" id="log-training-container">
-            <form id="log-training-form">
+        <main id="training-main">
+  
+          <div className="w3-bar w3-black" id="tabs-container">
+            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>Log</button>
+            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
+          </div>
+  
+          <div id="Log" className="tab">
+            {this.state.loggerVisible ? 
+            <div className="container-box" id="log-training-container">
+              <form id="log-training-form">
+                <label>Category:</label>
+                <select name="category" onChange={this.changeCategory} id="category" value={this.state.category} required>
+                  <option>Barbell</option>
+                  <option>Dumbell</option>
+                  <option>Bodyweight</option>
+                  </select>
+                  <br />
+                <label>Lift:</label>
+                <select id="lift" name="lift" onChange={this.changeLift} value={this.state.lift} required>
+                {lifts.map((lift, i) => {
+                  return lift.category === this.state.category ? 
+                <option key={i}>{lift.name}</option> : null
+                })}
+                </select>
+                <br />
+  
+                <label>Weight(kg):</label>
+                <i className="fas fa-minus-square fa-2x" onClick={this.removeWeight}></i>
+                <input name="weight" type="number" value={this.state.weight} id="weight" onChange={this.changeHandler} required />
+                <i className="fas fa-plus-square fa-2x" onClick={this.addWeight}></i>
+                {!user.weight ? <i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i> : null}
+              
+  
+                <br />
+                <label>Reps:</label>
+                <i className="fas fa-minus-square fa-2x" onClick={this.removeRep}></i>
+                <input name="reps" type="number" value={this.state.reps} id="reps" onChange={this.changeHandler} required />
+                <i className="fas fa-plus-square fa-2x" onClick={this.addRep}></i>
+                <div className="flex-container button-container">
+                  <button onClick={() => {this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: this.state.weight, reps: this.state.reps})}} type="button" id="submit-set-button">Save set</button>
+                  <h5 onClick={this.toggleForms} className="link" id="add-new-lyft-button">Add new lyft</h5>
+                </div>
+              </form>
+  
+            </div> :
+            <div className="container-box" id="add-lyft-container">
               <label>Category:</label>
-              <select name="category" onChange={this.changeCategory} id="category" value={this.state.category} required>
+              <select onChange={this.changeHandler} defaultValue={this.state.category} name="addCategory" id="add-category">
                 <option>Barbell</option>
                 <option>Dumbell</option>
                 <option>Bodyweight</option>
-                </select>
-                <br />
-              <label>Lift:</label>
-              <select id="lift" name="lift" onChange={this.changeLift} value={this.state.lift} required>
-              {lifts.map((lift, i) => {
-                return lift.category === this.state.category ? 
-              <option key={i}>{lift.name}</option> : null
-              })}
               </select>
               <br />
-
-              <label>Weight(kg):</label>
-              <i className="fas fa-minus-square fa-2x" onClick={this.removeWeight}></i>
-              <input name="weight" type="number" value={this.state.weight} id="weight" onChange={this.changeHandler} required />
-              <i className="fas fa-plus-square fa-2x" onClick={this.addWeight}></i>
-              {!user.weight ? <i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i> : null}
-            
-
+              <label>Name:</label>
+              <input onChange={this.changeHandler} name="addLift" type="text" id="add-name" required />
               <br />
-              <label>Reps:</label>
-              <i className="fas fa-minus-square fa-2x" onClick={this.removeRep}></i>
-              <input name="reps" type="number" value={this.state.reps} id="reps" onChange={this.changeHandler} required />
-              <i className="fas fa-plus-square fa-2x" onClick={this.addRep}></i>
-              <div className="flex-container button-container">
-                <button onClick={() => {this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: this.state.weight, reps: this.state.reps})}} type="button" id="submit-set-button">Save set</button>
-                <h5 onClick={this.toggleForms} className="link" id="add-new-lyft-button">Add new lyft</h5>
+              <button onClick={this.saveNewLift} type="button" id="save-lyft-button">{this.state.savingLift ? "Adding..." : "Add lyft"}</button>
+              <button onClick={this.toggleForms} type="button" id="cancel-lyft-button">Cancel</button>
+              {this.state.liftExists ? <p className="error-message" id="lyft-exists">Lyft already exists!</p> : null }
+            </div>}
+  
+  
+  
+  
+  
+            {this.props.currentWorkout.length > 0 ?
+            <div className="container-box" id="new-workout-container"> 
+              <div id="workout-table-container">
+                <table id="workout-table">
+                  <thead>
+                  <tr>
+                    <th width="60%">Lyft</th>
+                    <th width="10%">Weight</th>
+                    <th width="10%">Reps</th>
+                    <th width="10%"><i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Tap a set to pre-fill the logger.</span></i></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {this.populateSets()}
+                  </tbody>
+                </table>
+                <div className="flex-container button-container">
+                  <button type="button" id="save-workout-button">Save workout</button>
+                  <button onClick={this.props.clearWorkout} type="button" id="clear-workout-button">Clear workout</button>
+                </div>
               </div>
-            </form>
-
-          </div> :
-          <div className="container-box" id="add-lyft-container">
-            <label>Category:</label>
-            <select onChange={this.changeHandler} defaultValue={this.state.category} name="addCategory" id="add-category">
-              <option>Barbell</option>
-              <option>Dumbell</option>
-              <option>Bodyweight</option>
-            </select>
-            <br />
-            <label>Name:</label>
-            <input onChange={this.changeHandler} name="addLift" type="text" id="add-name" required />
-            <br />
-            <button onClick={this.saveNewLift} type="button" id="save-lyft-button">{this.state.savingLift ? "Adding..." : "Add lyft"}</button>
-            <button onClick={this.toggleForms} type="button" id="cancel-lyft-button">Cancel</button>
-            {this.state.liftExists ? <p className="error-message" id="lyft-exists">Lyft already exists!</p> : null }
-          </div>}
-          
-          
-
+            </div> 
+            : null}
+              
+  
+          </div>
 
   
-          {this.props.currentWorkout.length > 0 ?
-          <div className="container-box" id="new-workout-container"> 
-            <div id="workout-table-container">
-              <table id="workout-table">
-                <thead>
-                <tr>
-                  <th width="60%">Lyft</th>
-                  <th width="10%">Weight</th>
-                  <th width="10%">Reps</th>
-                  <th width="10%"><i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Tap a set to pre-fill the logger.</span></i></th>
-                </tr>
-                </thead>
-                <tbody>
-                  {this.populateSets()}
-                {/* {this.props.currentWorkout.map((set, i) => {
-                return (
-              <tr key={i}>
-                <td width="70%">{set.lift_name}</td>
-                <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span></td>
-                <td width="10%">{set.reps}</td>
-                <td width="10%"><i className="fas fa-trash" onClick={() => this.props.deleteThisSet(i)}></i></td>
-              </tr> )
-                
+        </main>
+      )
 
-                
-              })} */}
-                </tbody>
-              </table>
-              <div className="flex-container button-container">
-                <button type="button" id="save-workout-button">Save workout</button>
-                <button onClick={this.props.clearWorkout} type="button" id="clear-workout-button">Clear workout</button>
-              </div>
-            </div>
-          </div> 
-          : null}
+    } else {
+      return (
+
+        <main id="training-main">
+  
+          <div className="w3-bar w3-black" id="tabs-container">
+            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>Log</button>
+            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
+          </div>
+  
+          <div id="History" className="tab container-box">
+            {this.populateHistory()}
             
+          </div>
+  
+        </main>
 
-        </div>
-    )
+      )
+    }
+
+
   }
   
 }
@@ -288,6 +375,7 @@ const mapStateToProps = state => ({
   user: state.user,
   lifts: state.lifts,
   currentWorkout: state.currentWorkout,
+  sets: state.sets,
 });
 
 const mapDispatchToProps = dispatch => ({

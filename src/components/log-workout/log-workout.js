@@ -2,6 +2,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import Logger from './logger';
+import History from './history';
 
 
 //creating the master component
@@ -11,20 +12,18 @@ class LogWorkout extends Component {
     loggerVisible: true,
   }
 
-
+  toggleTabs = () => {
+    this.setState(prevState => ({
+      loggerVisible: !prevState.loggerVisible, 
+    }))
+  }
 
 
   render() {
 
     if (!this.props.isLoading){
       return (
-        <main id="training-main">
-          <div className="w3-bar w3-black" id="tabs-container">
-            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>Log</button>
-            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
-          </div>
-          <Logger />  
-        </main>
+        
 
       )
     } else {
