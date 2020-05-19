@@ -2,7 +2,7 @@
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { loadLifts } from '../../redux/thunks';
-import { addSet, clearCurrentWorkout } from '../../redux/actions';
+import { addSet, clearCurrentWorkout, removeSet } from '../../redux/actions';
  
 class Logger extends Component {
 
@@ -236,7 +236,7 @@ class Logger extends Component {
                 <td width="70%">{set.lift_name}</td>
                 <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span></td>
                 <td width="10%">{set.reps}</td>
-                <td width="10%"><i className="fas fa-trash"></i></td>
+                <td width="10%"><i className="fas fa-trash" onClick={() => this.props.deleteThisSet(i)}></i></td>
               </tr> )
                 
 
@@ -269,6 +269,7 @@ const mapDispatchToProps = dispatch => ({
   startLoadingLifts: () => dispatch(loadLifts()),
   addSetToCurrentWorkout: (set) => dispatch(addSet(set)),
   clearWorkout: () => dispatch(clearCurrentWorkout()),
+  deleteThisSet: (key) => dispatch(removeSet(key)),
 });
 
 

@@ -6,6 +6,12 @@ export const addSet = set => ({
   payload: { set },
 });
 
+export const REMOVE_SET = 'REMOVE_SET';
+export const removeSet = (key) => ({
+  type: REMOVE_SET,
+  payload: { key },
+});
+
 export const CLEAR_CURRENT_WORKOUT = 'CLEAR_CURRENT_WORKOUT';
 export const clearCurrentWorkout = () => ({
   type: CLEAR_CURRENT_WORKOUT,
