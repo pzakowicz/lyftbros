@@ -28,7 +28,16 @@ function Leaderboard({workouts, user}) {
     let now = new Date();
     var tempResult = {}
 
-    for(let { user_id, first_name, surname, date_time } of workouts)
+    let uniqueWorkoutsIds = []; 
+    let uniqueWorkouts = [];
+    for (let i = 0; i < workouts.length; i++) {
+      if (!uniqueWorkoutsIds.includes(workouts[i].id)) {
+        uniqueWorkoutsIds.push(workouts[i].id);
+        uniqueWorkouts.push(workouts[i]);
+      }
+    }
+
+    for(let { user_id, first_name, surname, date_time } of uniqueWorkouts)
     if ((Math.round(Math.abs((new Date(Date.parse(date_time)) - now) / oneDay))) <30 ) {
       tempResult[user_id] = { 
           id: user_id, 

@@ -60,7 +60,7 @@ function UserDetails({workouts}) {
           <Last4Weeks user={thisUser} workouts={userWorkouts} />
         </div>
         <div id="user-activity-container">
-          <UserFeed workouts={userWorkouts} />
+          <UserFeed userWorkouts={userWorkouts} />
         </div>
         <div className="container-box tile" id="user-prs-container">
           <Prs thisUser={thisUser} workouts={userWorkouts} />

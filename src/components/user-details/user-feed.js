@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 
 //creating the master component
-function UserFeed({workouts, user, fistBumps }) {
+function UserFeed({userWorkouts, user, fistBumps, workouts }) {
 
   //setting state
 
@@ -22,7 +22,7 @@ function UserFeed({workouts, user, fistBumps }) {
 
       return (
         <div >
-          {workouts.map(
+          {userWorkouts.map(
             (workout, i) => <SummaryWorkout 
               key={i}
               workout_id={workout.id} 
@@ -63,6 +63,7 @@ function UserFeed({workouts, user, fistBumps }) {
 const mapStateToProps = state => ({
   user: state.user,
   fistBumps: state.fistBumps,
+  workouts: state.workouts,
 
 });
 
