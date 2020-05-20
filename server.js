@@ -71,7 +71,7 @@ app.get("/", redirectToFeed, (req, res) => {
 
 //Render feed page
 app.get("/feed", redirectToLogin, (req, res) => {
-  res.render("feed");      
+  res.render("logged-in");      
 });
     
 
@@ -142,28 +142,7 @@ app.get("/users/:id", redirectToLogin, (req, res) => {
 
 //Render workout details page
 app.get("/workouts/:id", redirectToLogin, (req, res) => {
-  let fistBumps;
-  let connection = mysql.createConnection(config);
-
-  //get fist-bumps data for this workout
-  connection.query(`SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id WHERE Sub1.workout_id = ?`, [req.params.id], (error, results, fields) => {
-    if (error) {
-      return console.error(error.message);
-    }
-    fistBumps = results;
-    
-  });
-
-  //get workout data and render page
-  connection.query(`SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.email, Lifts.category, Lifts.name as lift_name, Sets.weight, Sets.reps FROM Sets JOIN Workouts ON Workouts.id = Sets.workout_id JOIN Lifts ON Sets.exercise_id = Lifts.id JOIN Users ON Workouts.user_id = Users.id WHERE Workouts.id = ?`, [req.params.id], (error, results, fields) => {
-    if (error) {
-      return console.error(error.message);
-    }
-    res.render("workout-details", { user: req.user[0], model: results, bumps: fistBumps });  
-  });
-
-  connection.end();
-  
+    res.render("workout-details");  
 })
 
 

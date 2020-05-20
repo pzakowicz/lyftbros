@@ -11,11 +11,11 @@ import { loadWorkouts, loadUser, loadFistBumps, loadSets, loadLifts } from '../.
 class Feed extends Component {
 
   componentDidMount() {
-    this.props.startLoadingUser();
-    this.props.startLoadingWorkouts();
-    this.props.startLoadingFistBumps();
-    this.props.startLoadingSets();
-    this.props.startLoadingLifts();
+    // this.props.startLoadingUser();
+    // this.props.startLoadingWorkouts();
+    // this.props.startLoadingFistBumps();
+    // this.props.startLoadingSets();
+    // this.props.startLoadingLifts();
 
   }
 
