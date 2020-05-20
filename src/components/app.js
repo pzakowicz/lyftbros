@@ -1,8 +1,9 @@
 //imports 
 import React, {Component} from 'react';
-import Login from './login/login';
+import Login from './login and logout/login';
 import Feed from './feed/feed';
 import Header from './header/header';
+import HeaderNotLoggedIn from './header/header-not-logged-in';
 import DetailedWorkout from './workout-details/detailed-workout';
 import UserDetails from './user-details/user-details';
 import AccountForm from './account/account-form';
@@ -32,11 +33,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.props.startLoadingWorkouts();
-    this.props.startLoadingUser();
-    this.props.startLoadingFistBumps();
-    this.props.startLoadingSets();
-    this.props.startLoadingLifts();
+    // this.props.startLoadingWorkouts();
+    // this.props.startLoadingFistBumps();
+    // this.props.startLoadingSets();
+    // this.props.startLoadingLifts();
   }
 
 
@@ -45,7 +45,10 @@ class App extends Component {
     return (
 
         <BrowserRouter>
-              <Route exact path="/" component={Login} />
+              <Route exact path="/">
+                <HeaderNotLoggedIn />
+                <Login />
+              </Route>
               <Route path="/feed">
                   <Header />
                   <Feed />
@@ -66,6 +69,7 @@ class App extends Component {
                 <Header />
                 <Logger />
               </Route>
+
         </BrowserRouter>
 
 

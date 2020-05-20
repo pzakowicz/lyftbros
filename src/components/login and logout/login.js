@@ -25,12 +25,14 @@ class Login extends Component {
   render() {
 
     return (
-    <div>
-      {this.state.loginFormVisible && <LoginForm  />}
-      {this.state.showCreateAccountVisible && <h5 className="link" id="show-create-account-form" onClick={this.toggleForms}>New to Lyftbros? Create an account.</h5>}
-      {this.state.registerFormVisible && <RegisterForm toggle={this.toggleForms}/>}
-        
-    </div>
+      <main id="login-main">
+        <div className="inner-container" id="login-and-register-container">
+          {this.state.loginFormVisible && <LoginForm  />}
+          {this.state.showCreateAccountVisible && <h5 className="link" id="show-create-account-form" onClick={this.toggleForms}>New to Lyftbros? Create an account.</h5>}
+          {this.state.registerFormVisible && <RegisterForm toggle={this.toggleForms}/>}
+          
+        </div>
+      </main>
     )
   }
 

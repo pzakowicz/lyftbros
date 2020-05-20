@@ -26,7 +26,7 @@ function Header() {
           <img className="dropbtn" id="account-pic" src="/resources/profile pic.png" /><i className="fas fa-caret-down"></i>
           <div className="dropdown-content">
             <Link to="/account">Account</Link>
-            <Link to="/logout">Logout</Link>
+            <a href="/logout">Logout</a>
           </div>
         </div>
     </header>
