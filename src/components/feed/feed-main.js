@@ -1,6 +1,5 @@
 //imports 
 import React, {useState, useEffect} from 'react';
-//import {WorkoutContext, UserContext} from './feed';
 import SummaryWorkout from './summary-workout';
 import { connect } from 'react-redux';
 
@@ -39,7 +38,7 @@ function FeedMain({workouts, user, fistBumps}) {
   }, []);
     if (!loading) {      
       return (
-        <div >
+        <div id="feed-container" >
           {uniqueWorkouts.map(
             (workout, i) => <SummaryWorkout 
               key={i}

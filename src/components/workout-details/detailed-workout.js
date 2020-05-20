@@ -126,10 +126,8 @@ function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
     if (!loading) {
       return (
 
-
-
-              <div>
-                <div className="container-box"> 
+              <main >
+                <div className="container-box" id="workout-container"> 
                   <h5 className="user-name"><Link to={'/users/' + workout[0].user_id}>{workout[0].first_name} {workout[0].surname}</Link></h5>
 
                   {calcWorkoutTimeAndDate()}
@@ -199,7 +197,7 @@ function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
                     </div>
                   </div> 
                 : null}
-              </div>          
+              </main>          
     )
 
     } else {

@@ -283,6 +283,10 @@ class Logger extends Component {
 
   
   }
+
+  selectValue = (event) => {
+    event.target.select();
+  }
     
 
   render() {
@@ -321,7 +325,7 @@ class Logger extends Component {
   
                 <label>Weight(kg):</label>
                 <i className="fas fa-minus-square fa-2x" onClick={this.removeWeight}></i>
-                <input name="weight" type="number" value={this.state.weight} id="weight" onChange={this.changeHandler} required />
+                <input name="weight" type="number" value={this.state.weight} id="weight" onChange={this.changeHandler} onClick={this.selectValue} required />
                 <i className="fas fa-plus-square fa-2x" onClick={this.addWeight}></i>
                 {!user.weight ? <i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i> : null}
               
@@ -329,7 +333,7 @@ class Logger extends Component {
                 <br />
                 <label>Reps:</label>
                 <i className="fas fa-minus-square fa-2x" onClick={this.removeRep}></i>
-                <input name="reps" type="number" value={this.state.reps} id="reps" onChange={this.changeHandler} required />
+                <input name="reps" type="number" value={this.state.reps} id="reps" onChange={this.changeHandler} onClick={this.selectValue} required />
                 <i className="fas fa-plus-square fa-2x" onClick={this.addRep}></i>
                 <div className="flex-container button-container">
                   <button onClick={() => { if (this.state.weight > 0 && this.state.reps > 0) {

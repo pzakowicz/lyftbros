@@ -7,7 +7,11 @@ html {
 body {
   font-family: sans-serif;
   margin: 0;
-  height: 90%;
+  height: 100%;
+}
+
+#root { 
+  height: 90.3%;
 }
 
 h4, h5, h6 {
@@ -333,6 +337,10 @@ button:hover {
     display: none;
   }
 
+  #logged-out-header #logo-text { 
+    display: inline;
+  }
+
   .nav-button {
     margin: 0px 5px;
     font-size: larger;
@@ -403,12 +411,9 @@ button:hover {
   margin-bottom: 8px;
 }
 
-.workout-summary {
-  justify-content: flex-start;
-}
-
 .flex-summary-item {
   margin-right: 30px;
+  display: inline-block;
 }
 
 .sets-table {
@@ -545,8 +550,8 @@ cursor: pointer;
 
 .tab-button {
   width: 50%;
-  height: 30px;
-  margin: 0px;
+  height: 40px;
+  margin: 2px 0px 0px 0px;
   background-color: white;
   font-size: medium;
   font-weight: bold;
