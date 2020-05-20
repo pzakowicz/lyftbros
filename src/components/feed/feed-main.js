@@ -49,7 +49,7 @@ function FeedMain({workouts, user, fistBumps}) {
               first_name={workout.first_name}
               surname={workout.surname}
               user_id={workout.user_id}
-              workouts={uniqueWorkouts}
+              workouts={workouts}
               user={user}
               fistBumps={fistBumps}
             /> 

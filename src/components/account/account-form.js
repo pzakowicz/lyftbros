@@ -1,6 +1,8 @@
 //imports 
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
+import { loadUser } from '../../redux/thunks';
+
 
 class AccountForm extends Component {
 
@@ -46,6 +48,7 @@ class AccountForm extends Component {
      console.log("Response is: ", response);
       if (response.status === 201) {
         console.log("User successfully updated");
+        this.props.startLoadingUser();
         this.setState({isEditable: false, saving: false});
 
       } else if (response.status === 400){
@@ -114,6 +117,12 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
+const mapDispatchToProps = dispatch => ({
+  startLoadingUser: () => dispatch(loadUser()),
+
+});
 
 
-export default connect(mapStateToProps)(AccountForm);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountForm);

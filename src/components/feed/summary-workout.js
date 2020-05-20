@@ -131,17 +131,16 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
                   <table className= "sets-table" id={"sets-table-" + workout_id }>
                     <thead>
                       <tr>
-
-                      <th>Lyft</th>
-                      <th>Sets</th>
-                      <th>Avg reps</th>
-                      <th>Avg weight</th>
-                      <th>Max weight</th>
+                        <th>Lyft</th>
+                        <th>Sets</th>
+                        <th>Avg reps</th>
+                        <th>Avg weight</th>
+                        <th>Max weight</th>
                       </tr>
                     </thead>
                     <tbody>
 
-                        { workouts.map((workout, i) => {
+                        {workouts.map((workout, i) => {
                           return workout.id === workout_id ? 
                           <tr key={i}>
                             <td width="100%">{workout.lift_name}</td>
