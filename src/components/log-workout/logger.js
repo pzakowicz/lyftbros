@@ -185,6 +185,7 @@ class Logger extends Component {
 
   populateHistory = () => {
     let filteredSets = this.props.sets.filter(set => set.user_id === this.props.user.id && set.lift_name === this.state.lift);
+    console.log(filteredSets);
     let sortedSets = filteredSets.sort((a,b) => (a.date_time > b.date_time) ? -1 : ((b.date_time > a.date_time) ? 1 : 0)); 
     let uniqueSetIds = []; 
     let uniqueSets = [];
@@ -194,9 +195,10 @@ class Logger extends Component {
         uniqueSets.push(sortedSets[i]);
       }
     }
-    return uniqueSets.map((set, i) => {
+    return uniqueSets.length > 0 ? 
+      uniqueSets.map((set, i) => {
       let currentWorkout = set.id;
-      return (
+      return  (
       <table key={set.id} id={set.id}>
         <thead>
           <tr> 
@@ -215,24 +217,11 @@ class Logger extends Component {
           })}
           </tbody>
       </table>
-      )
-
+      ) 
+      
     })
+    : (<h5>{"No " + this.state.lift + "s recorded yet. Record a workout including a " + this.state.lift + " to see it here." }</h5>)
     
-  }
-
-  populateHistorySets = () => {
-    let filteredSets = this.props.sets.filter(set => set.user_id === this.props.user.id && set.lift_name === this.state.lift);
-    let sortedSets = filteredSets.sort((a,b) => (a.date_time > b.date_time) ? -1 : ((b.date_time > a.date_time) ? 1 : 0)); 
-    for (let i = 0; i < sortedSets.length; i++) {
-      let newSet = 
-      <tr >
-        <td width="50%">{sortedSets[i].lift_name}</td>
-        <td width="20%">{sortedSets[i].weight} kg</td>
-        <td width="20%">{sortedSets[i].reps} reps</td>
-      </tr>
-      document.getElementById(sortedSets[i].id).append(newSet);
-    }
   }
 
   saveWorkout = async () => {

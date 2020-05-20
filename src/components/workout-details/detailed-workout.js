@@ -3,12 +3,10 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-
-
+import { loadFistBumps } from '../../redux/thunks';
 
 //creating the master component
-function DetailedWorkout( { workouts, fistBumps, user, sets }) {
+function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
 
   //getting params
   let {workout_id} = useParams();
@@ -47,17 +45,8 @@ function DetailedWorkout( { workouts, fistBumps, user, sets }) {
       }
     }
 
-    const hasUserBumped = () => {
-      for (let i = 0; i < fistBumps.length; i++) {
-        if (fistBumps[i].user_id === user.id) {
-          setUserHasBumped(true);
-        }
-      }
-    }
-
     setFistBumps();
     findThisWorkout();
-    hasUserBumped();
     setLoading(false);
 
   }, []);
@@ -96,7 +85,7 @@ function DetailedWorkout( { workouts, fistBumps, user, sets }) {
         totalReps += workout[i].reps;
 
     }
-    //setWorkoutStats({totalVolume: totalVolume, totalSets: totalSets, totalReps: totalReps});
+
     return (
       <div>
         <h4 className="flex-summary-item">Sets: {totalSets }</h4>
@@ -122,12 +111,10 @@ function DetailedWorkout( { workouts, fistBumps, user, sets }) {
     // check if fist bump has been added
     if (response.status === 201) {
       console.log("Fist bump added");
+      startLoadingFistBumps();
       setFistBumpsCount(fistBumpsCount + 1);
       setUserHasBumped(true);
 
-      await fetch('/api/fist-bumps/')
-      .then(data => data.json())
-      .then(fistBumps => setLocalFistBumps(fistBumps))
 
     }
   };
@@ -174,9 +161,9 @@ function DetailedWorkout( { workouts, fistBumps, user, sets }) {
                   </table>
                   <div className="flex-container comment-section">
                     <span onClick={toggleModal}>
-                      { (fistBumpsCount > 0) 
-                      ? <span>{fistBumpsCount} fist bumps!</span> 
-                      : <span>Be the first one to bump your bro!</span>}
+                      { fistBumpsCount === 0 && <span>Be the first one to bump your bro!</span>}
+                      { fistBumpsCount === 1 && <span>{fistBumpsCount} fist bump!</span>}
+                      { fistBumpsCount > 1 && <span>{fistBumpsCount} fist bumps!</span> }
                             
                     </span>
                     <div id="button-container">
@@ -233,6 +220,10 @@ const mapStateToProps = state => ({
   sets: state.sets,
 });
 
+const mapDispatchToProps = dispatch => ({
+  startLoadingFistBumps: () => dispatch(loadFistBumps()),
+
+});
 
 
-export default connect(mapStateToProps)(DetailedWorkout);
+export default connect(mapStateToProps, mapDispatchToProps)(DetailedWorkout);

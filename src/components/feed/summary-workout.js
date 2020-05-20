@@ -1,21 +1,41 @@
 //imports 
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { loadFistBumps } from '../../redux/thunks';
 
 
 
 //creating the master component
-function SummaryWorkout({workout_id, workout_name, date_time, first_name, surname, user_id, user, fistBumps, workouts }) {
+function SummaryWorkout({workout_id, workout_name, date_time, first_name, surname, user_id, user, fistBumps, workouts, startLoadingFistBumps }) {
 
 
   //setting state
   const [loading, setLoading] = useState(true);
   const [workoutDateTime, setWorkoutDateTime] = useState({});
   const [workoutStats, setWorkoutStats] = useState({});
-  const [fistBumpsCount, setFistBumpsCount] = useState();
+  const [fistBumpsCount, setFistBumpsCount] = useState(0);
   const [userHasBumped, setUserHasBumped] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [localFistBumps, setLocalFistBumps] = useState([]);
+
+  const countFistBumps = () => {
+    for (let i = 0; i < fistBumps.length; i++) {
+      if (fistBumps[i].workout_id === Number(workout_id)) {
+        setFistBumpsCount(fistBumps[i].count);
+        break
+      }
+    }
+    
+  }
+
+  const hasUserBumped = () => {
+    for (let i = 0; i < fistBumps.length; i++) {
+      if (fistBumps[i].workout_id === workout_id && fistBumps[i].user_id === user.id) {
+        setUserHasBumped(true);
+      }
+    }
+  }
   
 
   useEffect(() => {
@@ -48,30 +68,14 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
       setWorkoutStats({totalVolume: totalVolume, totalSets: totalSets, totalReps: totalReps});
     }
 
-    const countFistBumps = () => {
-      let count = 0; 
-      for (let i = 0; i < fistBumps.length; i++) {
-        if (fistBumps[i].workout_id === workout_id) {
-          count++;
-        }
-      }
-      setFistBumpsCount(count);
-    }
 
-    const userHasBumped = () => {
-      for (let i = 0; i < fistBumps.length; i++) {
-        if (fistBumps[i].workout_id === workout_id && fistBumps[i].user_id === user.id) {
-          setUserHasBumped(true);
-        }
-      }
-    }
 
     
 
     setWorkoutTimeAndDate();
     calcWorkoutStats();
     countFistBumps();
-    userHasBumped();
+    hasUserBumped();
     setLocalFistBumps(fistBumps);
     setLoading(false);
 
@@ -93,12 +97,9 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
     // check if fist bump has been added
     if (response.status === 201) {
       console.log("Fist bump added");
+      startLoadingFistBumps();
       setFistBumpsCount(fistBumpsCount + 1);
       setUserHasBumped(true);
-
-      await fetch('/api/fist-bumps/')
-      .then(data => data.json())
-      .then(fistBumps => setLocalFistBumps(fistBumps))
 
     }
   };
@@ -153,10 +154,12 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
                     </tbody>
                   </table>
                   <div className="flex-container comment-section">
-                    <span id={"comment-summary-" + workout_id} onClick={toggleModal}>
-                      { (fistBumpsCount > 0) 
-                      ? <span id={"fist-bump-count-" + workout_id}>{fistBumpsCount} fist bumps!</span> 
-                      : <span>Be the first one to bump your bro!</span>}
+                    <span onClick={toggleModal}>
+                      { fistBumpsCount === 0 && <span>Be the first one to bump your bro!</span>}
+                      { fistBumpsCount === 1 && <span>{fistBumpsCount} fist bump!</span>}
+                      { fistBumpsCount > 1 && <span>{fistBumpsCount} fist bumps!</span> }
+                       
+                    
                             
                     </span>
                     <div id="button-container">
@@ -205,5 +208,13 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
 
 }
 
+const mapDispatchToProps = dispatch => ({
+  startLoadingFistBumps: () => dispatch(loadFistBumps()),
 
-export default SummaryWorkout;
+});
+
+const mapStateToProps = state => ({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SummaryWorkout);
