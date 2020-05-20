@@ -185,7 +185,6 @@ class Logger extends Component {
 
   populateHistory = () => {
     let filteredSets = this.props.sets.filter(set => set.user_id === this.props.user.id && set.lift_name === this.state.lift);
-    console.log(filteredSets);
     let sortedSets = filteredSets.sort((a,b) => (a.date_time > b.date_time) ? -1 : ((b.date_time > a.date_time) ? 1 : 0)); 
     let uniqueSetIds = []; 
     let uniqueSets = [];

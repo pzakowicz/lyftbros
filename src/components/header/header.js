@@ -1,6 +1,6 @@
 //imports 
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {Link} from 'react-router-dom';
 
 
 //creating the master component
@@ -11,7 +11,7 @@ function Header() {
       <nav>
         <Link to="/feed">
           <div className="flex-container">
-            <img id="logo-img" src="../../resources/lbs logo 2.png" />
+            <img id="logo-img" src={"../../resources/lbs logo 2.png"} />
             <h2 id="logo-text">Lyftbros</h2>
           </div>
         </Link>

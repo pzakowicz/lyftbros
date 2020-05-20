@@ -1,4 +1,3 @@
-
 import React from "react";
 import ReactDOM from "react-dom";
 import { persistStore } from 'redux-persist';
@@ -9,6 +8,8 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import Login from '../src/components/login-and-logout/login';
 import HeaderNotLoggedIn from '../src/components/header/header-not-logged-in';
 import LoggedIn from '../src/components/logged-in';
+
+
 const store = configureStore();
 const persistor = persistStore(store);
 
