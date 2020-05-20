@@ -22,7 +22,7 @@ function LatestWorkout({workouts, user}) {
     let workoutDateObject = new Date(Date.parse(latestWorkout.date_time));
     let workoutDate = workoutDateObject.getDate()+'-'+(workoutDateObject.getMonth()+1)+'-'+workoutDateObject.getFullYear();
     let formattedDate = (months[workoutDateObject.getMonth()]) + ' ' + workoutDateObject.getDate()+', '+workoutDateObject.getFullYear()+' ';
-    let workoutTime = (workoutDateObject.getHours()-(offset/60))+ ':' + workoutDateObject.getMinutes();
+    let workoutTime = (workoutDateObject.getHours()-(offset/60))+ ':' + (('0' + (workoutDateObject.getMinutes())).slice(-2));
 
     return (
       <div className="inner-container">

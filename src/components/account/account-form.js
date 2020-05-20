@@ -68,7 +68,7 @@ class AccountForm extends Component {
     if (this.props.user.date_of_birth) {
       let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
       let dateObject = new Date(Date.parse(this.props.user.date_of_birth));
-      let formattedDate = (months[dateObject.getMonth()]) + ' ' + dateObject.getDate()+', '+dateObject.getFullYear();
+      let formattedDate = (months[dateObject.getMonth()]) + ' ' + dateObject.getDate() + ', ' + dateObject.getFullYear();
       return formattedDate;
     }
   }
