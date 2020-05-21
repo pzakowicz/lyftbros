@@ -3,7 +3,6 @@ import React, { Component, } from 'react';
 import { connect } from 'react-redux';
 import { loadWorkouts, loadSets } from '../../redux/thunks';
 import { addSet, clearCurrentWorkout, removeSet } from '../../redux/actions';
-import { Redirect } from 'react-router-dom';
 import AddLift from './add-lift';
 import History from './history';
 import NewWorkout from './new-workout';
@@ -142,6 +141,30 @@ class Logger extends Component {
   selectValue = (event) => {
     event.target.select();
   }
+
+  fadeBiceps = () => {
+    let biceps = document.getElementById("biceps-icon");
+    biceps.style.display = 'inline-block';
+    let op = 1;  // initial opacity
+    let timer = setInterval(function () {
+        if (op <= 0.2){
+            clearInterval(timer);
+            biceps.style.display = 'none';
+        }
+        biceps.style.opacity = op;
+        biceps.style.filter = 'alpha(opacity=' + op * 100 + ")";
+        op -= op * 0.35;
+    }, 50);
+  }
+
+  saveSet = () => {
+    if (this.state.weight > 0 && this.state.reps > 0) {
+      this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: this.state.weight, reps: this.state.reps});
+      this.fadeBiceps();
+    }
+
+  
+  }
     
   render() {
     const { lifts, user } = this.props;
@@ -189,9 +212,10 @@ class Logger extends Component {
                 <input name="reps" type="number" value={this.state.reps} id="reps" onChange={this.changeHandler} onClick={this.selectValue} required />
                 <i className="fas fa-plus-square fa-2x" onClick={this.addRep}></i>
                 <div className="flex-container button-container">
-                  <button onClick={() => { if (this.state.weight > 0 && this.state.reps > 0) {
-                    this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: this.state.weight, reps: this.state.reps})}}
-                  } type="button" id="submit-set-button">Save set</button>
+                  <div className="flex-container">
+                  <button onClick={this.saveSet} type="button" id="submit-set-button">Save set</button> 
+                  <img id="biceps-icon" src="resources/biceps.png" />
+                  </div>
                   
                   
                   <h5 onClick={this.toggleForms} className="link" id="add-new-lyft-button">Add new lyft</h5>

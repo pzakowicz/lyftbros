@@ -594,7 +594,6 @@ cursor: pointer;
   margin: 0px;
 }
 
-
 #log-training-form select {
   width: 200px;
 }
@@ -612,6 +611,15 @@ cursor: pointer;
 
 .button-container {
   justify-content: space-between;
+}
+
+#biceps-icon {
+  display: inline-block;
+  height: 25px;
+  margin: auto 5px;
+  transition: color 1s linear 0s;
+  opacity: 0;
+
 }
 
 
