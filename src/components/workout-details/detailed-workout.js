@@ -3,20 +3,17 @@ import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { loadFistBumps } from '../../redux/thunks';
+import DateTime from '../feed/date-time';
+import FistBumpSection from '../feed/fist-bump-section';
 
 //creating the master component
-function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
+function DetailedWorkout( { fistBumps, user, sets }) {
 
   //getting params
   let {workout_id} = useParams();
 
   //setting state
   const [loading, setLoading] = useState(true);
-  const [fistBumpsCount, setFistBumpsCount] = useState(0);
-  const [userHasBumped, setUserHasBumped] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [localFistBumps, setLocalFistBumps] = useState([]);
   const [workout, setWorkout] = useState([]);
 
   
@@ -33,47 +30,10 @@ function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
       setWorkout(thisWorkout);
     }
 
-    function setFistBumps() {
-      for (let i = 0; i < fistBumps.length; i++) {
-        if (fistBumps[i].workout_id === Number(workout_id)) {
-          setFistBumpsCount(fistBumps[i].count);
-          if (fistBumps[i].user_id === user.id) {
-            setUserHasBumped(true);
-            setLocalFistBumps(fistBumps);
-          }
-        }
-      }
-    }
-
-    setFistBumps();
     findThisWorkout();
     setLoading(false);
 
   }, []);
-
-
-
-  const calcWorkoutTimeAndDate = () => {
-
-      let today = new Date();
-      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      let offset = today.getTimezoneOffset();
-      let todayDate = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-      let yesterdayDate = today.getDate()-1+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-      let workoutDateObject = new Date(Date.parse(workout[0].date_time));
-      let workoutDate = workoutDateObject.getDate()+'-'+(workoutDateObject.getMonth()+1)+'-'+workoutDateObject.getFullYear();
-      let formattedDate = (months[workoutDateObject.getMonth()]) + ' ' + workoutDateObject.getDate()+', '+workoutDateObject.getFullYear()+' ';
-      let workoutTime = (workoutDateObject.getHours()-(offset/60))+ ':' + (('0' + (workoutDateObject.getMinutes())).slice(-2));
-      return (
-        <p className="subtitle">
-                        {(workoutDate === todayDate) && 'Today '}
-                        {(workoutDate === yesterdayDate) && 'Yesterday ' }
-                        {(workoutDate !== todayDate && workoutDate !== yesterdayDate) && formattedDate + ''}
-                        @ {workoutTime}
-                    </p>
-      )
-
-  }
 
   const calcWorkoutStats = () => {
     let totalVolume = 0;
@@ -83,8 +43,7 @@ function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
         totalVolume += workout[i].weight * workout[i].reps;
         totalSets ++;
         totalReps += workout[i].reps;
-
-    }
+  }
 
     return (
       <div>
@@ -94,34 +53,6 @@ function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
       </div>
     )
   }
-
-  async function addFistBump() {
-    const data = {
-      workoutId: workout[0].id
-    };
-    let response = await fetch(`/api/fist-bumps/add/`,
-    {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    console.log("requested to add fist bump:", data);
-    // check if fist bump has been added
-    if (response.status === 201) {
-      console.log("Fist bump added");
-      startLoadingFistBumps();
-      setFistBumpsCount(fistBumpsCount + 1);
-      setUserHasBumped(true);
-
-
-    }
-  };
-
-  const toggleModal = () => {
-    setModalVisible(prevState => !prevState)
-  }
   
     if (!loading) {
       return (
@@ -130,11 +61,11 @@ function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
                 <div className="container-box" id="workout-container"> 
                   <h5 className="user-name"><Link to={'/users/' + workout[0].user_id}>{workout[0].first_name} {workout[0].surname}</Link></h5>
 
-                  {calcWorkoutTimeAndDate()}
+                  <DateTime dateTime={workout[0].date_time} className="subtitle" />
                   
                   <h3 className="workout-name"><Link to={"/workouts/" + workout[0].id}>{workout[0].workout_name}</Link></h3>
                   <div className="flex-container workout-summary">
-                    {calcWorkoutStats()}
+                  {calcWorkoutStats()}
                   </div>
                   <table className= "sets-table" id={"sets-table-" + workout[0].id }>
                     <thead>
@@ -157,46 +88,9 @@ function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
                         })}
                     </tbody>
                   </table>
-                  <div className="flex-container comment-section">
-                    <span onClick={toggleModal}>
-                      { fistBumpsCount === 0 && <span>Be the first one to bump your bro!</span>}
-                      { fistBumpsCount === 1 && <span>{fistBumpsCount} fist bump!</span>}
-                      { fistBumpsCount > 1 && <span>{fistBumpsCount} fist bumps!</span> }
-                            
-                    </span>
-                    <div id="button-container">
-                      <button type="button" className="comment-button" onClick={addFistBump}>
-                        { userHasBumped ? <i className="fas fa-hand-rock" ></i> 
-                          : <i className="far fa-hand-rock"></i> }
-                      </button>
-                      <button type="button" className="comment-button" id="comment"><i className="far fa-comment"></i></button>
-                    </div> 
-                  </div>
-                </div>
+                  <FistBumpSection fistBumps={fistBumps} user={user} workout_id={Number(workout_id)} />
 
-                { modalVisible ? 
-                  <div id="commentModal" className="modal">
-                    <div className="modal-content">
-                      <span className="close" onClick={toggleModal}>&times;</span>
-                      <table id="fist-bumps-table">
-                        <thead>
-                          <tr>
-                            <th>Fist bumps</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                        {localFistBumps.map((fistBump, i) => {
-                          return fistBump.workout_id === Number(workout_id) ? 
-                          <tr key={i}>
-                            <td><Link to={"/users/"+ fistBump.user_id}>{fistBump.first_name} {fistBump.surname}</Link></td>
-                          </tr> 
-                          : null
-                        })}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div> 
-                : null}
+                </div>
               </main>          
     )
 
@@ -211,17 +105,10 @@ function DetailedWorkout( { fistBumps, user, sets, startLoadingFistBumps }) {
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.isLoading,
-  workouts: state.workouts,
   fistBumps: state.fistBumps,
   user: state.user,
   sets: state.sets,
 });
 
-const mapDispatchToProps = dispatch => ({
-  startLoadingFistBumps: () => dispatch(loadFistBumps()),
 
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(DetailedWorkout);
+export default connect(mapStateToProps)(DetailedWorkout);
