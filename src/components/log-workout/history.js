@@ -1,23 +1,11 @@
 //imports 
-import React, { Component, } from 'react';
+import React from 'react';
 import {Link } from 'react-router-dom';
  
-class History extends Component {
+function History({sets, user, formatDate, lift})  {
 
-  state = {
-    addCategory: this.props.category,
-    addLift: '',
-
-
-    workoutVisible: false,
-    liftExists: false,
-    savingLift: false,
-    savingWorkout: false,
-    redirect: false,
-  }
-
-  populateHistory = () => {
-    let filteredSets = this.props.sets.filter(set => set.user_id === this.props.user.id && set.lift_name === this.state.lift);
+  const populateHistory = () => {
+    let filteredSets = sets.filter(set => set.user_id === user.id && set.lift_name === lift);
     let sortedSets = filteredSets.sort((a,b) => (a.date_time > b.date_time) ? -1 : ((b.date_time > a.date_time) ? 1 : 0)); 
     let uniqueSetIds = []; 
     let uniqueSets = [];
@@ -28,14 +16,14 @@ class History extends Component {
       }
     }
     return uniqueSets.length > 0 ? 
-      uniqueSets.map((set, i) => {
+      uniqueSets.map((set) => {
       let currentWorkout = set.id;
       return  (
       <table key={set.id} id={set.id}>
         <thead>
           <tr> 
             <th><Link to={'/workouts/' + set.id}>{set.workout_name}</Link></th>
-            <th colSpan="2">{this.props.formatDate(set.date_time)}</th>
+            <th colSpan="2">{formatDate(set.date_time)}</th>
           </tr>
         </thead>
           <tbody>
@@ -54,26 +42,21 @@ class History extends Component {
     })
     : (
       <div>
-        <p>{"No " + this.props.lift + "s recorded yet."}</p>
-        <p>{"Record a workout including a " + this.props.lift + " to see it here." }</p>
+        <p>{"No " + lift + "s recorded yet."}</p>
+        <p>{"Record a workout including a " + lift + " to see it here." }</p>
       </div>
     )
     
   }
 
-  render() {
     return (
 
       <div id="History" className="tab container-box">
-        {this.populateHistory()}
+        {populateHistory()}
       </div>
 
     )
-  }
 
 }
-
-
-
 
 export default History;

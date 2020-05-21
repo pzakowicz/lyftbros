@@ -329,7 +329,7 @@ class Logger extends Component {
             <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
           </div>
 
-          <History category={this.state.category} sets={this.props.sets} user={this.props.user} formatDate={this.formatDate} lift={this.state.lift} />
+          <History sets={this.props.sets} user={this.props.user} formatDate={this.formatDate} lift={this.state.lift} />
   
           
   
