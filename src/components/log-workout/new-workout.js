@@ -111,7 +111,6 @@ function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, sta
         {redirect && <Redirect push to="/feed" />}
       </div> 
     )
-  
 }
 
 const mapStateToProps = state => ({
@@ -127,6 +126,5 @@ const mapDispatchToProps = dispatch => ({
   startLoadingWorkouts: () => dispatch(loadWorkouts()),
   startLoadingSets: () => dispatch(loadSets()),
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(NewWorkout);

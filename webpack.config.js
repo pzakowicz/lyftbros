@@ -1,6 +1,11 @@
 const path = require('path');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
+  optimization: {
+    minimizer: [new TerserPlugin()],
+  },
   entry:  "./src/index.js",
   output: {
     path: path.resolve('public'),
