@@ -1,11 +1,12 @@
 //imports 
 import React, { Component, } from 'react';
 import { connect } from 'react-redux';
-import { loadLifts, loadWorkouts, loadSets } from '../../redux/thunks';
+import { loadWorkouts, loadSets } from '../../redux/thunks';
 import { addSet, clearCurrentWorkout, removeSet } from '../../redux/actions';
-import {Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import AddLift from './add-lift';
 import History from './history';
+import NewWorkout from './new-workout';
  
 class Logger extends Component {
 
@@ -19,11 +20,8 @@ class Logger extends Component {
     addLift: '',
     loggerVisible: true,
     logTabVisible: true,
-    workoutVisible: false,
     liftExists: false,
     savingLift: false,
-    savingWorkout: false,
-    redirect: false,
   }
 
   toggleForms = () => {
@@ -96,6 +94,7 @@ class Logger extends Component {
     this.setState(prevState => ({
       weight: prevState.weight + 1, 
     }))
+
   }
 
   addRep = () => {
@@ -121,21 +120,6 @@ class Logger extends Component {
     }
   }
 
- 
-  populateSets = () => {
-    let sortedSets = this.props.currentWorkout.sort((a,b) => (a.lift_name > b.lift_name) ? 1 : ((b.lift_name > a.lift_name) ? -1 : 0)); 
-    return sortedSets.map((set, i) => {
-      return (
-        <tr onClick={() => this.selectRow(i)} key={i}>
-          <td width="70%">{set.lift_name}</td>
-          <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span></td>
-          <td width="10%">{set.reps}</td>
-          <td width="10%"><i className="fas fa-trash" onClick={() => this.props.deleteThisSet(i)}></i></td>
-        </tr>
-      )
-    })
-  }
-
   selectRow = (key) => {
     let set = this.props.currentWorkout[key];
     this.setState({
@@ -155,73 +139,10 @@ class Logger extends Component {
     return formattedDate;
   }
 
-
-
-  saveWorkout = async () => {
-    if (this.props.currentWorkout.length > 0) {
-      let workoutName = prompt("Give your workout a name", "Lyft session");
-      if (workoutName) {
-        this.setState({savingWorkout: true})
-        //save workout
-        let data = {
-          name: workoutName,
-        };
-        let response = await fetch(`/api/workouts/`,
-        {
-           method: "POST",
-           headers: {
-             "Content-Type": "application/json"
-         },
-         body: JSON.stringify(data)
-        })
-        let json = await response.json();
-
-        let workoutId = json.workout[0].id;
-        if (response.status === 201) {
-            //save sets
-            const data = {};
-            data.sets = [];
-            for (let i = 0; i < this.props.currentWorkout.length; i++) { 
-              data.sets.push([this.props.currentWorkout[i].lift_id, this.props.currentWorkout[i].weight, this.props.currentWorkout[i].reps, workoutId]);
-            };
-            let response = await fetch(`/api/sets/`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-            })
-            if (response.status === 201) {
-              this.props.clearWorkout();
-              this.props.startLoadingWorkouts();
-              this.props.startLoadingSets();
-              this.setState({savingWorkout: false, redirect: true});
-              
-            } else {
-              alert("Failed to save sets, try again.");
-              this.setState({savingWorkout: false});
-            }
-          } else {
-            alert("Failed to save workout, try again.");
-            this.setState({savingWorkout: false});
-          }
-      } else {
-        alert("Workout name cannot be empty")
-      }
-
-    } else {
-      alert("Add at least one set to save a workout.")
-    }
-
-  
-  }
-
   selectValue = (event) => {
     event.target.select();
   }
     
-
   render() {
     const { lifts, user } = this.props;
 
@@ -261,7 +182,6 @@ class Logger extends Component {
                 <input name="weight" type="number" value={this.state.weight} id="weight" onChange={this.changeHandler} onClick={this.selectValue} required />
                 <i className="fas fa-plus-square fa-2x" onClick={this.addWeight}></i>
                 {!user.weight ? <i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i> : null}
-              
   
                 <br />
                 <label>Reps:</label>
@@ -277,45 +197,17 @@ class Logger extends Component {
                   <h5 onClick={this.toggleForms} className="link" id="add-new-lyft-button">Add new lyft</h5>
                 </div>
               </form>
-              {this.state.redirect && <Redirect push to="/feed" />}
+              
   
             </div> :
             <AddLift toggleForms={this.toggleForms} category={this.state.category} />}
   
-  
-  
-  
-  
             {this.props.currentWorkout.length > 0 ?
-            <div className="container-box" id="new-workout-container"> 
-              <div id="workout-table-container">
-                <table id="workout-table">
-                  <thead>
-                  <tr>
-                    <th width="60%">Lyft</th>
-                    <th width="10%">Weight</th>
-                    <th width="10%">Reps</th>
-                    <th width="10%"><i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Tap a set to pre-fill the logger.</span></i></th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    {this.populateSets()}
-                  </tbody>
-                </table>
-                <div className="flex-container button-container">
-                  <button onClick={this.saveWorkout} type="button" id="save-workout-button">Save workout</button>
-                  <button onClick={this.props.clearWorkout} type="button" id="clear-workout-button">Clear workout</button>
-                  
-                </div>
-              </div>
-            </div> 
+            <NewWorkout selectRow={this.selectRow} />
             : null}
 
-              
-  
           </div>
 
-  
         </main>
       )
 
@@ -331,16 +223,10 @@ class Logger extends Component {
 
           <History sets={this.props.sets} user={this.props.user} formatDate={this.formatDate} lift={this.state.lift} />
   
-          
-  
         </main>
-
       )
     }
-
-
   }
-  
 }
 
 const mapStateToProps = state => ({
@@ -357,8 +243,5 @@ const mapDispatchToProps = dispatch => ({
   startLoadingWorkouts: () => dispatch(loadWorkouts()),
   startLoadingSets: () => dispatch(loadSets()),
 });
-
-
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Logger);
