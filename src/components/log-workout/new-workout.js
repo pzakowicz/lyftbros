@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import { loadWorkouts, loadSets } from '../../redux/thunks';
-import { addSet, clearCurrentWorkout, removeSet } from '../../redux/actions';
+import { clearCurrentWorkout, removeSet } from '../../redux/actions';
 import { Redirect } from 'react-router-dom';
  
 function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, startLoadingWorkouts, startLoadingSets }) {

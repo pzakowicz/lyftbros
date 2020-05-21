@@ -153,7 +153,7 @@ class Logger extends Component {
         }
         biceps.style.opacity = op;
         biceps.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op -= op * 0.35;
+        op -= op * 0.3;
     }, 50);
   }
 

@@ -15,7 +15,6 @@ export const removeSet = (key) => ({
 export const CLEAR_CURRENT_WORKOUT = 'CLEAR_CURRENT_WORKOUT';
 export const clearCurrentWorkout = () => ({
   type: CLEAR_CURRENT_WORKOUT,
-  //payload: { text },
 });
 
 //getting the workouts into the store
