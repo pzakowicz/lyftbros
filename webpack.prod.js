@@ -1,6 +1,11 @@
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 
 module.exports = {
+  mode: 'production',
+  optimization: {
+    minimizer: [new TerserPlugin()],
+  },
   entry:  "./src/index.js",
   output: {
     path: path.resolve('public'),
@@ -19,3 +24,8 @@ module.exports = {
     ]
   }
 };
+
+
+
+
+
