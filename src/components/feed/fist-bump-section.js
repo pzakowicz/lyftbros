@@ -10,7 +10,6 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps}) {
   const [fistBumpsCount, setFistBumpsCount] = useState(0);
   const [userHasBumped, setUserHasBumped] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  const [localFistBumps, setLocalFistBumps] = useState([]);
 
 
   const toggleModal = () => {
@@ -55,6 +54,7 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps}) {
       setFistBumpsCount(fistBumpsCount + 1);
       setUserHasBumped(true);
 
+
     }
   };
  
@@ -62,7 +62,7 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps}) {
   useEffect(() => {
     countFistBumps();
     hasUserBumped();
-    setLocalFistBumps(fistBumps);
+
   }, []);
 
   return (
@@ -94,7 +94,7 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps}) {
                 </tr>
               </thead>
               <tbody>
-              {localFistBumps.map((fistBump, i) => {
+              {fistBumps.map((fistBump, i) => {
                 return fistBump.workout_id === workout_id ? 
                 <tr key={i}>
                   <td><Link to={"/users/"+ fistBump.user_id}>{fistBump.first_name} {fistBump.surname}</Link></td>
