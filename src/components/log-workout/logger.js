@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { loadLifts, loadWorkouts, loadSets } from '../../redux/thunks';
 import { addSet, clearCurrentWorkout, removeSet } from '../../redux/actions';
 import {Link, Redirect } from 'react-router-dom';
+import AddLift from './add-lift';
+import History from './history';
  
 class Logger extends Component {
 
@@ -119,37 +121,7 @@ class Logger extends Component {
     }
   }
 
-  saveNewLift = async () => {
-    if (this.state.addCategory && this.state.addLift) {
-      const data = {
-        category: this.state.addCategory,
-        name: this.state.addLift
-      };
-      this.setState({savingLift: true})
-      //add to state placeholder
-    
-      //add new exercise to database
-      let response = await fetch(`/api/exercises/`,
-      {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-      if (response.status === 201) {
-        alert("Lift added!");
-        this.setState({savingLift: false, loggerVisible: true})
-        this.props.startLoadingLifts();
-
-      } else if (response.status === 400) {
-        this.setState({liftExists: true, savingLift: false})
-      }
-    } else {
-      alert("Name cannot be blank.")
-    }
-  };
-
+ 
   populateSets = () => {
     let sortedSets = this.props.currentWorkout.sort((a,b) => (a.lift_name > b.lift_name) ? 1 : ((b.lift_name > a.lift_name) ? -1 : 0)); 
     return sortedSets.map((set, i) => {
@@ -183,45 +155,7 @@ class Logger extends Component {
     return formattedDate;
   }
 
-  populateHistory = () => {
-    let filteredSets = this.props.sets.filter(set => set.user_id === this.props.user.id && set.lift_name === this.state.lift);
-    let sortedSets = filteredSets.sort((a,b) => (a.date_time > b.date_time) ? -1 : ((b.date_time > a.date_time) ? 1 : 0)); 
-    let uniqueSetIds = []; 
-    let uniqueSets = [];
-    for (let i = 0; i < sortedSets.length; i++) {
-      if (!uniqueSetIds.includes(sortedSets[i].id)) {
-        uniqueSetIds.push(sortedSets[i].id);
-        uniqueSets.push(sortedSets[i]);
-      }
-    }
-    return uniqueSets.length > 0 ? 
-      uniqueSets.map((set, i) => {
-      let currentWorkout = set.id;
-      return  (
-      <table key={set.id} id={set.id}>
-        <thead>
-          <tr> 
-            <th><Link to={'/workouts/' + set.id}>{set.workout_name}</Link></th>
-            <th colSpan="2">{this.formatDate(set.date_time)}</th>
-          </tr>
-        </thead>
-          <tbody>
-          {sortedSets.map((set, i) => {
-            return set.id === currentWorkout ? 
-            <tr key={i}>
-            <td width="50%">{set.lift_name}</td>
-            <td width="20%">{set.weight} kg</td>
-            <td width="20%">{set.reps} reps</td>
-          </tr> : null
-          })}
-          </tbody>
-      </table>
-      ) 
-      
-    })
-    : (<h5>{"No " + this.state.lift + "s recorded yet. Record a workout including a " + this.state.lift + " to see it here." }</h5>)
-    
-  }
+
 
   saveWorkout = async () => {
     if (this.props.currentWorkout.length > 0) {
@@ -346,21 +280,7 @@ class Logger extends Component {
               {this.state.redirect && <Redirect push to="/feed" />}
   
             </div> :
-            <div className="container-box" id="add-lyft-container">
-              <label>Category:</label>
-              <select onChange={this.changeHandler} defaultValue={this.state.category} name="addCategory" id="add-category">
-                <option>Barbell</option>
-                <option>Dumbell</option>
-                <option>Bodyweight</option>
-              </select>
-              <br />
-              <label>Name:</label>
-              <input onChange={this.changeHandler} name="addLift" type="text" id="add-name" required />
-              <br />
-              <button onClick={this.saveNewLift} type="button" id="save-lyft-button">{this.state.savingLift ? "Adding..." : "Add lyft"}</button>
-              <button onClick={this.toggleForms} type="button" id="cancel-lyft-button">Cancel</button>
-              {this.state.liftExists ? <p className="error-message" id="lyft-exists">Lyft already exists!</p> : null }
-            </div>}
+            <AddLift toggleForms={this.toggleForms} category={this.state.category} />}
   
   
   
@@ -408,11 +328,10 @@ class Logger extends Component {
             <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>Log</button>
             <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
           </div>
+
+          <History category={this.state.category} sets={this.props.sets} user={this.props.user} formatDate={this.formatDate} lift={this.state.lift} />
   
-          <div id="History" className="tab container-box">
-            {this.populateHistory()}
-            
-          </div>
+          
   
         </main>
 
@@ -432,7 +351,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  startLoadingLifts: () => dispatch(loadLifts()),
   addSetToCurrentWorkout: (set) => dispatch(addSet(set)),
   clearWorkout: () => dispatch(clearCurrentWorkout()),
   deleteThisSet: (key) => dispatch(removeSet(key)),

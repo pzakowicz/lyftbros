@@ -7,9 +7,6 @@ import { connect } from 'react-redux';
 //creating the master component
 function FeedMain({workouts, user, fistBumps}) {
 
-
-
-
   //setting state
 
   const [loading, setLoading] = useState(true);
@@ -53,28 +50,18 @@ function FeedMain({workouts, user, fistBumps}) {
               fistBumps={fistBumps}
             /> 
           )}
-        </div>
-          
-          
+        </div> 
     )
-
 
     } else {
       return (
         <div>
-          
+
         </div>
       )
     }
 
-
-      
-
-
-
 }
-
-
 
 const mapStateToProps = state => ({
   workouts: state.workouts,
