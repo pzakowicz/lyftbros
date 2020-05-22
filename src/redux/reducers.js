@@ -6,6 +6,7 @@ import {
   LOAD_FISTBUMPS_IN_PROGRESS, LOAD_FISTBUMPS_SUCCESS, LOAD_FISTBUMPS_FAILURE, 
   LOAD_SETS_IN_PROGRESS, LOAD_SETS_SUCCESS, LOAD_SETS_FAILURE,
   LOAD_LIFTS_IN_PROGRESS, LOAD_LIFTS_SUCCESS, LOAD_LIFTS_FAILURE, 
+  LOAD_COMMENTS_IN_PROGRESS, LOAD_COMMENTS_SUCCESS, LOAD_COMMENTS_FAILURE,
 
 } from './actions';
 
@@ -105,6 +106,22 @@ export const lifts = (state=[], action) => {
     }
     case LOAD_LIFTS_IN_PROGRESS:
     case LOAD_LIFTS_FAILURE:
+    default:
+      return state
+  }
+}
+
+//adding the comment reducers
+export const comments = (state=[], action) => {
+  const { type, payload} = action;
+
+  switch (type) {
+    case LOAD_COMMENTS_SUCCESS: {
+      const { comments } = payload;
+      return comments;
+    }
+    case LOAD_COMMENTS_IN_PROGRESS:
+    case LOAD_COMMENTS_FAILURE:
     default:
       return state
   }

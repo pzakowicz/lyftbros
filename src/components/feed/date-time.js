@@ -17,12 +17,12 @@ function DateTime({dateTime, className}) {
     let workoutTime = (workoutDateObject.getHours()-(offset/60))+ ':' + (('0' + (workoutDateObject.getMinutes())).slice(-2));
 
     return (
-          <p className={className}>
+          <span className={className}>
               {(workoutDate === todayDate) && 'Today '}
               {(workoutDate === yesterdayDate) && 'Yesterday ' }
               {(workoutDate !== todayDate && workoutDate !== yesterdayDate) && formattedDate + ''}
             @ {workoutTime}
-          </p>
+          </span>
     )
   }
 

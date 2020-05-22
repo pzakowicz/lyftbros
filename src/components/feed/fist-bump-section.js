@@ -3,13 +3,20 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { loadFistBumps } from '../../redux/thunks';
 import { Link } from 'react-router-dom';
+import CommentForm from './comment-form';
 
 //creating the master component
-function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps}) {
+function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps, comments}) {
 
   const [fistBumpsCount, setFistBumpsCount] = useState(0);
   const [userHasBumped, setUserHasBumped] = useState(false);
+  const [commentCount, setCommentCount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [commentVisible, setCommentVisible] = useState(false);
+
+  const toggleComment = () => {
+    setCommentVisible(prevState => !prevState)
+  }
 
 
   const toggleModal = () => {
@@ -23,7 +30,16 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps}) {
         break
       }
     }
-    
+  }
+
+  const countComments = () => {
+    let count = 0
+    for (let i = 0; i < comments.length; i++) {
+      if (comments[i].workout_id === Number(workout_id)) {
+        count ++
+      }
+    }
+    setCommentCount(count);
   }
 
   const hasUserBumped = () => {
@@ -61,6 +77,7 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps}) {
 
   useEffect(() => {
     countFistBumps();
+    countComments();
     hasUserBumped();
 
   }, []);
@@ -69,19 +86,22 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps}) {
     <div>
 
       <div className="flex-container comment-section">
-        <span onClick={toggleModal}>
-          { fistBumpsCount === 0 && <span>Be the first one to bump your bro!</span>}
-          { fistBumpsCount === 1 && <span>{fistBumpsCount} fist bump!</span>}
-          { fistBumpsCount > 1 && <span>{fistBumpsCount} fist bumps!</span> }        
+        <span>
+          { fistBumpsCount === 0 && <span>Be the first one to bump your bro</span>}
+          { fistBumpsCount === 1 && <span className="link" onClick={toggleModal}>{fistBumpsCount} fist bump</span>}
+          { fistBumpsCount > 1 && <span className="link" onClick={toggleModal}>{fistBumpsCount} fist bumps</span> }        
+          { commentCount === 1 && <span><span>  |  </span><span className="link" onClick={toggleComment}>{commentCount} comment</span></span>}
+          { commentCount > 1 && <span><span>  |  </span><span className="link" onClick={toggleComment}>{commentCount} comments</span></span>}
         </span>
         <div id="button-container">
           <button type="button" className="comment-button"  onClick={addFistBump}>
             { userHasBumped ? <i className="fas fa-hand-rock"></i> 
               : <i className="far fa-hand-rock"></i> }
           </button>
-          <button type="button" className="comment-button" id="comment"><i className="far fa-comment"></i></button>
-        </div> 
+          <button type="button" className="comment-button" id="comment" onClick={toggleComment}><i className="far fa-comment"></i></button>
+        </div>
       </div>  
+      {commentVisible && <CommentForm workout_id={workout_id} comments={comments} />} 
 
       { modalVisible ? 
         <div id="commentModal" className="modal">
@@ -117,4 +137,9 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(null, mapDispatchToProps)(FistBumpSection);
+const mapStateToProps = state => ({
+  comments: state.comments,
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(FistBumpSection);

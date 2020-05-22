@@ -8,7 +8,7 @@ import AccountForm from './account/account-form';
 import Logger from './log-workout/logger';
 import {BrowserRouter, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { loadWorkouts, loadUser, loadFistBumps, loadSets, loadLifts } from '../redux/thunks';
+import { loadWorkouts, loadUser, loadFistBumps, loadSets, loadLifts, loadComments } from '../redux/thunks';
 
 
 
@@ -34,6 +34,7 @@ class LoggedIn extends Component {
     this.props.startLoadingWorkouts();
     this.props.startLoadingUser();
     this.props.startLoadingFistBumps();
+    this.props.startLoadingComments();
     this.props.startLoadingSets();
     this.props.startLoadingLifts();
   }
@@ -64,7 +65,6 @@ class LoggedIn extends Component {
                 <Header />
                 <Logger />
               </Route>
-
         </BrowserRouter>
 
 
@@ -85,6 +85,7 @@ const mapDispatchToProps = dispatch => ({
   startLoadingWorkouts: () => dispatch(loadWorkouts()),
   startLoadingUser: () => dispatch(loadUser()),
   startLoadingFistBumps: () => dispatch(loadFistBumps()),
+  startLoadingComments: () => dispatch(loadComments()),
   startLoadingSets: () => dispatch(loadSets()),
   startLoadingLifts: () => dispatch(loadLifts()),
 });

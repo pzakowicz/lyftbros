@@ -5,6 +5,7 @@ import {
   loadFistBumpsInProgress, loadFistBumpsSuccess, loadFistBumpsFailure,
   loadSetsInProgress, loadSetsSuccess, loadSetsFailure,
   loadLiftsInProgress, loadLiftsSuccess, loadLiftsFailure,
+  loadCommentsInProgress, loadCommentsSuccess, loadCommentsFailure,
 } from './actions'
 
 //adding thunk for getting workouts
@@ -68,6 +69,19 @@ export const loadLifts = () => async (dispatch, getState) => {
     dispatch(loadLiftsSuccess(lifts));
   } catch(error) {
     dispatch(loadLiftsFailure());
+    dispatch(displayAlert(error))
+  }
+}
+
+//adding thunk for getting comments
+export const loadComments = () => async (dispatch, getState) => {
+  try {
+    dispatch(loadCommentsInProgress());
+    const response = await fetch('/api/comments/')
+    const comments = await response.json();
+    dispatch(loadCommentsSuccess(comments));
+  } catch(error) {
+    dispatch(loadCommentsFailure());
     dispatch(displayAlert(error))
   }
 }

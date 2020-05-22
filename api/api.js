@@ -4,6 +4,7 @@ const userRouter = require("./users");
 const exerciseRouter = require("./exercises");
 const fistBumpRouter = require("./fist-bumps");
 const workoutRouter = require("./workouts");
+const commentRouter = require("./comments");
 const mysql = require("mysql2");
 const config = require("../config");
 
@@ -15,6 +16,7 @@ apiRouter.use("/users", userRouter);
 apiRouter.use("/exercises", exerciseRouter);
 apiRouter.use("/fist-bumps", fistBumpRouter);
 apiRouter.use("/workouts", workoutRouter);
+apiRouter.use("/comments", commentRouter);
 
 //REQUEST HANDLERS -------------------------------
 

@@ -161,10 +161,6 @@ i:hover {
 
 }
 
-.link {
-  text-decoration: underline;
-}
-
 .link:hover {
   color: lightgray;
   cursor: pointer;
@@ -192,6 +188,9 @@ label, span {
 
 input, select {
   margin: 4px 0px;
+  border-radius: 4px;
+  background-color: rgb(240, 240, 240);
+  border: 1px solid rgb(240, 240, 240);
 }
 
 button {
@@ -423,15 +422,25 @@ button:hover {
 .comment-section {
   align-items: center;
   justify-content: space-between;
+  font-size: 11px;
+}
+
+.new-comment-container {
+  border-top: 1px solid rgb(240, 240, 240);
+  margin-top: 5px;
+  padding-top: 5px;
 }
 
 .comment-section span {
-  font-size: 12px;
+  font-size: 11px;
 }
 
-.comment-section span:hover {
-  color: gray;
-  cursor: pointer;
+.comment-list {
+  margin-top: 10px;
+}
+
+.comment-list span {
+  font-size: 11px;
 }
 
 .comment-button { 
@@ -452,6 +461,23 @@ cursor: pointer;
 .comment-button i {
   color: black;
 
+}
+
+.comment-input {
+  width: 80%;
+  height: 21px;
+}
+
+.add-comment-button {
+  font-size: 12px;
+  background-color: white;
+  border: 1px solid white;
+  margin: auto;
+}
+
+.add-comment-button:hover {
+  background-color: rgb(240, 240, 240);
+  border: 1px solid rgb(240, 240, 240);
 }
 
 .user-list-item {
@@ -559,14 +585,14 @@ cursor: pointer;
 
 .tab {
   display: flex;
-  width: 52%;
+  width: 50%;
   justify-content: center;
   flex-wrap: wrap;
 
 }
 
 .lift-history {
-  width: 1000%;
+  width: 100%;
 }
 
 #log-training-container {
@@ -603,10 +629,6 @@ cursor: pointer;
   display: inline-block;
   width: 90px;
   margin: 5px 0px;
-}
-
-#lift-history {
-  width: 100%;
 }
 
 .button-container {

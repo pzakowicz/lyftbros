@@ -19,7 +19,7 @@ function History({sets, user, formatDate, lift})  {
       uniqueSets.map((set) => {
       let currentWorkout = set.id;
       return  (
-      <table key={set.id} id={set.id}>
+      <table key={set.id} id={set.id} className="lift-history"> 
         <thead>
           <tr> 
             <th><Link to={'/workouts/' + set.id}>{set.workout_name}</Link></th>

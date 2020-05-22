@@ -1,5 +1,5 @@
 
-//example reducers
+//managing current workout state
 export const ADD_SET = 'ADD_SET';
 export const addSet = set => ({
   type: ADD_SET,
@@ -100,4 +100,21 @@ export const loadLiftsSuccess = lifts => ({
 export const LOAD_LIFTS_FAILURE = 'LOAD_LIFTS_FAILURE';
 export const loadLiftsFailure = () => ({
   type: LOAD_LIFTS_FAILURE,
+})
+
+//getting comments into the store
+export const LOAD_COMMENTS_IN_PROGRESS = 'LOAD_COMMENTS_IN_PROGRESS';
+export const loadCommentsInProgress = () => ({
+  type: LOAD_COMMENTS_IN_PROGRESS,
+})
+
+export const LOAD_COMMENTS_SUCCESS = 'LOAD_COMMENTS_SUCCESS';
+export const loadCommentsSuccess = comments => ({
+  type: LOAD_COMMENTS_SUCCESS,
+  payload: { comments },
+})
+
+export const LOAD_COMMENTS_FAILURE = 'LOAD_COMMENTS_FAILURE';
+export const loadCommentsFailure = () => ({
+  type: LOAD_COMMENTS_FAILURE,
 })

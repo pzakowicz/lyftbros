@@ -125,8 +125,8 @@ class Logger extends Component {
       category: set.category,
       lift: set.lift_name,
       liftId: set.lift_id,
-      weight: set.weight,
-      reps: set.reps,
+      weight: Number(set.weight),
+      reps: Number(set.reps),
       addCategory: set.category,
     })
   }
@@ -147,13 +147,13 @@ class Logger extends Component {
     biceps.style.display = 'inline-block';
     let op = 1;  // initial opacity
     let timer = setInterval(function () {
-        if (op <= 0.2){
+        if (op <= 0.3){
             clearInterval(timer);
             biceps.style.display = 'none';
         }
         biceps.style.opacity = op;
         biceps.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op -= op * 0.3;
+        op -= op * 0.1;
     }, 50);
   }
 
@@ -180,9 +180,8 @@ class Logger extends Component {
             <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
           </div>
   
-          <div id="Log" className="tab">
+          <div id="Log" className="tab container-box">
             {this.state.loggerVisible ? 
-            <div className="container-box" id="log-training-container">
               <form id="log-training-form">
                 <label>Category:</label>
                 <select name="category" onChange={this.changeCategory} id="category" value={this.state.category} required>
@@ -223,7 +222,7 @@ class Logger extends Component {
               </form>
               
   
-            </div> :
+ :
             <AddLift toggleForms={this.toggleForms} category={this.state.category} />}
   
             {this.props.currentWorkout.length > 0 ?
