@@ -1,6 +1,7 @@
 //imports 
 import React, {Component} from 'react';
 import DateTime from './date-time';
+import { Link } from 'react-router-dom';
 
 //creating the master component
 class CommentForm extends Component {
@@ -42,7 +43,7 @@ render() {
       {this.props.comments.map((comment, i) => {
         return comment.workout_id === this.props.workout_id ? 
         <div key={i} className="comment-list">
-          <span className="flex-container button-container"><span className="value">{comment.first_name + ' ' + comment.surname}</span><span><DateTime dateTime={comment.date_time} /></span></span>
+          <span className="flex-container button-container"><span className="value link"><Link to={'/users/' + comment.user_id}>{comment.first_name + ' ' + comment.surname}</Link></span><span><DateTime dateTime={comment.date_time} /></span></span>
           <span>{comment.content}</span>
         </div> : null
       })}
