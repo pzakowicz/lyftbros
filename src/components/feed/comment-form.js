@@ -2,6 +2,8 @@
 import React, {Component} from 'react';
 import DateTime from './date-time';
 import { Link } from 'react-router-dom';
+import { loadComments } from '../../redux/thunks';
+import { connect } from 'react-redux';
 
 //creating the master component
 class CommentForm extends Component {
@@ -33,7 +35,10 @@ class CommentForm extends Component {
     // check if fist bump has been added
     if (response.status === 201) {
       console.log("Comment added");
-      startLoadingComments();
+      await this.props.startLoadingComments();
+      this.props.countComments();
+      this.props.toggleComment();
+
     }
   }
 
@@ -43,13 +48,13 @@ render() {
       {this.props.comments.map((comment, i) => {
         return comment.workout_id === this.props.workout_id ? 
         <div key={i} className="comment-list">
-          <span className="flex-container button-container"><span className="value link"><Link to={'/users/' + comment.user_id}>{comment.first_name + ' ' + comment.surname}</Link></span><span><DateTime dateTime={comment.date_time} /></span></span>
+          <span className="flex-container button-container"><span className="value link"><Link to={'/users/' + comment.user_id}>{comment.first_name + ' ' + comment.surname}</Link></span><span className="subtitle"><DateTime dateTime={comment.date_time} /></span></span>
           <span>{comment.content}</span>
         </div> : null
       })}
       <form className="flex-container button-container new-comment-container">
         <input type="text" name="comment" className="comment-input" onChange={this.changeHandler} required />
-        <button onClick={this.saveComment} type="submit" className="add-comment-button">Submit</button>
+        <button onClick={this.saveComment} type="button" className="add-comment-button">Submit</button>
       </form>
   </div>
   )
@@ -57,4 +62,8 @@ render() {
 
 }
 
-export default CommentForm;
+const mapDispatchToProps = dispatch => ({
+  startLoadingComments: () => dispatch(loadComments()),
+})
+
+export default connect(null, mapDispatchToProps)(CommentForm);

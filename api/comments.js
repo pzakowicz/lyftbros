@@ -36,7 +36,7 @@ commentRouter.get("/", (req, res, next) => {
   console.log("Requested comments");
 
   let connection = mysql.createConnection(config);
-  connection.query(`SELECT comments.id, comments.content, comments.workout_id, comments.user_id, comments.date_time, users.first_name, users.surname FROM comments LEFT JOIN users on comments.user_id = users.id;;`, (error, results, fields) => {
+  connection.query(`SELECT comments.id, comments.content, comments.workout_id, comments.user_id, comments.date_time, users.first_name, users.surname FROM comments LEFT JOIN users on comments.user_id = users.id;`, (error, results, fields) => {
     if (error) {
       return console.error(error.message);
     }

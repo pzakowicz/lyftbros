@@ -50,7 +50,7 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps, co
     }
   }
 
-  async function addFistBump(e) {
+  async function addFistBump() {
     const data = {
       workoutId: workout_id
     };
@@ -80,7 +80,7 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps, co
     countComments();
     hasUserBumped();
 
-  }, []);
+  });
 
   return (
     <div>
@@ -101,7 +101,7 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps, co
           <button type="button" className="comment-button" id="comment" onClick={toggleComment}><i className="far fa-comment"></i></button>
         </div>
       </div>  
-      {commentVisible && <CommentForm workout_id={workout_id} comments={comments} />} 
+      {commentVisible && <CommentForm workout_id={workout_id} comments={comments} countComments={countComments} toggleComment={toggleComment} />} 
 
       { modalVisible ? 
         <div id="commentModal" className="modal">
