@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 
 //creating the master component
-function FeedMain({workouts, user, fistBumps}) {
+function FeedMain({workouts, user, fistBumps, sets}) {
 
   //setting state
 
@@ -44,10 +44,11 @@ function FeedMain({workouts, user, fistBumps}) {
               date_time={workout.date_time}
               first_name={workout.first_name}
               surname={workout.surname}
-              user_id={workout.user_id}
+              userId={workout.user_id}
               workouts={workouts}
               user={user}
               fistBumps={fistBumps}
+              loading={loading}
             /> 
           )}
         </div> 
@@ -67,6 +68,7 @@ const mapStateToProps = state => ({
   workouts: state.workouts,
   user: state.user,
   fistBumps: state.fistBumps,
+  sets: state.sets,
 
 });
 

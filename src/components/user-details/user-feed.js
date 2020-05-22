@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 
 //creating the master component
-function UserFeed({userWorkouts, user, fistBumps, workouts }) {
+function UserFeed({userWorkouts, user, fistBumps, workouts, sets }) {
 
   //setting state
 
@@ -34,7 +34,6 @@ function UserFeed({userWorkouts, user, fistBumps, workouts }) {
               workouts={workouts}
               user={user}
               fistBumps={fistBumps}
-
             /> 
           )}
         </div>
@@ -64,6 +63,7 @@ const mapStateToProps = state => ({
   user: state.user,
   fistBumps: state.fistBumps,
   workouts: state.workouts,
+  sets: state.sets
 
 });
 

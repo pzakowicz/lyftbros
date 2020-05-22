@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 
 //creating the master component
-function Prs({thisUser, workouts, sets}) {
+function Prs({thisUser, sets}) {
 
   const [loading, setLoading] = useState(true);
   const [prs, setPrs] = useState();
@@ -23,7 +23,6 @@ function Prs({thisUser, workouts, sets}) {
     let result = Object.values(tempResult)
     result.sort((a,b) => (a.lift_name > b.lift_name) ? 1 : ((b.lift_name > a.lift_name) ? -1 : 0));
     setPrs(result);
-
   }
 
   useEffect(() => {
@@ -52,17 +51,8 @@ function Prs({thisUser, workouts, sets}) {
               <td width="25%">{pr.five_reps}<span className="unit"> kg</span></td>
               <td width="25%">{pr.ten_reps}<span className="unit"> kg</span></td>
             </tr> 
-
           )
-
         })}
-
-            
-
-
-
-          
-
         </tbody>
       </table>
     </div>

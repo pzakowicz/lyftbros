@@ -78,6 +78,7 @@ function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, sta
           <td width="70%">{set.lift_name}</td>
           <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span></td>
           <td width="10%">{set.reps}</td>
+          <td width="10%"></td>
           <td width="10%"><i className="fas fa-trash" onClick={() => deleteThisSet(i)}></i></td>
         </tr>
       )
@@ -93,6 +94,7 @@ function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, sta
               <th width="60%">Lyft</th>
               <th width="10%">Weight</th>
               <th width="10%">Reps</th>
+              <th width="10%">PR</th>
               <th width="10%"><i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Tap a set to pre-fill the logger.</span></i></th>
             </tr>
             </thead>

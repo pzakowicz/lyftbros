@@ -225,11 +225,11 @@ class Logger extends Component {
  :
             <AddLift toggleForms={this.toggleForms} category={this.state.category} />}
   
+
+          </div>
             {this.props.currentWorkout.length > 0 ?
             <NewWorkout selectRow={this.selectRow} />
             : null}
-
-          </div>
 
         </main>
       )
