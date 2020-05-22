@@ -16,9 +16,10 @@ class CommentForm extends Component {
     let name = event.target.name;
     let value = event.target.value;
     this.setState({[name]: value});
-  }
+  }  
 
-  saveComment = async () => {
+  saveComment = async (event) => {
+    event.preventDefault();
     const data = {
       workoutId: this.props.workout_id,
       content: this.state.comment
@@ -38,7 +39,6 @@ class CommentForm extends Component {
       await this.props.startLoadingComments();
       this.props.countComments();
       this.props.toggleComment();
-
     }
   }
 
@@ -52,7 +52,7 @@ render() {
           <span>{comment.content}</span>
         </div> : null
       })}
-      <form className="flex-container button-container new-comment-container">
+      <form className="flex-container button-container new-comment-container" onSubmit={this.saveComment}>
         <input type="text" name="comment" className="comment-input" onChange={this.changeHandler} required />
         <button onClick={this.saveComment} type="button" className="add-comment-button">Submit</button>
       </form>
