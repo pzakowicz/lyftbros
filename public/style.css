@@ -592,7 +592,7 @@ cursor: pointer;
 }
 
 .lift-history {
-  width: 100%;
+  max-width: 100%;
 }
 
 #log-training-container {
