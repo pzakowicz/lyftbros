@@ -5,7 +5,7 @@ import { loadWorkouts, loadSets } from '../../redux/thunks';
 import { clearCurrentWorkout, removeSet } from '../../redux/actions';
 import { Redirect } from 'react-router-dom';
  
-function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, startLoadingWorkouts, startLoadingSets }) {
+function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, startLoadingWorkouts, startLoadingSets, sets, user }) {
 
   const [savingWorkout, setSavingWorkout] = useState(false);
   const [redirect, setRedirect] = useState(false);
@@ -35,7 +35,7 @@ function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, sta
             const data = {};
             data.sets = [];
             for (let i = 0; i < currentWorkout.length; i++) { 
-              data.sets.push([currentWorkout[i].lift_id, currentWorkout[i].weight, currentWorkout[i].reps, workoutId]);
+              data.sets.push([currentWorkout[i].lift_id, currentWorkout[i].weight, currentWorkout[i].reps, workoutId, currentWorkout[i].pr]);
             };
             let response = await fetch(`/api/sets/`,
             {
@@ -70,15 +70,17 @@ function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, sta
 
   }
 
+  
+
+
   const populateSets = () => {
     let sortedSets = currentWorkout.sort((a,b) => (a.lift_name > b.lift_name) ? 1 : ((b.lift_name > a.lift_name) ? -1 : 0)); 
     return sortedSets.map((set, i) => {
       return (
         <tr onClick={() => selectRow(i)} key={i}>
           <td width="70%">{set.lift_name}</td>
-          <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span></td>
+          <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span>{set.pr && <i className="fas fa-trophy"></i>}</td>
           <td width="10%">{set.reps}</td>
-          <td width="10%"></td>
           <td width="10%"><i className="fas fa-trash" onClick={() => deleteThisSet(i)}></i></td>
         </tr>
       )
@@ -94,7 +96,6 @@ function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, sta
               <th width="60%">Lyft</th>
               <th width="10%">Weight</th>
               <th width="10%">Reps</th>
-              <th width="10%">PR</th>
               <th width="10%"><i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Tap a set to pre-fill the logger.</span></i></th>
             </tr>
             </thead>

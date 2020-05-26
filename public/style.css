@@ -407,7 +407,7 @@ button:hover {
 }
 
 .workout-name {
-  margin-bottom: 8px;
+  margin-top: 5px;
 }
 
 .flex-summary-item {
@@ -633,6 +633,7 @@ cursor: pointer;
 
 .button-container {
   justify-content: space-between;
+  align-items: flex-start;
 }
 
 #biceps-icon {
@@ -683,6 +684,10 @@ cursor: pointer;
 
 .weight {
   font-size: medium;
+}
+
+.fa-trophy {
+  color: gold;
 }
 
 .id {

@@ -55,15 +55,26 @@ function DetailedWorkout( { fistBumps, user, sets }) {
   }
   
     if (!loading) {
+      console.log(workout);
       return (
 
               <main >
                 <div className="container-box" id="workout-container"> 
-                  <h5 className="user-name"><Link to={'/users/' + workout[0].user_id}>{workout[0].first_name} {workout[0].surname}</Link></h5>
-
-                  <DateTime dateTime={workout[0].date_time} className="subtitle" />
+                  <div className="flex-container button-container">
+                    <h3 className="workout-name"><Link to={"/workouts/" + workout[0].id}>{workout[0].workout_name}</Link></h3>
+                    <div>
+                      <h5 className="user-name"><Link to={'/users/' + workout[0].user_id}>{workout[0].first_name} {workout[0].surname}</Link></h5>
+                      <DateTime dateTime={workout[0].date_time} className="subtitle" />
+                    </div> 
+                  </div>
+                  <div>
+                    {workout.map((workout, j) => {
+                      return workout.pr ? 
+                        <h4 key={j}><i className="fas fa-trophy"></i>{workout.lift_name} PR!</h4> : null
+                    })}
+                  </div>
                   
-                  <h3 className="workout-name"><Link to={"/workouts/" + workout[0].id}>{workout[0].workout_name}</Link></h3>
+                  
                   <div className="flex-container workout-summary">
                   {calcWorkoutStats()}
                   </div>
@@ -80,7 +91,7 @@ function DetailedWorkout( { fistBumps, user, sets }) {
 
                         { workout.map((workout, i) => {
                           return (<tr key={i}>
-                            <td width="70%">{workout.lift_name}</td>
+                            <td width="70%">{workout.lift_name} {workout.pr ? <i className="fas fa-trophy"></i> : null}</td>
                             <td width="10%">{workout.weight} <span className="unit">kg</span></td>
                             <td width="10%">{workout.reps}</td> 
                           </tr>)

@@ -91,14 +91,14 @@ class Logger extends Component {
 
   addWeight = () => {
     this.setState(prevState => ({
-      weight: prevState.weight + 1, 
+      weight: Number(prevState.weight) + 1, 
     }))
 
   }
 
   addRep = () => {
     this.setState(prevState => ({
-      reps: prevState.reps + 1, 
+      reps: Number(prevState.reps) + 1, 
     }))
 
   }
@@ -157,13 +157,31 @@ class Logger extends Component {
     }, 50);
   }
 
+  isPR = () => {
+    let max = 0;
+    for (let i = 0; i < this.props.sets.length; i++) {
+      if (this.props.sets[i].user_id === this.props.user.id && this.props.sets[i].lift_name === this.state.lift && this.props.sets[i].reps >= this.state.reps && this.props.sets[i].weight > max)  {
+        max = this.props.sets[i].weight
+      } 
+    }
+    for (let i = 0; i < this.props.currentWorkout.length; i++) {
+      if (this.props.currentWorkout[i].lift_name === this.state.lift && this.props.currentWorkout[i].reps >= this.state.reps && this.props.currentWorkout[i].weight > max)  {
+        max = this.props.currentWorkout[i].weight
+      } 
+    }
+    if (this.state.weight > max) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   saveSet = () => {
+
     if (this.state.weight > 0 && this.state.reps > 0) {
-      this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: this.state.weight, reps: this.state.reps});
+      this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: this.state.weight, reps: this.state.reps, pr: this.isPR()});
       this.fadeBiceps();
     }
-
-  
   }
     
   render() {

@@ -30,8 +30,8 @@ if (!req.body.sets) {
   return res.sendStatus(400);
 } else {
   console.log("Requested to post sets: ", req.body.sets);
-  let placeholders = exerciseArray.map(() => "(?, ?, ?, ?)").join(', ');
-  let query = `INSERT INTO Sets(exercise_id, weight, reps, workout_id) VALUES${placeholders}`;
+  let placeholders = exerciseArray.map(() => "(?, ?, ?, ?, ?)").join(', ');
+  let query = `INSERT INTO Sets(exercise_id, weight, reps, workout_id, pr) VALUES${placeholders}`;
   console.log(query);
   let flatExerciseArray = [];
   exerciseArray.forEach((arr) => { arr.forEach((item) => { flatExerciseArray.push(item) }) });

@@ -10,7 +10,7 @@ const workoutRouter = express.Router();
 workoutRouter.get("/", (req, res, next) => {
   
   let connection = mysql.createConnection(config);
-  connection.query(`SELECT Workouts.id, Workouts.name as  workout_name, workouts.date_time, Users.first_name, Users.surname, Users.id as user_id, Users.gender, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;`, (error, results, fields) => {
+  connection.query(`SELECT Workouts.id, Workouts.name as  workout_name, workouts.date_time, Users.first_name, Users.surname, Users.id as user_id, Users.gender, Lifts.name as lift_name, COUNT(Lifts.name) as sets, ROUND(AVG(Sets.reps),1) as avg_reps, AVG(Sets.weight) as avg_weight, MAX(Sets.weight) as max_weight, MAX(Sets.pr) as pr FROM Sets LEFT JOIN Workouts on Workouts.id = Sets.workout_id LEFT JOIN Lifts on Sets.exercise_id = Lifts.id LEFT JOIN Users on Workouts.user_id = Users.id GROUP BY Workouts.id, Lifts.name ORDER BY Workouts.date_time DESC;`, (error, results, fields) => {
     if (error) {
       return console.error(error.message);
     }
@@ -24,7 +24,7 @@ workoutRouter.get("/", (req, res, next) => {
 workoutRouter.get("/sets/", (req, res, next) => {
   
   let connection = mysql.createConnection(config);
-  connection.query(`SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.id as user_id, Lifts.category, Lifts.name as lift_name, Sets.weight, Sets.reps FROM Sets JOIN Workouts ON Workouts.id = Sets.workout_id JOIN Lifts ON Sets.exercise_id = Lifts.id JOIN Users ON Workouts.user_id = Users.id`, (error, results, fields) => {
+  connection.query(`SELECT Workouts.id, Workouts.name as workout_name, Workouts.date_time, Users.first_name, Users.surname, Users.id as user_id, Lifts.category, Lifts.name as lift_name, Sets.weight, Sets.reps, Sets.pr FROM Sets JOIN Workouts ON Workouts.id = Sets.workout_id JOIN Lifts ON Sets.exercise_id = Lifts.id JOIN Users ON Workouts.user_id = Users.id`, (error, results, fields) => {
     if (error) {
       return console.error(error.message);
     }
