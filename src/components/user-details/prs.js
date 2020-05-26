@@ -10,15 +10,29 @@ function Prs({thisUser, sets}) {
 
   const findPrs = () => {
 
-    let tempResult = {}
-    for(let { user_id, lift_name, weight, reps } of sets)
-      if (user_id === thisUser.id) {
-        tempResult[lift_name] = { 
-            lift_name: lift_name, 
-            five_reps: (tempResult[lift_name] &&  5 < reps < 10 ) ? Math.max(weight) : 0,
-            ten_reps: (tempResult[lift_name] && reps >= 10) ? Math.max(weight) : 0
-        }      
-      }
+    let addedLifts = [];
+    let tempResult = {};
+    for (let i = 0; i < sets.length; i++) {
+      if (sets[i].user_id === thisUser.id && !addedLifts.includes(sets[i].lift_name))  {
+          addedLifts.push(sets[i].lift_name);
+          let maxFive = 0;
+          let maxTen = 0;
+          for (let j = 0; j < sets.length; j++) {
+            if (sets[j].user_id === thisUser.id && sets[j].lift_name === sets[i].lift_name && sets[j].reps >= 5 && sets[j].weight > maxFive) {
+                maxFive = sets[j].weight;
+            }
+            if (sets[j].user_id === thisUser.id && sets[j].lift_name === sets[i].lift_name && sets[j].reps >= 10 && sets[j].weight > maxTen) {
+              maxTen = sets[j].weight;
+            }
+          }
+          tempResult[sets[i].lift_name] = {
+            lift_name: sets[i].lift_name,
+            five_reps: maxFive,
+            ten_reps: maxTen
+
+          }
+        }
+    }
 
     let result = Object.values(tempResult)
     result.sort((a,b) => (a.lift_name > b.lift_name) ? 1 : ((b.lift_name > a.lift_name) ? -1 : 0));
@@ -31,6 +45,7 @@ function Prs({thisUser, sets}) {
   },[])
   
   if (!loading && prs.length > 0) {
+    console.log(prs);
     return (
       <div>
       <h4>Bro's PRs</h4>
