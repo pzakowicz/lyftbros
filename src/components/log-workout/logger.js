@@ -159,21 +159,32 @@ class Logger extends Component {
 
   isPR = () => {
     let max = 0;
+    let second = 0;
+    let third = 0;
     for (let i = 0; i < this.props.sets.length; i++) {
       if (this.props.sets[i].user_id === this.props.user.id && this.props.sets[i].lift_name === this.state.lift && this.props.sets[i].reps >= this.state.reps && this.props.sets[i].weight > max)  {
-        max = this.props.sets[i].weight
+        third = second;
+        second = max;
+        max = this.props.sets[i].weight;
       } 
     }
     for (let i = 0; i < this.props.currentWorkout.length; i++) {
       if (this.props.currentWorkout[i].lift_name === this.state.lift && this.props.currentWorkout[i].reps >= this.state.reps && this.props.currentWorkout[i].weight > max)  {
+        third = second;
+        second = max;
         max = this.props.currentWorkout[i].weight
       } 
     }
     if (this.state.weight > max) {
-      return true
+      return 3
+    } else if (this.state.weight <= max && this.state.weight > second){
+      return 2
+    } else if (this.state.weight <= second && this.state.weight > third) {
+      return 1
     } else {
-      return false
+      return 0
     }
+
   }
 
   saveSet = () => {

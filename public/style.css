@@ -686,8 +686,16 @@ cursor: pointer;
   font-size: medium;
 }
 
-.fa-trophy {
+.gold {
   color: gold;
+}
+
+.silver {
+  color: silver;
+}
+
+.bronze {
+  color: rgb(205, 127, 50)
 }
 
 .id {

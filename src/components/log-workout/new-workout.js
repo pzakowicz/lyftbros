@@ -79,7 +79,7 @@ function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, sta
       return (
         <tr onClick={() => selectRow(i)} key={i}>
           <td width="70%">{set.lift_name}</td>
-          <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span>{set.pr && <i className="fas fa-trophy"></i>}</td>
+          <td width="10%"><span className="weight">{set.weight}</span><span className="unit"> kg</span>{set.pr === 3 && <i className="fas fa-trophy gold"></i>}{set.pr === 2 && <i className="fas fa-trophy silver"></i>}{set.pr === 1 && <i className="fas fa-trophy bronze"></i>}</td>
           <td width="10%">{set.reps}</td>
           <td width="10%"><i className="fas fa-trash" onClick={() => deleteThisSet(i)}></i></td>
         </tr>
