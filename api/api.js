@@ -5,6 +5,7 @@ const exerciseRouter = require("./exercises");
 const fistBumpRouter = require("./fist-bumps");
 const workoutRouter = require("./workouts");
 const commentRouter = require("./comments");
+const subscriptionRouter = require("./subscriptions");
 const mysql = require("mysql2");
 const config = require("../config");
 
@@ -17,6 +18,8 @@ apiRouter.use("/exercises", exerciseRouter);
 apiRouter.use("/fist-bumps", fistBumpRouter);
 apiRouter.use("/workouts", workoutRouter);
 apiRouter.use("/comments", commentRouter);
+apiRouter.use("/subscriptions", subscriptionRouter);
+
 
 //REQUEST HANDLERS -------------------------------
 

@@ -17,43 +17,58 @@ function urlBase64ToUint8Array(base64String) {
 
 const publicVapidKey = 'BKzx5iPJ1QipYxjMAE4fcjA3LsBk7iBssmvD3H2ZnYxebaygcbQjNPSC5mUbxKL3S8NrvLDIUHXX_s6WyHF76tU';
 
-const triggerPush = document.querySelector('.trigger-push');
+let subscription = {};
 
-// function isPushNotificationSupported() {
-//   return "serviceWorker" in navigator && "PushManager" in window;
-// }
-
-// function initializePushNotifications() {
-//   // request user grant to show notification
-//   return Notification.requestPermission(function(result) {
-//     return result;
-//   });
-// }
-
-async function triggerPushNotification() {
-  if ('serviceWorker' in navigator) {
+export async function registerServiceWorker() {
+  if ('serviceWorker' in navigator && "PushManager" in window) {
+    Notification.requestPermission();
     const register = await navigator.serviceWorker.register('/sw.js', {
       scope: '/'
     });
-
-    const subscription = await register.pushManager.subscribe({
+    console.log("Service worker registered");
+    setTimeout(async function() {
+      subscription = await register.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
     });
+    console.log("Subscription registered", subscription);
+    //save subscribtion to database
+      if (subscription) {
+        let response = await fetch(`/api/subscriptions/save`,
+        {
+           method: "POST",
+           credentials: "include",
+           headers: {
+             "Content-Type": "application/json"
+         },
+        body: JSON.stringify(subscription),
+       })
+    
+       console.log("Response is: ", response);
+        if (response.status === 201) {
+          console.log("Subscription saved to database");
+  
+        } else if (response.status === 400){
+          console.log("Subscription save failed");
+        }
+      }
 
-    await fetch('/subscribe', {
+    }, 3000)
+
+
+   } else {
+  console.error('Service workers are not supported in this browser');
+  }
+}
+
+export async function triggerPushNotification() {
+
+    await fetch('/api/subscriptions/subscribe', {
       method: 'POST',
       body: JSON.stringify(subscription),
       headers: {
         'Content-Type': 'application/json',
       },
     });
-  } else {
-    console.error('Service workers are not supported in this browser');
-  }
-}
 
-triggerPush.addEventListener('click', () => {
-  //initializePushNotifications().then(updateUserConsent);
-  triggerPushNotification().catch(error => console.error(error));
-});
+}

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { loadFistBumps } from '../../redux/thunks';
 import { Link } from 'react-router-dom';
 import CommentForm from './comment-form';
+import {triggerPushNotification} from '../../../public/notifications';
 
 //creating the master component
 function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps, comments}) {
@@ -69,6 +70,8 @@ function FistBumpSection({fistBumps, user, workout_id, startLoadingFistBumps, co
       startLoadingFistBumps();
       setFistBumpsCount(fistBumpsCount + 1);
       setUserHasBumped(true);
+      triggerPushNotification();
+      
 
 
     }

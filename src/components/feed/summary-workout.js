@@ -40,7 +40,7 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
               <th>Sets</th>
               <th>Avg reps</th>
               <th>Avg weight</th>
-              <th>Max weight</th>
+              {/* <th>Max weight</th> */}
             </tr>
           </thead>
           <tbody>
@@ -56,7 +56,7 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
                   <td width="10%">{workout.sets}</td>
                   <td width="10%">{(workout.avg_reps/1).toFixed(0)}</td>
                   <td width="10%">{(workout.avg_weight/1).toFixed(0)}<span className="unit"> kg</span></td>
-                  <td width="10%">{workout.max_weight}<span className="unit"> kg</span></td>      
+                  {/* <td width="10%">{workout.max_weight}<span className="unit"> kg</span></td>       */}
                 </tr> : null
               })}
           </tbody>

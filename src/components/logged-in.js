@@ -9,27 +9,11 @@ import Logger from './log-workout/logger';
 import {BrowserRouter, Route} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { loadWorkouts, loadUser, loadFistBumps, loadSets, loadLifts, loadComments } from '../redux/thunks';
-
-
+import { registerServiceWorker } from '../../public/notifications';
 
 //creating the master component
 class LoggedIn extends Component {
   
-  //setting state object for the master component
-  state = { 
-    loginFormVisible: true,
-    showCreateAccountVisible: true,
-    registerFormVisible: false
-   }
-
-  toggleForms = () => {
-    this.setState(prevState => ({
-      loginFormVisible: !prevState.loginFormVisible, 
-      showCreateAccountVisible: !prevState.showCreateAccountVisible, 
-      registerFormVisible: !prevState.registerFormVisible, 
-    }))
-  }
-
   componentDidMount() {
     this.props.startLoadingWorkouts();
     this.props.startLoadingUser();
@@ -37,6 +21,7 @@ class LoggedIn extends Component {
     this.props.startLoadingComments();
     this.props.startLoadingSets();
     this.props.startLoadingLifts();
+    registerServiceWorker().catch(error => console.error(error));
   }
 
 

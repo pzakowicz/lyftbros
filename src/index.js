@@ -9,7 +9,6 @@ import Login from '../src/components/login-and-logout/login';
 import HeaderNotLoggedIn from '../src/components/header/header-not-logged-in';
 import LoggedIn from '../src/components/logged-in';
 
-
 const store = configureStore();
 const persistor = persistStore(store);
 

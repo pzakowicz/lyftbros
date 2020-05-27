@@ -1,6 +1,7 @@
 //imports 
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 
 //creating the master component
@@ -21,7 +22,6 @@ function Header() {
         <Link to="/feed">
           <button type="button" className="nav-button secondary-button" id="feed-button">Feed</button>
         </Link>
-        <button type="button" className="nav-button secondary-button trigger-push">Push</button>
       </nav>
         <div className="dropdown flex-container">
           <img className="dropbtn" id="account-pic" src="/resources/profile pic.png" /><i className="fas fa-caret-down"></i>

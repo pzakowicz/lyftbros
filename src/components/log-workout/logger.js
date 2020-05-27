@@ -158,39 +158,34 @@ class Logger extends Component {
   }
 
   isPR = () => {
-    let max = 0;
-    let second = 0;
-    let third = 0;
+    let liftArray = [];
     for (let i = 0; i < this.props.sets.length; i++) {
-      if (this.props.sets[i].user_id === this.props.user.id && this.props.sets[i].lift_name === this.state.lift && this.props.sets[i].reps >= this.state.reps && this.props.sets[i].weight > max)  {
-        third = second;
-        second = max;
-        max = this.props.sets[i].weight;
+      if (this.props.sets[i].user_id === this.props.user.id && this.props.sets[i].lift_name === this.state.lift && this.props.sets[i].reps >= this.state.reps)  {
+        liftArray.push(this.props.sets[i].weight)
       } 
     }
     for (let i = 0; i < this.props.currentWorkout.length; i++) {
-      if (this.props.currentWorkout[i].lift_name === this.state.lift && this.props.currentWorkout[i].reps >= this.state.reps && this.props.currentWorkout[i].weight > max)  {
-        third = second;
-        second = max;
-        max = this.props.currentWorkout[i].weight
+      if (this.props.currentWorkout[i].lift_name === this.state.lift && this.props.currentWorkout[i].reps >= this.state.reps)  {
+        liftArray.push(this.props.currentWorkout[i].weight)
       } 
     }
-    if (this.state.weight > max) {
-      return 3
-    } else if (this.state.weight <= max && this.state.weight > second){
-      return 2
-    } else if (this.state.weight <= second && this.state.weight > third) {
-      return 1
-    } else {
-      return 0
-    }
+    liftArray.sort(function(a, b){return b-a});
 
+      if (this.state.weight > liftArray[0]) {
+        return 3
+      } else if (this.state.weight <= liftArray[0] && this.state.weight > liftArray[1]) {
+        return 2
+      } else if (this.state.weight <= liftArray[1] && this.state.weight > liftArray[2]) { 
+        return 1
+      } else {
+        return 0
+      }
   }
 
   saveSet = () => {
 
     if (this.state.weight > 0 && this.state.reps > 0) {
-      this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: this.state.weight, reps: this.state.reps, pr: this.isPR()});
+      this.props.addSetToCurrentWorkout({lift_id: this.state.liftId, category: this.state.category, lift_name: this.state.lift, weight: Number(this.state.weight), reps: Number(this.state.reps), pr: this.isPR()});
       this.fadeBiceps();
     }
   }

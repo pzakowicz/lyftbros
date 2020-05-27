@@ -9,7 +9,6 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
-const webPush = require('web-push');
 const auth = require("./auth");
 const config = require("./config");
 const apiRouter = require("./api/api");
@@ -102,24 +101,6 @@ app.get("/logout", (req, res) => {
   return res.render("logout");  
 });
 
-//PUSH NOTIFICATIONS ----------------------------------
-
-const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
-const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
-webPush.setVapidDetails('mailto:piotr.zakowicz@gmail.com', publicVapidKey, privateVapidKey);
-
-app.post('/subscribe', (req, res) => {
-  const subscription = req.body
-
-  res.status(201).json({});
-
-  const payload = JSON.stringify({
-    title: 'Push notifications with Service Workers',
-  });
-
-  webPush.sendNotification(subscription, payload)
-    .catch(error => console.error(error));
-});
     
 //STARTING THE APP ----------------------------------
 app.listen(PORT, "0.0.0.0", () => {
