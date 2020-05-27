@@ -55,7 +55,6 @@ function DetailedWorkout( { fistBumps, user, sets }) {
   }
   
     if (!loading) {
-      console.log(workout);
       return (
 
               <main >

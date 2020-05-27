@@ -1,5 +1,5 @@
 // imports
-require('dotenv').config()
+require('dotenv').config({ path: '.env'});
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
@@ -7,12 +7,12 @@ const errorhandler = require("errorhandler");
 const morgan = require("morgan");
 const express = require("express");
 const path = require("path");
-const apiRouter = require("./api/api");
 const session = require("express-session");
 const MySQLStore = require("express-mysql-session")(session);
+const webPush = require('web-push');
 const auth = require("./auth");
-const mysql = require("mysql2");
 const config = require("./config");
+const apiRouter = require("./api/api");
 
 // create application
 const app = express();
@@ -101,8 +101,27 @@ app.get("/logout", (req, res) => {
   console.log("User logged out");
   return res.render("logout");  
 });
+
+//PUSH NOTIFICATIONS ----------------------------------
+
+const publicVapidKey = process.env.PUBLIC_VAPID_KEY;
+const privateVapidKey = process.env.PRIVATE_VAPID_KEY;
+webPush.setVapidDetails('mailto:piotr.zakowicz@gmail.com', publicVapidKey, privateVapidKey);
+
+app.post('/subscribe', (req, res) => {
+  const subscription = req.body
+
+  res.status(201).json({});
+
+  const payload = JSON.stringify({
+    title: 'Push notifications with Service Workers',
+  });
+
+  webPush.sendNotification(subscription, payload)
+    .catch(error => console.error(error));
+});
     
-//starting app
+//STARTING THE APP ----------------------------------
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Listening on port: ${PORT} in ${process.env.NODE_ENV} environment.`);
 });

@@ -4,7 +4,7 @@ import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { Provider } from 'react-redux';
 import { configureStore } from './redux/store';
-import {BrowserRouter, Route} from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import Login from '../src/components/login-and-logout/login';
 import HeaderNotLoggedIn from '../src/components/header/header-not-logged-in';
 import LoggedIn from '../src/components/logged-in';
@@ -47,3 +47,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root'),
 );
+

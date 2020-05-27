@@ -40,7 +40,6 @@ fistBumpRouter.post("/add/", (req, res, next) => {
 
 //GET all fist bumps with count
 fistBumpRouter.get("/", (req, res, next) => {
-  console.log("Requested fist-bumps");
 
   let connection = mysql.createConnection(config);
   connection.query(`SELECT Sub1.workout_id, Sub1.user_id, Sub3.first_name, Sub3.surname, Sub2.count FROM (SELECT workout_id, user_id FROM Fist_bumps) AS Sub1 JOIN (SELECT workout_id, COUNT(user_id) as 'count' FROM Fist_bumps GROUP BY workout_id) AS Sub2 ON Sub1.workout_id = Sub2.workout_id JOIN (SELECT Users.id, Users.first_name, Users.surname FROM Users) AS Sub3 ON Sub1.user_id = Sub3.id`, [req.params.workoutid], (error, results, fields) => {
