@@ -10,7 +10,7 @@ class Feed extends Component {
 
   render() {
 
-    if (!this.props.isLoading){
+
       return (
             <main>
               <UserStats />
@@ -19,22 +19,17 @@ class Feed extends Component {
             </main>
 
       )
-    } else {
-      return (
-        <div className="flex-container">
-        <h5>Loading..</h5>
-      </div>
-      )
-
-    }
-
-
   }
 
 }
 
 const mapStateToProps = state => ({
-  isLoading: state.isLoading
+  isLoading: state.isLoading,
+  user: state.user,
+  workouts: state.workouts,
+  comments: state.comments,
+  fistBumps: state.fistBumps,
+
 });
 
 export default connect(mapStateToProps)(Feed);

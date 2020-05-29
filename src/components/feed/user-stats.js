@@ -13,14 +13,15 @@ class UserStats extends Component {
     const { user, workouts } = this.props;
 
 
+
       return (
         <div className="container-box" id="stat-container">
                     
           <h4>Welcome <Link to={'/users/' + user.id}>{user.first_name}!</Link></h4>  
-
+  
           <LatestWorkout />
           <Last4Weeks user={user} workouts={workouts}/>
-
+  
         </div>
       
     )     
@@ -32,6 +33,7 @@ class UserStats extends Component {
 const mapStateToProps = state => ({
   user: state.user,
   workouts: state.workouts,
+  isLoading: state.isLoading,
 });
 
 export default connect(mapStateToProps)(UserStats);

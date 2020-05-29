@@ -70,10 +70,7 @@ function NewWorkout({selectRow, clearWorkout, deleteThisSet, currentWorkout, sta
 
   }
 
-  
-
-
-  const populateSets = () => {
+    const populateSets = () => {
     let sortedSets = currentWorkout.sort((a,b) => (a.lift_name > b.lift_name) ? 1 : ((b.lift_name > a.lift_name) ? -1 : 0)); 
     return sortedSets.map((set, i) => {
       return (

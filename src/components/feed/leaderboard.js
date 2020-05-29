@@ -6,22 +6,7 @@ import { Link } from 'react-router-dom';
 
 
 //creating the master component
-function Leaderboard({workouts, user}) {
-
-  //setting state
-  const [workoutLeader, setWorkoutLeader] = useState([]);
-  const [volumeLeader, setVolumeLeader] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
-
-  useEffect( () => {
-
-    findVolumeLeader();
-    findWorkoutLeader();
-
-    setLoading(false);
-
-  }, []);
+function Leaderboard({workouts, isLoading}) {
 
   const findWorkoutLeader = () => {
     const oneDay = 24 * 60 * 60 * 1000;
@@ -50,7 +35,16 @@ function Leaderboard({workouts, user}) {
 
     result.sort((a, b) => parseFloat(b.count) - parseFloat(a.count));
 
-    setWorkoutLeader(result);
+    return (
+      result.map((user, i) => {
+        return <div key={i} className="flex-container list-item">
+          <Link to={"/users/" + user.id}>
+            <span>{(i+1) + '. ' + user.name}</span>
+          </Link>
+          <span className="value">{user.count}</span>
+        </div> 
+      })
+    )
   }
 
   const findVolumeLeader = () => {
@@ -70,10 +64,21 @@ function Leaderboard({workouts, user}) {
     let result = Object.values(tempResult)
 
     result.sort((a, b) => parseFloat(b.volume) - parseFloat(a.volume));
-    setVolumeLeader(result);
+
+    return (
+
+      result.map((user, i) => {
+        return <div key={i} className="flex-container list-item">
+          <Link to={"/users/" + user.id}>
+            <span>{(i+1) + '. ' + user.name}</span>
+          </Link>
+          <span className="value">{(user.volume/1000).toFixed(1) + ' t'}</span>
+        </div> 
+      })
+    )
   }
    
-    if (!loading) {
+    if (!isLoading) {
 
       return (
         <div className="container-box" id="leaderboard-container">
@@ -84,28 +89,14 @@ function Leaderboard({workouts, user}) {
           <div className="inner-container">
               <h5>Most workouts:</h5>
 
-              {workoutLeader.map((user, i) => {
-                return <div key={i} className="flex-container list-item">
-                  <Link to={"/users/" + user.id}>
-                    <span>{(i+1) + '. ' + user.name}</span>
-                  </Link>
-                  <span className="value">{user.count}</span>
-                </div> 
-              })}
+              {findWorkoutLeader()}
           </div>
 
           <div className="inner-container">
 
               <h5>Total volume:</h5>
-              {volumeLeader.map((user, i) => {
-                return <div key={i} className="flex-container list-item">
-                  <Link to={"/users/" + user.id}>
-                    <span>{(i+1) + '. ' + user.name}</span>
-                  </Link>
-                  <span className="value">{(user.volume/1000).toFixed(1) + ' t'}</span>
-                </div> 
-              })}
-
+             
+             {findVolumeLeader()}
           </div>
 
         </div>
@@ -127,8 +118,7 @@ function Leaderboard({workouts, user}) {
 
 const mapStateToProps = state => ({
   workouts: state.workouts,
-  user: state.user,
-  fistBumps: state.fistBumps
+  isLoading: state.isLoading,
 
 });
 

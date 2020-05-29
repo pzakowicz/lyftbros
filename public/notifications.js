@@ -17,11 +17,28 @@ function urlBase64ToUint8Array(base64String) {
 
 const publicVapidKey = 'BKzx5iPJ1QipYxjMAE4fcjA3LsBk7iBssmvD3H2ZnYxebaygcbQjNPSC5mUbxKL3S8NrvLDIUHXX_s6WyHF76tU';
 
+function askPermission() {
+  return new Promise(function(resolve, reject) {
+    const permissionResult = Notification.requestPermission(function(result) {
+      resolve(result);
+    });
+
+    if (permissionResult) {
+      permissionResult.then(resolve, reject);
+    }
+  })
+  .then(function(permissionResult) {
+    if (permissionResult !== 'granted') {
+      throw new Error('We weren\'t granted permission.');
+    }
+  });
+}
+
 let subscription = {};
 
 export async function registerServiceWorker() {
   if ('serviceWorker' in navigator && "PushManager" in window) {
-    Notification.requestPermission();
+    askPermission();
     const register = await navigator.serviceWorker.register('/sw.js', {
       scope: '/'
     });

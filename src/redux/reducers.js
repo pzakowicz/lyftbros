@@ -135,11 +135,23 @@ export const isLoading = (state=false, action) => {
   switch (type) {
     case LOAD_WORKOUTS_IN_PROGRESS:
     case LOAD_USER_IN_PROGRESS:
+    case LOAD_COMMENTS_IN_PROGRESS:
+    case LOAD_LIFTS_IN_PROGRESS:
+    case LOAD_FISTBUMPS_IN_PROGRESS:
+    case LOAD_SETS_IN_PROGRESS:
       return true;
     case LOAD_WORKOUTS_SUCCESS:
     case LOAD_WORKOUTS_FAILURE:
     case LOAD_USER_SUCCESS:
     case LOAD_USER_FAILURE:
+    case LOAD_COMMENTS_SUCCESS:
+    case LOAD_COMMENTS_FAILURE:
+    case LOAD_LIFTS_SUCCESS:
+    case LOAD_LIFTS_FAILURE:
+    case LOAD_FISTBUMPS_SUCCESS:
+    case LOAD_FISTBUMPS_FAILURE:
+    case LOAD_SETS_SUCCESS:
+    case LOAD_SETS_FAILURE:
       return false;
     default: 
       return state;

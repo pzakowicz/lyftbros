@@ -14,52 +14,46 @@ import { registerServiceWorker } from '../../public/notifications';
 //creating the master component
 class LoggedIn extends Component {
 
-  state = {
-    loading: false,
-  }
-  
-  componentDidMount() {
-    this.setState({loading: true});
-    this.props.startLoadingWorkouts();
-    this.props.startLoadingUser();
-    this.props.startLoadingFistBumps();
-    this.props.startLoadingComments();
+  async componentDidMount() {
+
+     this.props.startLoadingWorkouts();
+     this.props.startLoadingUser();
+     this.props.startLoadingFistBumps();
+     this.props.startLoadingComments();
     this.props.startLoadingSets();
     this.props.startLoadingLifts();
-    this.setState({loading: false});
     registerServiceWorker().catch(error => console.error(error));
   }
 
 
   render() {
 
-    return (
-
-        <BrowserRouter>
-              <Route path="/feed">
+      return (
+  
+          <BrowserRouter>
+                <Route path="/feed">
+                    <Header />
+                    <Feed />
+                </Route>
+                <Route path="/workouts/:workout_id">
+                  <Header/>
+                  <DetailedWorkout/>
+                </Route>
+                <Route path="/users/:user_id">
+                  <Header/>
+                  <UserDetails/>
+                </Route>
+                <Route path="/account">
                   <Header />
-                  <Feed fetchLoading={this.state.loading} />
-              </Route>
-              <Route path="/workouts/:workout_id">
-                <Header/>
-                <DetailedWorkout/>
-              </Route>
-              <Route path="/users/:user_id">
-                <Header/>
-                <UserDetails/>
-              </Route>
-              <Route path="/account">
-                <Header />
-                <AccountForm />
-              </Route>
-              <Route path="/log-workout">
-                <Header />
-                <Logger />
-              </Route>
-        </BrowserRouter>
+                  <AccountForm />
+                </Route>
+                <Route path="/log-workout">
+                  <Header />
+                  <Logger />
+                </Route>
+          </BrowserRouter>
+      )
 
-
-    )
   }
 
 }
@@ -67,7 +61,6 @@ class LoggedIn extends Component {
 
 
 const mapStateToProps = state => ({
-  
   isLoading: state.isLoading,
   workouts: state.workouts,
 });

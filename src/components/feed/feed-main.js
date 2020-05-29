@@ -5,38 +5,27 @@ import { connect } from 'react-redux';
 
 
 //creating the master component
-function FeedMain({workouts, user, fistBumps, fetchloading}) {
+function FeedMain({workouts, user, fistBumps}) {
 
   //setting state
 
-  const [loading, setLoading] = useState(true);
-  const [uniqueWorkouts, setUniqueWorkouts] = useState([]);
-
-
-  useEffect(() => {
-
-    const findUniqueWorkouts = () => {
-      
-      let uniqueWorkoutsIds = []; 
-      let uniqueWorkouts = [];
-      for (let i = 0; i < workouts.length; i++) {
-        if (!uniqueWorkoutsIds.includes(workouts[i].id)) {
-          uniqueWorkoutsIds.push(workouts[i].id);
-          uniqueWorkouts.push(workouts[i]);
-        }
-      }
-      setUniqueWorkouts(uniqueWorkouts);
+  const findUniqueWorkouts = () => {
     
+    let uniqueWorkoutsIds = []; 
+    let uniqueWorkouts = [];
+    for (let i = 0; i < workouts.length; i++) {
+      if (!uniqueWorkoutsIds.includes(workouts[i].id)) {
+        uniqueWorkoutsIds.push(workouts[i].id);
+        uniqueWorkouts.push(workouts[i]);
+      }
     }
+    return uniqueWorkouts;
+  }
 
-    findUniqueWorkouts();
-    setLoading(false);
 
-  }, []);
-    if (!loading && !fetchloading) {      
       return (
         <div id="feed-container" >
-          {uniqueWorkouts.map(
+          {findUniqueWorkouts().map(
             (workout, i) => <SummaryWorkout 
               key={i}
               workout_id={workout.id} 
@@ -48,19 +37,11 @@ function FeedMain({workouts, user, fistBumps, fetchloading}) {
               workouts={workouts}
               user={user}
               fistBumps={fistBumps}
-              loading={loading}
             /> 
           )}
         </div> 
     )
 
-    } else {
-      return (
-        <div>
-
-        </div>
-      )
-    }
 
 }
 
@@ -69,6 +50,8 @@ const mapStateToProps = state => ({
   user: state.user,
   fistBumps: state.fistBumps,
   sets: state.sets,
+  isLoading: state.isLoading,
+  
 
 });
 

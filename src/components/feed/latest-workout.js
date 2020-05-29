@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import DateTime from './date-time';
 
 //creating the master component
-function LatestWorkout({workouts, user}) {
+function LatestWorkout({workouts, user, isLoading}) {
 
   const getLatestWorkout = () => {
     let latestWorkout = {};
@@ -29,22 +29,25 @@ function LatestWorkout({workouts, user}) {
 
   }
 
-
+  if (!isLoading) {
+    
     return (
       getLatestWorkout()
-
     )
 
+  } else {
+    return (
 
+      <p>Loading... </p>
+    )
+    }
+  }
 
-  
-    
-
-}
 
 const mapStateToProps = state => ({
   workouts: state.workouts,
   user: state.user,
+  isLoading: state.isLoading,
 });
 
 export default connect(mapStateToProps)(LatestWorkout);

@@ -6,9 +6,7 @@ import WorkoutStats from './workout-stats';
 import FistBumpSection from './fist-bump-section';
 
 //creating the master component
-function SummaryWorkout({workout_id, workout_name, date_time, first_name, surname, userId, user, fistBumps, workouts, loading }) {
-
-  if (!loading) {
+function SummaryWorkout({workout_id, workout_name, date_time, first_name, surname, userId, user, fistBumps, workouts }) {
 
     return (
       <div className="container-box">
@@ -65,7 +63,7 @@ function SummaryWorkout({workout_id, workout_name, date_time, first_name, surnam
       </div>
     )
 
-  }
+  
 }
 
 export default SummaryWorkout;
