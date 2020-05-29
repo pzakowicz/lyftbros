@@ -111,10 +111,14 @@ table, th, td {
 i {
   margin: 5px;
   color: lightgray;
+}
+
+.icon {
+
   cursor: pointer;
 }
 
-i:hover {
+.icon:hover {
   color: grey;
 }
 
@@ -200,6 +204,7 @@ button {
   font-weight: bold;
   padding: 5px;
   border: 1px solid rgb(240, 240, 240);
+  cursor: pointer;
 }
 
 

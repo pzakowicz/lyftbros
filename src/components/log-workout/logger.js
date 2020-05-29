@@ -29,12 +29,6 @@ class Logger extends Component {
     }))
   }
 
-  toggleTabs = () => {
-    this.setState(prevState => ({
-      logTabVisible: !prevState.logTabVisible, 
-    }))
-  }
-
   changeHandler = (event) => {
     let name = event.target.name;
     let value = event.target.value;
@@ -200,8 +194,8 @@ class Logger extends Component {
         <main id="training-main">
   
           <div className="w3-bar w3-black" id="tabs-container">
-            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>Log</button>
-            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
+            <button className="w3-bar-item tab-button" onClick={() => this.setState({logTabVisible: true})}>Log</button>
+            <button className="w3-bar-item tab-button" onClick={() => this.setState({logTabVisible: false})}>History</button>
           </div>
   
           <div id="Log" className="tab container-box">
@@ -224,16 +218,16 @@ class Logger extends Component {
                 <br />
   
                 <label>Weight(kg):</label>
-                <i className="fas fa-minus-square fa-2x" onClick={this.removeWeight}></i>
+                <i className="fas fa-minus-square fa-2x icon" onClick={this.removeWeight}></i>
                 <input name="weight" type="number" value={this.state.weight} id="weight" onChange={this.changeHandler} onClick={this.selectValue} required />
-                <i className="fas fa-plus-square fa-2x" onClick={this.addWeight}></i>
-                {!user.weight ? <i className="fas fa-info-circle tooltip"><span className="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i> : null}
+                <i className="fas fa-plus-square fa-2x icon" onClick={this.addWeight}></i>
+                {!user.weight ? <i className="fas fa-info-circle tooltip icon"><span className="tooltiptext">Tip: Log your weight in your account details to have it pre-populated for bodyweight exercises.</span></i> : null}
   
                 <br />
                 <label>Reps:</label>
-                <i className="fas fa-minus-square fa-2x" onClick={this.removeRep}></i>
+                <i className="fas fa-minus-square fa-2x icon" onClick={this.removeRep}></i>
                 <input name="reps" type="number" value={this.state.reps} id="reps" onChange={this.changeHandler} onClick={this.selectValue} required />
-                <i className="fas fa-plus-square fa-2x" onClick={this.addRep}></i>
+                <i className="fas fa-plus-square fa-2x icon" onClick={this.addRep}></i>
                 <div className="flex-container button-container">
                   <div className="flex-container">
                   <button onClick={this.saveSet} type="button" id="submit-set-button">Save set</button> 
@@ -264,8 +258,8 @@ class Logger extends Component {
         <main id="training-main">
   
           <div className="w3-bar w3-black" id="tabs-container">
-            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>Log</button>
-            <button className="w3-bar-item tab-button" onClick={this.toggleTabs}>History</button>
+            <button className="w3-bar-item tab-button" onClick={() => this.setState({logTabVisible: true})}>Log</button>
+            <button className="w3-bar-item tab-button" onClick={() => this.setState({logTabVisible: false})}>History</button>
           </div>
 
           <History sets={this.props.sets} user={this.props.user} formatDate={this.formatDate} lift={this.state.lift} />
