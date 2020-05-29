@@ -45,7 +45,7 @@ function Prs({thisUser, sets}) {
   },[])
   
   if (!loading && prs.length > 0) {
-    console.log(prs);
+
     return (
       <div>
       <h4>Bro's PRs</h4>

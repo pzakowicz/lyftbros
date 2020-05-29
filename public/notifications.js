@@ -31,7 +31,7 @@ export async function registerServiceWorker() {
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
     });
-    console.log("Subscription registered", subscription);
+    console.log("Subscription registered");
     //save subscribtion to database
       if (subscription) {
         let response = await fetch(`/api/subscriptions/save`,
@@ -43,8 +43,6 @@ export async function registerServiceWorker() {
          },
         body: JSON.stringify(subscription),
        })
-    
-       console.log("Response is: ", response);
         if (response.status === 201) {
           console.log("Subscription saved to database");
   

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 
 //creating the master component
-function FeedMain({workouts, user, fistBumps, sets}) {
+function FeedMain({workouts, user, fistBumps, fetchloading}) {
 
   //setting state
 
@@ -33,7 +33,7 @@ function FeedMain({workouts, user, fistBumps, sets}) {
     setLoading(false);
 
   }, []);
-    if (!loading) {      
+    if (!loading && !fetchloading) {      
       return (
         <div id="feed-container" >
           {uniqueWorkouts.map(

@@ -13,14 +13,20 @@ import { registerServiceWorker } from '../../public/notifications';
 
 //creating the master component
 class LoggedIn extends Component {
+
+  state = {
+    loading: false,
+  }
   
   componentDidMount() {
+    this.setState({loading: true});
     this.props.startLoadingWorkouts();
     this.props.startLoadingUser();
     this.props.startLoadingFistBumps();
     this.props.startLoadingComments();
     this.props.startLoadingSets();
     this.props.startLoadingLifts();
+    this.setState({loading: false});
     registerServiceWorker().catch(error => console.error(error));
   }
 
@@ -32,7 +38,7 @@ class LoggedIn extends Component {
         <BrowserRouter>
               <Route path="/feed">
                   <Header />
-                  <Feed />
+                  <Feed fetchLoading={this.state.loading} />
               </Route>
               <Route path="/workouts/:workout_id">
                 <Header/>
